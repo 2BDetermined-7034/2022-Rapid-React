@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class X3D extends Joystick {
 
-    private Map<Integer, JoystickButton> buttons;
+    private final Map<Integer, JoystickButton> buttons;
 
     public X3D(final int port) {
         super(port);

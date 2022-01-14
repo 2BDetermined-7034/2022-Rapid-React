@@ -7,34 +7,26 @@
 
 package frc.robot.controllers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-public class GPad extends Joystick {
+public class JankButtonPad extends Joystick {
 
-    private final Map<String, JoystickButton> buttons;
-    private final ArrayList<String> axes;
+    private final Map<Integer, JoystickButton> buttons;
 
-    public GPad(final int port) {
+    public JankButtonPad(final int port) {
         super(port);
         buttons = new HashMap<>();
-        String[] buttonNames = {"A","B","X","Y","LB","RB","BACK","START","LSB","RSB"};
         for(int i = 1; i <= 10; i++) {
-            buttons.put(buttonNames[i-1], new JoystickButton(this, i));
+            buttons.put(i, new JoystickButton(this, i));
         }
-        axes = new ArrayList<>(Arrays.asList("LX","LY","LTrigger","RTrigger","RX","RY"));
     }
 
-    public JoystickButton getButton(String buttonName) {
-        return buttons.get(buttonName);
+    public JoystickButton getButton(int buttonID) {
+        return buttons.get(buttonID);
     }
 
-    public double getAxis(String axisName) {
-        return getRawAxis(axes.indexOf(axisName));
-    }
 }
