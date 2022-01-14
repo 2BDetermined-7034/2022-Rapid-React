@@ -1,6 +1,7 @@
 package frc.robot.subsystems.prototypes;
 
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -17,6 +18,7 @@ private final WPI_TalonSRX cargoMotor;
     }
 
     public void mmmRunMotor(double speed) {
+        SmartDashboard.putNumber("IntakeSpeed", speed);
         cargoMotor.set(speed);
     }
 
