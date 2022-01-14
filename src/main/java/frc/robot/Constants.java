@@ -13,10 +13,14 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
     public static final class controller {
         public static int gamePadPort = 1;
     }
     public static final class driveBase {
+        // Odometry
+        public static double length = 0;
+        public static double width = 0;
         // Left
         public static int leftTalon1 = 0;
         public static int leftTalon2 = 1;

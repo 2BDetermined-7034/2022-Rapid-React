@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems.drive;
 
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,11 +20,13 @@ import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 
 
 public class DriveTrain extends SubsystemBase {
+
+  public final AHRS navX;
+
   public WPI_TalonSRX talonL;
   public WPI_TalonSRX talonL2;
 
   SpeedControllerGroup left;
-
 
   public WPI_TalonSRX talonR;
   public WPI_TalonSRX talonR2;
@@ -38,6 +42,8 @@ public class DriveTrain extends SubsystemBase {
    * Creates an instance of the robot's drivetrain.
    */
   public DriveTrain() {
+
+    navX = new AHRS(SPI.Port.kMXP);
 
     // Left
     talonL = new WPI_TalonSRX(Constants.driveBase.leftTalon1);
