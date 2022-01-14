@@ -15,18 +15,16 @@ package frc.robot.commands.Drive;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drive.DriveTrain;
 import frc.robot.controllers.*;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 public class Drive extends CommandBase {
     private final DriveTrain botDriveTrain;
-    private final DoubleSupplier m_x;
-    private final DoubleSupplier m_y;
+    private final DoubleSupplier xDoubleSup;
+    private final DoubleSupplier yDoubleSup;
 
-    private final gPad controller;
+    public final gPad pad;
 
     /**
      * Command will drive the robot's drivetrain.
@@ -39,10 +37,10 @@ public class Drive extends CommandBase {
     public Drive(DriveTrain driveTrain, DoubleSupplier rotation, DoubleSupplier speed, gPad gamePad) {
         botDriveTrain = driveTrain;
 
-        m_y = speed;
-        m_x = rotation;
+        yDoubleSup = speed;
+        xDoubleSup = rotation;
 
-        controller = gamePad;
+        pad = gamePad;
 
         addRequirements(botDriveTrain);
     }
@@ -54,24 +52,21 @@ public class Drive extends CommandBase {
     //The execute method will run every 20ms while the command is active.
     @Override
     public void execute() {
-        double rot = m_x.getAsDouble();
-        double speed = m_y.getAsDouble();
+        double rot = xDoubleSup.getAsDouble();
+        double speed = yDoubleSup.getAsDouble();
 
         //Rumble stuff.
         //Enable/disable rumble in Constants.java under "rumbleEnabled" (Controllers section).
         //Rumble amount is multiplied by "rumbleMultiplier" in Constants.java.
-
-        if(speed == 0) {
-            //useless
-            DriverStation.reportError("No speed found", true);
-        }
+        botDriveTrain.drive(-speed, rot);
 
         //Drives the robot with the appropriate speed and rotation.
-        botDriveTrain.drive(-speed, rot);
+
     }
 
     @Override
     public void end(boolean interrupted) {
+        botDriveTrain.drive(0, 0);
     }
 
     @Override
