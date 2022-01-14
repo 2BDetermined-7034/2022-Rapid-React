@@ -14,7 +14,7 @@ package frc.robot;
  */
 public final class Constants {
     //Motor IDs
-    public static final int hoodedShooterID1 = 0;
+    public static final int hoodedShooterID1 = 5;
     public static final int hoodedShooterID2 = 1;
 
 

@@ -14,17 +14,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class HoodedShooter extends SubsystemBase {
     private final WPI_TalonSRX m_motor1;
-    private final WPI_TalonSRX m_motor2;
-    private final SpeedControllerGroup m_bothMotors;
+    //private final WPI_TalonSRX m_motor2;
+    //private final SpeedControllerGroup m_bothMotors;
 
     public HoodedShooter() {
         m_motor1 = new WPI_TalonSRX(Constants.hoodedShooterID1);
-        m_motor2 = new WPI_TalonSRX(Constants.hoodedShooterID2);
-        m_bothMotors = new SpeedControllerGroup(m_motor1, m_motor2);
+    //    m_motor2 = new WPI_TalonSRX(Constants.hoodedShooterID2);
+    //    m_bothMotors = new SpeedControllerGroup(m_motor1, m_motor2);
     }
 
     public void shootBalls(double speed){
-        m_bothMotors.set(speed);
+        //m_bothMotors.set(speed);
+        m_motor1.set(speed);
     }
 
     @Override
