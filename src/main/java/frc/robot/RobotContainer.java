@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Drive.Drive;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -44,8 +45,8 @@ public class RobotContainer {
   private final Drive driveCommand = new Drive(driveTrain, () -> m_gPad.getAxis("LY"), () -> m_gPad.getAxis("LX"), m_gPad);
 
   private final Drive autoCommand = new Drive(driveTrain, () -> 0, () -> 0.7, m_gPad);
-  //private final Brake brake = new Brake(driveTrain);
 
+  //private final Brake brake = new Brake(driveTrain);
   
 
   // The container for the robot. Contains subsystems, OI devices, and commands.

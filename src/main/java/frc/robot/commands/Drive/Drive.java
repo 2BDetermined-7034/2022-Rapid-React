@@ -15,7 +15,9 @@ package frc.robot.commands.Drive;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.drive.DriveTrain;
 import frc.robot.controllers.*;
 
@@ -25,6 +27,8 @@ public class Drive extends CommandBase {
     private final DoubleSupplier yDoubleSup;
 
     public final gPad pad;
+    private final DriveTrain driveTrain = new DriveTrain();
+    public final gPad gPad = new gPad(Constants.controller.gamePadPort);
 
     /**
      * Command will drive the robot's drivetrain.
@@ -53,6 +57,7 @@ public class Drive extends CommandBase {
         double rot = xDoubleSup.getAsDouble();
         double speed = yDoubleSup.getAsDouble();
 
+        SmartDashboard.putData("Run Motors", new Drive(driveTrain, () -> 0, () -> 0.6, gPad));
         //Rumble stuff.
         //Enable/disable rumble in Constants.java under "rumbleEnabled" (Controllers section).
         //Rumble amount is multiplied by "rumbleMultiplier" in Constants.java.
