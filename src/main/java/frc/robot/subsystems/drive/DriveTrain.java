@@ -9,6 +9,7 @@ package frc.robot.subsystems.drive;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.*;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -57,6 +58,8 @@ public class DriveTrain extends SubsystemBase {
     talonL2.setNeutralMode(NeutralMode.Coast);
     talonR.setNeutralMode(NeutralMode.Coast);
     talonR2.setNeutralMode(NeutralMode.Coast);
+
+
   }
 
   /**
@@ -67,6 +70,8 @@ public class DriveTrain extends SubsystemBase {
    * @param rot Rotation speed (left and right)
    */
   public void drive(double speed, double rot){
+    SmartDashboard.putNumber("Speed", speed * Constants.driveBase.xSpeed);
+    SmartDashboard.putNumber("Rotation", rot * Constants.driveBase.xRot);
     diffDrive.arcadeDrive(speed * Constants.driveBase.xSpeed, rot * Constants.driveBase.xRot);
   }
 
