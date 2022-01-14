@@ -49,7 +49,6 @@ public class RobotContainer {
 
   // The container for the robot. Contains subsystems, OI devices, and commands.
   public RobotContainer() {
-    executeAuto = new TrashAuto(driveTrain, dumper);
     configureButtonBindings();
   }
 
@@ -71,6 +70,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     //Returns the "auto" command, which we want to run in autonomous.
-    return executeAuto;
+    return null;
   }
 }

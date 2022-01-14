@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 
+
 public class DriveTrain extends SubsystemBase {
   public WPI_TalonSRX talonL;
   public WPI_TalonSRX talonL2;
@@ -70,38 +71,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
 
-  //Ignore the below commented out methods, they are broken and most likely will not work.
 
-
-  /*
-
-  driveFor would only work with encoders mounted.
-
-  public void driveFor(double distance){
-    talonL.setSelectedSensorPosition(0);
-    while(talonL.getSelectedSensorPosition() / 360.0 * 2.0 * 3.14159 * 4.5 < distance){
-      diffDrive.arcadeDrive(0.8, 0);
-    }
-  }
-  */
-
-  /*
-  public void autoDrive(double leftSpeed, double rightSpeed) {  
-		m_drive.tankDrive(-rightSpeed, leftSpeed);
-  }
-
-  public void driveFor(double cm) {
-    m_leftPID.setReference(-cm, ControlType.kPosition);
-    m_rightPID.setReference(cm, ControlType.kPosition);
-  }
-
-  public void driveFor(double cm, double maxSpeed) {
-    Shortcuts.print("bruh");
-    m_leftPID.setOutputRange(-maxSpeed, maxSpeed);
-    m_rightPID.setOutputRange(-maxSpeed, maxSpeed);
-    driveFor(cm);
-  }
-  */
 
   @Override
   public void periodic() {}

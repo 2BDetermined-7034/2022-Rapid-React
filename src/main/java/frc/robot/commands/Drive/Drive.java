@@ -59,12 +59,7 @@ public class Drive extends CommandBase {
         //Rumble stuff.
         //Enable/disable rumble in Constants.java under "rumbleEnabled" (Controllers section).
         //Rumble amount is multiplied by "rumbleMultiplier" in Constants.java.
-        if(Constants.rumbleEnabled) {
-            controller.setRumble(RumbleType.kLeftRumble, Math.abs(m_y.getAsDouble() * Constants.rumbleMultiplier));
-            controller.setRumble(RumbleType.kRightRumble, Math.abs(m_y.getAsDouble() * Constants.rumbleMultiplier));
-        }
-
-
+      
 
 
         //Drives the robot with the appropriate speed and rotation.
