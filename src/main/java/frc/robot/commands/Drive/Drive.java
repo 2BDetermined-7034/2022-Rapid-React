@@ -15,6 +15,7 @@ package frc.robot.commands.Drive;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drive.DriveTrain;
 import frc.robot.controllers.*;
@@ -59,8 +60,11 @@ public class Drive extends CommandBase {
         //Rumble stuff.
         //Enable/disable rumble in Constants.java under "rumbleEnabled" (Controllers section).
         //Rumble amount is multiplied by "rumbleMultiplier" in Constants.java.
-      
 
+        if(speed == 0) {
+            //useless
+            DriverStation.reportError("No speed found", true);
+        }
 
         //Drives the robot with the appropriate speed and rotation.
         botDriveTrain.drive(-speed, rot);

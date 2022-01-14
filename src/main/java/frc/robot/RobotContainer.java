@@ -30,7 +30,7 @@ public class RobotContainer {
   //USB port number is defined in Constants.java under "gamepadPort" or "x3DPort" respectively. 
   //Find the correct port in the driver station under in the tab with the USB icon.
 
-  public final gPad m_gPad = new gPad(1); // Gamepad
+  public final gPad m_gPad = new gPad(Constants.controller.gamePadPort); // Gamepad
  // public final X3D m_X3D = new X3D(Constants.x3DPort); // Joystick
 
 
@@ -42,7 +42,7 @@ public class RobotContainer {
   //Driving command.
   //Passes in the left joystick's X axis as rotation and the left joystick's Y axis as speed.
   private final Drive driveCommand = new Drive(driveTrain, () -> m_gPad.getAxis("LX"), () -> m_gPad.getAxis("LY"), m_gPad);
-
+  private final Drive autoCommand = new Drive(driveTrain, () -> 0, () -> 0.7, m_gPad);
   //private final Brake brake = new Brake(driveTrain);
 
   
@@ -70,6 +70,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     //Returns the "auto" command, which we want to run in autonomous.
-    return null;
+    return autoCommand;
   }
 }
