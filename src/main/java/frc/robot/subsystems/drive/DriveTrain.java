@@ -9,7 +9,7 @@ package frc.robot.subsystems.drive;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import frc.robot.*;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -38,12 +38,12 @@ public class DriveTrain extends SubsystemBase {
    */
   public DriveTrain() {
 
-    //To change motor IDs, edit the desired motor in Constants.java under the "Motor IDs" section.
-    talonL = new WPI_TalonSRX(0);
-    talonL2 = new WPI_TalonSRX(1);
-
-    talonR = new WPI_TalonSRX(2);
-    talonR2 = new WPI_TalonSRX(3);
+    // Left
+    talonL = new WPI_TalonSRX(Constants.driveBase.leftTalon1);
+    talonL2 = new WPI_TalonSRX(Constants.driveBase.leftTalon2);
+    // Right
+    talonR = new WPI_TalonSRX(Constants.driveBase.rightTalon1);
+    talonR2 = new WPI_TalonSRX(Constants.driveBase.rightTalon2);
 
     left = new SpeedControllerGroup(talonL, talonL2);
     right = new SpeedControllerGroup(talonR, talonR2);
@@ -67,7 +67,7 @@ public class DriveTrain extends SubsystemBase {
    * @param rot Rotation speed (left and right)
    */
   public void drive(double speed, double rot){
-    diffDrive.arcadeDrive(speed * 0.7, rot * 0.6);
+    diffDrive.arcadeDrive(speed * Constants.driveBase.xSpeed, rot * Constants.driveBase.xRot);
   }
 
 
