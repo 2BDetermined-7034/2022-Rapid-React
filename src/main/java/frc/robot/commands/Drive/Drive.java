@@ -20,7 +20,7 @@ import frc.robot.subsystems.drive.DriveTrain;
 import frc.robot.controllers.*;
 
 public class Drive extends CommandBase {
-    private final DriveTrain botDriveTrain;
+    private final DriveTrain dT;
     private final DoubleSupplier xDoubleSup;
     private final DoubleSupplier yDoubleSup;
 
@@ -35,14 +35,12 @@ public class Drive extends CommandBase {
      * @param gamePad    The gamepad being used for input.
      */
     public Drive(DriveTrain driveTrain, DoubleSupplier rotation, DoubleSupplier speed, gPad gamePad) {
-        botDriveTrain = driveTrain;
-
+        dT = driveTrain;
         yDoubleSup = speed;
         xDoubleSup = rotation;
-
         pad = gamePad;
 
-        addRequirements(botDriveTrain);
+        addRequirements(dT);
     }
 
     @Override
@@ -58,7 +56,7 @@ public class Drive extends CommandBase {
         //Rumble stuff.
         //Enable/disable rumble in Constants.java under "rumbleEnabled" (Controllers section).
         //Rumble amount is multiplied by "rumbleMultiplier" in Constants.java.
-        botDriveTrain.drive(-speed, rot);
+        dT.drive(-speed, rot);
 
         //Drives the robot with the appropriate speed and rotation.
 
@@ -66,7 +64,7 @@ public class Drive extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        botDriveTrain.drive(0, 0);
+        dT.drive(0, 0);
     }
 
     @Override
