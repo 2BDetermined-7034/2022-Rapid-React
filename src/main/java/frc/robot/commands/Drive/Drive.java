@@ -57,13 +57,9 @@ public class Drive extends CommandBase {
         double rot = xDoubleSup.getAsDouble();
         double speed = yDoubleSup.getAsDouble();
 
-        SmartDashboard.putData("Run Motors", new Drive(driveTrain, () -> 0, () -> 0.6, gPad));
-        //Rumble stuff.
-        //Enable/disable rumble in Constants.java under "rumbleEnabled" (Controllers section).
-        //Rumble amount is multiplied by "rumbleMultiplier" in Constants.java.
+        SmartDashboard.putData("Run Motors", new Drive(driveTrain, () -> 0.6, () -> 0, gPad));
         dT.drive(-speed, rot);
 
-        //Drives the robot with the appropriate speed and rotation.
 
     }
 

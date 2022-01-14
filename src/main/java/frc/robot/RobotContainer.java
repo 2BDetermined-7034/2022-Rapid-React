@@ -42,9 +42,9 @@ public class RobotContainer {
 
   //Driving command.
   //Passes in the left joystick's X axis as rotation and the left joystick's Y axis as speed.
-  private final Drive driveCommand = new Drive(driveTrain, () -> m_gPad.getAxis("LY"), () -> m_gPad.getAxis("LX"), m_gPad);
+  private final Drive driveCommand = new Drive(driveTrain, () -> m_gPad.getAxis("LX"), () -> m_gPad.getAxis("LY"), m_gPad);
 
-  private final Drive autoCommand = new Drive(driveTrain, () -> 0, () -> 0.7, m_gPad);
+  private final Drive autoCommand = new Drive(driveTrain, () -> 0.6, () -> 0, m_gPad);
 
   //private final Brake brake = new Brake(driveTrain);
   
