@@ -11,12 +11,12 @@
 // - Sam
 
 
-package frc.robot.commands;
+package frc.robot.commands.Drive;
 
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.drive.DriveTrain;
 import frc.robot.controllers.*;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
