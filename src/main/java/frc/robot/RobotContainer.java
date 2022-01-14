@@ -1,48 +1,76 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.controllers.*;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
+ * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
+ * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
+ * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  //The robot's subsystems and commands are defined here
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  //Defines the gamepad and/or joystick (X3D is the joystick) for use.
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  //USB port number is defined in Constants.java under "gamepadPort" or "x3DPort" respectively. 
+  //Find the correct port in the driver station under in the tab with the USB icon.
+
+  public final gPad m_gPad = new gPad(1); // Gamepad
+ // public final X3D m_X3D = new X3D(Constants.x3DPort); // Joystick
+
+
+  //Declaration of subsystems.
+  private final DriveTrain driveTrain = new DriveTrain(); // Robot drivetrain
+
+  //Declaration of commands.
+
+  //Driving command.
+  //Passes in the left joystick's X axis as rotation and the left joystick's Y axis as speed.
+  private final Drive driveCommand = new Drive(driveTrain, () -> m_gPad.getAxis("LX"), () -> m_gPad.getAxis("LY"), m_gPad);
+
+  //private final Brake brake = new Brake(driveTrain);
+
+  
+
+  // The container for the robot. Contains subsystems, OI devices, and commands.
   public RobotContainer() {
-    // Configure the button bindings
+    executeAuto = new TrashAuto(driveTrain, dumper);
     configureButtonBindings();
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button->command mappings.  Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
+   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    driveTrain.setDefaultCommand(driveCommand); //Sets the drivetrain to always be running the "driveCommand" command.
+ 
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
-   * @return the command to run in autonomous
+   * @return The command to run in autonomous.
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    //Returns the "auto" command, which we want to run in autonomous.
+    return executeAuto;
   }
 }
