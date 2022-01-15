@@ -14,11 +14,11 @@ private final WPI_TalonSRX cargoMotor;
 
 
     public CargoIntake() {
+        SmartDashboard.putNumber("IntakeSpeed", 0);
         cargoMotor = new WPI_TalonSRX(Constants.cargoIntakeMotorID1);
     }
 
     public void mmmRunMotor(double speed) {
-        SmartDashboard.putNumber("IntakeSpeed", speed);
         cargoMotor.set(speed);
     }
 
