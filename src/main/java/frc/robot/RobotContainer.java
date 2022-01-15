@@ -7,8 +7,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.climb.RaiseClimber;
+import frc.robot.commands.climb.RunWinch;
+import frc.robot.controllers.GPad;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.TeleClimb;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,6 +23,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+
+  private final TeleClimb m_teleClimb = new TeleClimb();
+  private final RaiseClimber m_raiseClimber = new RaiseClimber(m_teleClimb);
+  private final RunWinch m_runWinch = new RunWinch(m_teleClimb);
+
+  private final GPad controller = new GPad(Constants.controllers.gamePadPort);
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
@@ -34,7 +44,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    controller.getButton("LT").whileHeld(m_raiseClimber);
+    controller.getButton("RT").whileHeld(m_runWinch);
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
