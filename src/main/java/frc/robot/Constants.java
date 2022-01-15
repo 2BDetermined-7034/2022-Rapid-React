@@ -20,6 +20,7 @@ public final class Constants {
         public static final int buttonPadPort = 2;
     }
     public final static class driveBase {
-        // Add NEO IDs here.
+        public static final int neoMotor1 = 1;
+        public static final int neoMotor2 = 2;
     }
 }
