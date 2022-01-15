@@ -21,6 +21,8 @@ import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 
 public class DriveTrain extends SubsystemBase {
 
+  public WCDOdometryController odometryController;
+
   public final AHRS navX;
 
   public WPI_TalonSRX talonL;
@@ -42,6 +44,8 @@ public class DriveTrain extends SubsystemBase {
    * Creates an instance of the robot's drivetrain.
    */
   public DriveTrain() {
+
+    WCDOdometryController odometryController= new WCDOdometryController(Constants.driveBase.length, Constants.driveBase.width);
 
     navX = new AHRS(SPI.Port.kMXP);
 
@@ -69,6 +73,14 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
+   * Method to get heading of robot
+   * @return direction of drive (degrees)
+   */
+  public double getHeading(){
+    return navX.getYaw();
+  }
+
+  /**
    * Drives the robot at the desired speed and with the desired rotation.
    * Speed and rotation are affected by a modifier in Constants.java (check Driving section).
    * 
@@ -79,6 +91,7 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("Speed", speed * Constants.driveBase.xSpeed);
     SmartDashboard.putNumber("Rotation", rot * Constants.driveBase.xRot);
     diffDrive.arcadeDrive(speed * Constants.driveBase.xSpeed, rot * Constants.driveBase.xRot);
+    odometryController.update(speed * Constants.driveBase.xSpeed, getHeading());
   }
 
 
