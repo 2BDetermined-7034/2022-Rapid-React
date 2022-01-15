@@ -28,8 +28,8 @@ public class RobotContainer {
   private final HoodedShooter m_hoodedShooter = new HoodedShooter();
   private final ShootBallsHooded m_shootBallsHooded = new ShootBallsHooded(m_hoodedShooter);
 
-  private final CargoIntake m_CargoIntake = new CargoIntake();
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_CargoIntake, () -> 0.5);
+  private final CargoIntake m_cargoIntake = new CargoIntake();
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> 0.5);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
