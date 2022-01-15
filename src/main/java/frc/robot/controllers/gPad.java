@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class gPad extends Joystick {
 
-    private Map<String, JoystickButton> buttons;
-    private ArrayList<String> axes;
+    private final Map<String, JoystickButton> buttons;
+    private final ArrayList<String> axes;
 
     public gPad(final int port) {
         super(port);

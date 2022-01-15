@@ -23,8 +23,8 @@ import frc.robot.controllers.*;
 
 public class Drive extends CommandBase {
     private final DriveTrain dT;
-    private final DoubleSupplier xDoubleSup;
     private final DoubleSupplier yDoubleSup;
+    private final DoubleSupplier xDoubleSup;
 
     public final gPad pad;
     private final DriveTrain driveTrain = new DriveTrain();
@@ -40,8 +40,8 @@ public class Drive extends CommandBase {
      */
     public Drive(DriveTrain driveTrain, DoubleSupplier rotation, DoubleSupplier speed, gPad gamePad) {
         dT = driveTrain;
-        yDoubleSup = speed;
-        xDoubleSup = rotation;
+        xDoubleSup = speed;
+        yDoubleSup = rotation;
         pad = gamePad;
 
         addRequirements(dT);
@@ -54,8 +54,8 @@ public class Drive extends CommandBase {
     //The execute method will run every 20ms while the command is active.
     @Override
     public void execute() {
-        double rot = xDoubleSup.getAsDouble();
-        double speed = yDoubleSup.getAsDouble();
+        double rot = yDoubleSup.getAsDouble();
+        double speed = xDoubleSup.getAsDouble();
 
         SmartDashboard.putData("Run Motors", new Drive(driveTrain, () -> 0.6, () -> 0, gPad));
         dT.drive(-speed, rot);
