@@ -10,12 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.Drive.Drive;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.controllers.*;
-import frc.robot.subsystems.drive.DriveTrain;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -31,21 +26,15 @@ public class RobotContainer {
   //USB port number is defined in Constants.java under "gamepadPort" or "x3DPort" respectively. 
   //Find the correct port in the driver station under in the tab with the USB icon.
 
-  public final gPad m_gPad = new gPad(Constants.controller.gamePadPort); // Gamepad
  // public final X3D m_X3D = new X3D(Constants.x3DPort); // Joystick
 
 
   //Declaration of subsystems.
-  private final DriveTrain driveTrain = new DriveTrain(); // Robot drivetrain
 
   //Declaration of commands.
 
   //Driving command.
   //Passes in the left joystick's X axis as rotation and the left joystick's Y axis as speed.
-  private final Drive driveCommand = new Drive(driveTrain, () -> m_gPad.getAxis("LX"), () -> m_gPad.getAxis("LY"), m_gPad);
-
-  private final Drive autoCommand = new Drive(driveTrain, () -> 0.6, () -> 0, m_gPad);
-
   //private final Brake brake = new Brake(driveTrain);
   
 
@@ -61,7 +50,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    driveTrain.setDefaultCommand(driveCommand); //Sets the drivetrain to always be running the "driveCommand" command.
  
   }
 
@@ -72,6 +60,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     //Returns the "auto" command, which we want to run in autonomous.
-    return autoCommand;
+    return null;
   }
 }
