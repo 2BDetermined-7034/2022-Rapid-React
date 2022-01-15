@@ -6,11 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.prototypes.intake.RunIntakeMotors;
 import frc.robot.commands.prototypes.shooters.ShootBallsHooded;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.subsystems.prototypes.CargoIntake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.controllers.*;
@@ -23,16 +22,20 @@ import frc.robot.subsystems.prototypes.HoodedShooter;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final GPad controller = new GPad(0);
+  private final GPad controller = new GPad(Constants.controller.controllerPort);
   // The robot's subsystems and commands are defined here...
 
   private final HoodedShooter m_hoodedShooter = new HoodedShooter();
   private final ShootBallsHooded m_shootBallsHooded = new ShootBallsHooded(m_hoodedShooter);
 
+  private final CargoIntake m_CargoIntake = new CargoIntake();
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_CargoIntake, () -> 0.5);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     SmartDashboard.putNumber("HoodedShooterSpeed", 0);
+    SmartDashboard.putNumber("IntakeSpeed", 0);
     configureButtonBindings();
   }
 
@@ -44,6 +47,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     controller.getButton("A").whenHeld(m_shootBallsHooded);
+    controller.getButton("B").whenHeld(m_runIntake);
   }
 
   /**

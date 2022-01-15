@@ -16,6 +16,12 @@ public final class Constants {
     //Motor IDs
     public static final int hoodedShooterID1 = 5;
     public static final int hoodedShooterID2 = 1;
+    public static final int cargoIntakeMotorID1 = 0;
+    public static double cargoIntakeSpeed = 0.7;
+
+    public static final class controller {
+        public static final int controllerPort = 0;
+    }
 
     //Shooter Values
     public static final double hoodedShooterSpeed = 0.9;
