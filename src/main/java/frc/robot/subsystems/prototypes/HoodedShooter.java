@@ -18,10 +18,10 @@ public class HoodedShooter extends SubsystemBase {
     //private final SpeedControllerGroup m_bothMotors;
 
     public HoodedShooter() {
-        m_motor1 = new WPI_TalonSRX(Constants.hoodedShooterID1);
+        m_motor1 = new WPI_TalonSRX(Constants.hoodedShooterMotorID1);
         SmartDashboard.putNumber("HoodedShooterSpeed", 0);
-        //    m_motor2 = new WPI_TalonSRX(Constants.hoodedShooterID2);
-    //    m_bothMotors = new SpeedControllerGroup(m_motor1, m_motor2);
+        //m_motor2 = new WPI_TalonSRX(Constants.hoodedShooterMotorID2);
+        //m_bothMotors = new SpeedControllerGroup(m_motor1, m_motor2);
     }
 
     public void shootBalls(double speed){
