@@ -19,4 +19,8 @@ public final class Constants {
     public static final int cargoIntakeMotorID1 = 0;
     public static double cargoIntakeSpeed = 0.7;
 
+    public static final class controller {
+        public static final int controllerPort = 0;
+    }
+
 }
