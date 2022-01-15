@@ -5,25 +5,24 @@
 package frc.robot.commands.drive;
 
 
-import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.drive.RobotDrive;
+import frc.robot.subsystems.drive.bDrive;
 
 import java.util.function.DoubleSupplier;
 
 /** An example command that uses an example subsystem. */
 public class DriveCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final RobotDrive robotDriveBase;
+    private final bDrive bDriveBase;
     private final DoubleSupplier gPadX;
     private final DoubleSupplier gpadY;
 
-    public DriveCommand(RobotDrive robotDriveBase, DoubleSupplier gamepadX, DoubleSupplier gamepadY) {
-        this.robotDriveBase = robotDriveBase;
+    public DriveCommand(bDrive bDriveBase, DoubleSupplier gamepadX, DoubleSupplier gamepadY) {
+        this.bDriveBase = bDriveBase;
         this.gPadX = gamepadX;
         this.gpadY = gamepadY;
 
-        addRequirements(robotDriveBase);
+        addRequirements(bDriveBase);
     }
 
     // Called when the command is initially scheduled.
@@ -35,6 +34,8 @@ public class DriveCommand extends CommandBase {
     public void execute() {
         double gPadAxisX = gPadX.getAsDouble();
         double gPadAxisY = gpadY.getAsDouble();
+
+       // bDriveBase.Drive();
 
     }
 
