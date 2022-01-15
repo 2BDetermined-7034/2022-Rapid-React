@@ -22,7 +22,7 @@ import frc.robot.subsystems.prototypes.HoodedShooter;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final GPad controller = new GPad(Constants.controller.controllerPort);
+  private final GPad controller = new GPad(Constants.controllers.gamePadPort);
   // The robot's subsystems and commands are defined here...
 
   private final HoodedShooter m_hoodedShooter = new HoodedShooter();

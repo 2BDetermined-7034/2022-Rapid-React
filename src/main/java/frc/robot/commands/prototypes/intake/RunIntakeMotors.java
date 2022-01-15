@@ -25,7 +25,7 @@ public class RunIntakeMotors extends CommandBase {
     @Override
     public void execute() {
         double speed = SmartDashboard.getNumber("IntakeSpeed", 0);
-        //double speed = -0.9;
+        //double speed = -Constants.intake.speed;
         m_intake.mmmRunMotor(speed);
     }
 

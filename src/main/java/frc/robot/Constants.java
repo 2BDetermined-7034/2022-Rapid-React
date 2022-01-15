@@ -32,7 +32,7 @@ public final class Constants {
         public static final double speed = 0.7;
     }
     public final static class climber {
-        public static final int driverTalon = 0;
-        public static final int winchTalon = 0;
+        public static final int driverMotorID = 0;
+        public static final int winchMotorID = 0;
     }
 }

@@ -22,7 +22,7 @@ public class ShootBallsHooded extends CommandBase {
     @Override
     public void execute() {
         double speed = SmartDashboard.getNumber("HoodedShooterSpeed", 0);
-        //double speed = Constants.hoodedShooterSpeed;
+        //double speed = -Constants.shooter.speed;
         m_hoodedShooter.shootBalls(speed);
     }
 
