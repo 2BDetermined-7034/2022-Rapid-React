@@ -27,4 +27,17 @@ public final class Constants {
         public static final int neoMotorRight5 = 5;
         public static final int neoMotorRight6 = 6;
     }
+
+    public final static class intake {
+        public static final int intakeMotor = 1;
+        public static double intakeSpeed = 0.7;
+    }
+
+    public final static class shooter {
+
+    }
+
+    public final static class climb {
+
+    }
 }
