@@ -34,8 +34,6 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    SmartDashboard.putNumber("HoodedShooterSpeed", 0);
-    SmartDashboard.putNumber("IntakeSpeed", 0);
     configureButtonBindings();
   }
 
