@@ -17,5 +17,6 @@ public final class Constants {
     public static final int hoodedShooterID1 = 5;
     public static final int hoodedShooterID2 = 1;
 
-
+    //Shooter Values
+    public static final double hoodedShooterSpeed = 0.9;
 }

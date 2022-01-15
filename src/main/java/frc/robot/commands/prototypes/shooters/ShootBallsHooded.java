@@ -3,11 +3,9 @@ package frc.robot.commands.prototypes.shooters;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.prototypes.*;
+import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
-import java.util.Set;
 
 public class ShootBallsHooded extends CommandBase {
     private final HoodedShooter m_hoodedShooter;
@@ -24,7 +22,7 @@ public class ShootBallsHooded extends CommandBase {
     @Override
     public void execute() {
         double speed = SmartDashboard.getNumber("HoodedShooterSpeed", 0);
-        //double speed = -0.9;
+        //double speed = Constants.hoodedShooterSpeed;
         m_hoodedShooter.shootBalls(speed);
     }
 
@@ -35,6 +33,6 @@ public class ShootBallsHooded extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_hoodedShooter.shootBalls(0);
+        m_hoodedShooter.shootBalls(0); // Resets the motor to 0 speed
     }
 }
