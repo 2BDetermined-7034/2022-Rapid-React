@@ -4,8 +4,7 @@
 
 package frc.robot.subsystems.drive;
 
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -13,16 +12,30 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants;
 
 public class RobotDrive extends SubsystemBase {
-    private CANSparkMax leftDriveMotor;
-    private CANSparkMax rightDriveMotor;
+    private CANSparkMax left1DriveMotor;
+    private CANSparkMax left2DriveMotor;
+    private CANSparkMax left3DriveMotor;
+    private CANSparkMax right1DriveMotor;
+    private CANSparkMax right2DriveMotor;
+    private CANSparkMax right3DriveMotor;
     private DifferentialDrive m_bot;
 
+    SpeedControllerGroup leftMotor;
+    SpeedControllerGroup rightMotor;
 
-    public void Drive(double left, double right) {
-        leftDriveMotor = new CANSparkMax(Constants.driveBase.neoMotor1, MotorType.kBrushless);
-        rightDriveMotor = new CANSparkMax(Constants.driveBase.neoMotor2, MotorType.kBrushless);
+    public void Drive(Double left, Double right) {
 
-        m_bot = new DifferentialDrive(leftDriveMotor, rightDriveMotor);
+        left1DriveMotor = new CANSparkMax(Constants.driveBase.neoMotorLeft1, MotorType.kBrushless);
+        left2DriveMotor = new CANSparkMax(Constants.driveBase.neoMotorLeft2, MotorType.kBrushless);
+        left3DriveMotor = new CANSparkMax(Constants.driveBase.neoMotorLeft3, MotorType.kBrushless);
+        leftMotor = new SpeedControllerGroup(left1DriveMotor, left2DriveMotor, left3DriveMotor);
+
+        right1DriveMotor = new CANSparkMax(Constants.driveBase.neoMotorRight4, MotorType.kBrushless);
+        right2DriveMotor = new CANSparkMax(Constants.driveBase.neoMotorRight5, MotorType.kBrushless);
+        right3DriveMotor = new CANSparkMax(Constants.driveBase.neoMotorRight6, MotorType.kBrushless);
+        rightMotor = new SpeedControllerGroup(right1DriveMotor, right2DriveMotor, right3DriveMotor);
+
+        m_bot = new DifferentialDrive(leftMotor, rightMotor);
 
         m_bot.tankDrive(left, right);
 

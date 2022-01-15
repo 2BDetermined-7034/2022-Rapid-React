@@ -20,7 +20,11 @@ public final class Constants {
         public static final int buttonPadPort = 2;
     }
     public final static class driveBase {
-        public static final int neoMotor1 = 1;
-        public static final int neoMotor2 = 2;
+        public static final int neoMotorLeft1 = 1;
+        public static final int neoMotorLeft2 = 2;
+        public static final int neoMotorLeft3 =3;
+        public static final int neoMotorRight4 = 4;
+        public static final int neoMotorRight5 = 5;
+        public static final int neoMotorRight6 = 6;
     }
 }
