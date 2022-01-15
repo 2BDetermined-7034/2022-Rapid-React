@@ -13,20 +13,26 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final class controller {
-        public static final int controllerPort = 0;
+
+    public final static class controllers {
+        public static final int gamePadPort = 0;
+        public static final int joystickPort = 1;
+        public static final int buttonPadPort = 2;
     }
-
-    //Motor IDs
-    public static final int hoodedShooterMotorID1 = 5;
-    //public static final int hoodedShooterMotorID2 = 1;
-    public static final int cargoIntakeMotorID1 = 0;
-    public static final int climbDriverMotorID = 0;
-    public static final int climbWinchMotorID = 0;
-
-    //Intake Values
-    public static double cargoIntakeSpeed = 0.7;
-
-    //Shooter Values
-    public static final double hoodedShooterSpeed = 0.9;
+    public final static class driveBase {
+        public static final int neoMotor1 = 1;
+        public static final int neoMotor2 = 2;
+    }
+    public final static class shooter {
+        public static final int talonSRX1 = 5;
+        public static final double speed = 0.9;
+    }
+    public final static class intake {
+        public static final int talonSRX1 = 0;
+        public static final double speed = 0.7;
+    }
+    public final static class climber {
+        public static final int driverTalon = 0;
+        public static final int winchTalon = 0;
+    }
 }
