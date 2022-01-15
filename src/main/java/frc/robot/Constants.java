@@ -34,5 +34,9 @@ public final class Constants {
     public final static class climber {
         public static final int driverMotorID = 0;
         public static final int winchMotorID = 0;
+
+        public static final double driverkP = 0.05;
+        public static final double driverkI = 0;
+        public static final double driverkD = 0;
     }
 }
