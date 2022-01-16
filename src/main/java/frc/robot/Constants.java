@@ -22,11 +22,15 @@ public final class Constants {
         public static double length = 0;
         public static double width = 0;
         // Left
-        public static int leftTalon1 = 0;
-        public static int leftTalon2 = 1;
+        public static int driveL1ID = 0;
+        public static int driveL2ID = 0;
+        public static int driveL3ID = 0;
         // Right
-        public static int rightTalon1 = 2;
-        public static int rightTalon2 = 3;
+        public static int driveR1ID = 0;
+        public static int driveR2ID = 0;
+        public static int driveR3ID = 0;
+        //Shifter
+        public static int shifterID = 0;
         // Speed
         public static final double xSpeed = 0.7;
         public static final double xRot = 0.6;
