@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems.prototypes;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
@@ -16,6 +17,7 @@ public class HoodedShooter extends SubsystemBase {
 
     public HoodedShooter() {
         m_motor1 = new WPI_TalonSRX(Constants.shooter.talonSRX1);
+        m_motor1.setNeutralMode(NeutralMode.Coast);
         SmartDashboard.putNumber("HoodedShooterSpeed", 0);
     }
 

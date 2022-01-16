@@ -16,14 +16,17 @@ import frc.robot.Constants;
 // Climb code assumes NEOs are being used for the winch and driver motors
 
 public class ClimbPrototype1 extends SubsystemBase {
+    /*
     public final CANSparkMax m_deployMotor;
     public final CANSparkMax m_winchMotor;
     public final RelativeEncoder m_deployEncoder;
     public final SparkMaxPIDController m_deployPID;
     public final RelativeEncoder m_winchEncoder;
     public final SparkMaxPIDController m_winchPID;
+    */
 
     public ClimbPrototype1() {
+         /*
         m_deployMotor = new CANSparkMax(Constants.climber.driverMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_deployEncoder = m_deployMotor.getEncoder();
         m_deployPID = m_deployMotor.getPIDController();
@@ -35,10 +38,11 @@ public class ClimbPrototype1 extends SubsystemBase {
         m_deployPID.setP(Constants.climber.driverkP);
         m_deployPID.setI(Constants.climber.driverkI);
         m_deployPID.setD(Constants.climber.driverkD);
+        */
     }
 
     public void runDriver(double speed){
-        m_deployMotor.set(speed);
+        //m_deployMotor.set(speed);
     }
 
     @Override

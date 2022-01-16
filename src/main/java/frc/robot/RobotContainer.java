@@ -44,6 +44,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    SmartDashboard.putData("balls", new ShootBallsHooded(m_hoodedShooter));
     controller.getButton("A").whenHeld(m_shootBallsHooded);
     controller.getButton("B").whenHeld(m_runIntake);
   }
