@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.prototypes.intake.RunIntakeMotors;
 import frc.robot.commands.prototypes.shooters.ShootBallsHooded;
@@ -45,6 +46,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     SmartDashboard.putData("balls", new ShootBallsHooded(m_hoodedShooter));
+    SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
+    SmartDashboard.putBoolean("Is Browned Out", RobotController.isBrownedOut());
+    SmartDashboard.putBoolean("Is Sys Active", RobotController.isSysActive());
     controller.getButton("A").whenHeld(m_shootBallsHooded);
     controller.getButton("B").whenHeld(m_runIntake);
   }
