@@ -17,10 +17,29 @@ public final class Constants {
     public static final class controller {
         public static int gamePadPort = 1;
     }
+
+    public static final class motion {
+        // Distance PID
+        public static double distancekP = 0.5;
+        public static double distancekI = 0.0;
+        public static double distancekD = 0.0;
+        //Heading PID
+        public static double headingkP = 0.5;
+        public static double headingkI = 0.0;
+        public static double headingkD = 0.0;
+
+    }
+
     public static final class driveBase {
         // Odometry
+        public static double startX = 0;
+        public static double startY = 0;
         public static double length = 0;
         public static double width = 0;
+        public static double highRatio = 6.86;
+        public static double lowRatio = 0;
+        public static final boolean HIGH_GEAR = false;
+        public static final boolean LOW_GEAR = true;
         // Left
         public static int driveL1ID = 0;
         public static int driveL2ID = 0;
@@ -34,5 +53,6 @@ public final class Constants {
         // Speed
         public static final double xSpeed = 0.7;
         public static final double xRot = 0.6;
+
     }
 }
