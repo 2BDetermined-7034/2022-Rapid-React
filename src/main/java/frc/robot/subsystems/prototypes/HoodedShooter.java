@@ -21,8 +21,8 @@ public class HoodedShooter extends SubsystemBase {
         m_motor2 = new WPI_TalonSRX(Constants.shooter.talonSRX2);
         m_motor1.setNeutralMode(NeutralMode.Coast);
         m_motor2.setNeutralMode(NeutralMode.Coast);
-        SmartDashboard.putNumber("HoodedShooterSpeed", 0.7);
-        SmartDashboard.putNumber("HoodedShooterSpeed2", 0.7);
+        SmartDashboard.putNumber("Shooter Speed", 0.7);
+        SmartDashboard.putNumber("Shooter Speed 2", 0.7);
     }
 
     public void shootBalls(double speed, double speed2){
