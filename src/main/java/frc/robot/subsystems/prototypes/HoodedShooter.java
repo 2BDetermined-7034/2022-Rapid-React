@@ -14,15 +14,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class HoodedShooter extends SubsystemBase {
     private final WPI_TalonSRX m_motor1;
+    private final WPI_TalonSRX m_motor2;
 
     public HoodedShooter() {
         m_motor1 = new WPI_TalonSRX(Constants.shooter.talonSRX1);
+        m_motor2 = new WPI_TalonSRX(Constants.shooter.talonSRX2);
         m_motor1.setNeutralMode(NeutralMode.Coast);
+        m_motor2.setNeutralMode(NeutralMode.Coast);
         SmartDashboard.putNumber("HoodedShooterSpeed", 0);
+        SmartDashboard.putNumber("HoodedShooterSpeed2", 0);
     }
 
-    public void shootBalls(double speed){
+    public void shootBalls(double speed, double speed2){
         m_motor1.set(speed);
+        m_motor2.set(speed2);
     }
 
     @Override
