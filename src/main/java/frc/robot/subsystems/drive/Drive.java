@@ -2,9 +2,7 @@ package frc.robot.subsystems.drive;
 
 
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.RelativeEncoder;
+import com.revrobotics.*;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -18,7 +16,7 @@ import frc.robot.Constants;
 public class Drive extends SubsystemBase {
 
     private final CANSparkMax m_left, m_left2, m_left3, m_right, m_right2,  m_right3;
-    private final RelativeEncoder m_leftEnc, m_rightEnc;
+    private final CANEncoder m_leftEnc, m_rightEnc;
 
     private final Solenoid m_shifter;
 
@@ -68,6 +66,7 @@ public class Drive extends SubsystemBase {
      * @param zRotation sideways rotation in speed -1 to 1
      */
     public void arcadeDrive(double xSpeed, double zRotation){
+        SmartDashboard.putNumber("Sad", xSpeed);
         xSpeed *= Constants.driveBase.xSpeed;
         zRotation *= Constants.driveBase.xRot;
         m_differentialDrive.arcadeDrive(xSpeed, zRotation);

@@ -28,6 +28,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     m_drive.register();
+    
     m_drive.setDefaultCommand(new DriveCommand(
             m_drive,
             () -> m_gPad.getY(GenericHID.Hand.kLeft),
