@@ -24,6 +24,7 @@ public class Shooter extends SubsystemBase {
     public SpeedControllerGroup Motors;
 
     public Shooter() {
+        // TODO Might need to have these run separate depending on how the motors/wheels are positioned
         Motor = new WPI_TalonSRX(Constants.shooter.shooterTalonID1);
         Motor2 = new WPI_TalonSRX(Constants.shooter.shooterTalonID2);
         Motor3 = new WPI_TalonSRX(Constants.shooter.shooterTalonID3);
