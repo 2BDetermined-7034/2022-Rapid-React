@@ -17,7 +17,6 @@ public class Shooter extends SubsystemBase {
     public WPI_TalonSRX Motor;
 
     public Shooter() {
-      //
         Motor = new WPI_TalonSRX(Constants.shooter.shooterTalonID);
         Motor.setNeutralMode(NeutralMode.Brake);
     }
@@ -35,7 +34,6 @@ public class Shooter extends SubsystemBase {
    * Method for command
    * @param speed to be taken from Vision
    */
-
   public void goBrr(double speed) {
       Motor.set(speed * Constants.shooter.shooterMultiplier);
   }

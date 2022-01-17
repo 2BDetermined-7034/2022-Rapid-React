@@ -3,29 +3,27 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
-import frc.robot.subsystems.ExampleSubsystem;
-
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/** An example command that uses an example subsystem. */
-public class ShootShooter extends CommandBase {
+public class RunShooter extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+
   private final Shooter m_Shooter;
   private final DoubleSupplier shooterSpeed;
 
   /**
-   * Creates a new ExampleCommand.
+   * Creates a new RunShooter.
    *
    * @param subsystem The subsystem used by this command.
-   * @param speed Fed to the motor
+   * @param speed DoubleSupplier for the motor.
    */
-  public ShootShooter(Shooter subsystem, DoubleSupplier speed) {
+  public RunShooter(Shooter subsystem, DoubleSupplier speed) {
     m_Shooter = subsystem;
     shooterSpeed = speed;
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Shooter);
   }
@@ -37,8 +35,11 @@ public class ShootShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      if(shooterSpeed.getAsDouble() != 0) {
-        m_Shooter.goBrr(shooterSpeed.getAsDouble());
+    //double speed = shooterSpeed.getAsDouble();
+
+    double speed = SmartDashboard.getNumber("ShooterSpeed", 0); // Temporary
+      if(speed != 0) {
+        m_Shooter.goBrr(speed);
       }
   }
 
