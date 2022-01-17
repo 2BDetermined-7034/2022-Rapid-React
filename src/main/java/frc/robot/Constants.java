@@ -26,6 +26,7 @@ public final class Constants {
     public final static class shooter {
         public static final int talonSRX1 = 5;
         public static final int talonSRX2 = 4;
+        public static final int talonSRX3 = 3;
         public static final double speed = 0.9;
     }
     public final static class intake {

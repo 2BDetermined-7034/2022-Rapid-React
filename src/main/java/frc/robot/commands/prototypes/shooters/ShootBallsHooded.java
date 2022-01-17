@@ -20,9 +20,8 @@ public class ShootBallsHooded extends CommandBase {
     @Override
     public void execute() {
         double speed = SmartDashboard.getNumber("Shooter Speed", 0);
-        double speed2 = SmartDashboard.getNumber("Shooter Speed 2", 0);
         //double speed = -Constants.shooter.speed;
-        m_hoodedShooter.shootBalls(speed, speed2);
+        m_hoodedShooter.shootBalls(speed);
     }
 
     @Override
@@ -32,6 +31,6 @@ public class ShootBallsHooded extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_hoodedShooter.shootBalls(0, 0); // Resets the motor to 0 speed
+        m_hoodedShooter.shootBalls(0); // Resets the motor to 0 speed
     }
 }
