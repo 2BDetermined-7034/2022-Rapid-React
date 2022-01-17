@@ -45,10 +45,19 @@ public class Drive extends SubsystemBase {
 
     }
 
+    /**
+     * Method to move the drivebase to a setpoint
+     * @param x distance away perpendicular to the robot's starting pos (meters)
+     * @param y distance away parallel to the robot's starting pos (meters)
+     */
     public void driveToPoint(double x, double y){
 
     }
 
+    /**
+     * Method to get the heading of the drivebase
+     * @return heading 0-360 (in degrees)
+     */
     public double getHeading(){
         return m_gyro.getYaw();
     }
