@@ -12,14 +12,8 @@ import frc.robot.Constants;
 
 public class Drive extends SubsystemBase {
 
-    private final CANSparkMax m_left;
-    private final CANSparkMax m_left2;
-    private final CANSparkMax m_left3;
-    private final CANSparkMax m_right;
-    private final CANSparkMax m_right2;
-    private final CANSparkMax m_right3;
-    private final RelativeEncoder m_leftEnc;
-    private final RelativeEncoder m_rightEnc;
+    private final CANSparkMax m_left, m_left2, m_left3, m_right, m_right2,  m_right3;
+    private final RelativeEncoder m_leftEnc, m_rightEnc;
 
     private final Solenoid m_shifter;
 
