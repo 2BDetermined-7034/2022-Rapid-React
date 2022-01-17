@@ -6,13 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.climb.*;
 import frc.robot.commands.climb.RaiseClimber;
 import frc.robot.commands.climb.RunWinch;
 import frc.robot.controllers.GPad;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.TeleClimb;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,15 +21,14 @@ import frc.robot.subsystems.TeleClimb;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
   private final TeleClimb m_teleClimb = new TeleClimb();
   private final RaiseClimber m_raiseClimber = new RaiseClimber(m_teleClimb);
   private final RunWinch m_runWinch = new RunWinch(m_teleClimb);
 
-  private final GPad controller = new GPad(Constants.controllers.gamePadPort);
+  private final LegoClimb m_legoClimb = new LegoClimb();
+  private final RunLegoWinch m_runLegoWinch = new RunLegoWinch(m_legoClimb);
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final GPad controller = new GPad(Constants.controllers.gamePadPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -47,6 +45,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     controller.getButton("LT").whileHeld(m_raiseClimber);
     controller.getButton("RT").whileHeld(m_runWinch);
+    controller.getButton("A").whileHeld(m_runLegoWinch);
+    controller.getButton("B").whileHeld(m_runLegoWinch);
   }
 
   /**
@@ -56,6 +56,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }

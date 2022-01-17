@@ -4,39 +4,29 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
-public class TeleClimb extends SubsystemBase {
-    private WPI_TalonSRX driverMotor;
-    private WPI_TalonSRX winchMotor;
+public class LegoClimb extends SubsystemBase {
     private CANSparkMax driverNeo;
     private CANSparkMax winchNeo;
 
     /**
      * Creates a new TeleClimb
      */
-    public TeleClimb() {
-        driverMotor = new WPI_TalonSRX(Constants.climb.driverMotorID);
-        winchMotor = new WPI_TalonSRX(Constants.climb.winchMotorID);
+    public LegoClimb() {
+        winchNeo = new CANSparkMax(Constants.climb.winchMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
 
         //Putting smartdashboard stuff
-        SmartDashboard.putNumber("TeleClimberRaiseSpeed", 0);
         SmartDashboard.putNumber("TeleClimberWinchSpeed", 0);
     }
 
-    public void runDriver(double speed){
-        driverMotor.set(speed);
-    }
-
     public void runWinch(double speed){
-        winchMotor.set(speed);
+        winchNeo.set(speed);
     }
 
     @Override
