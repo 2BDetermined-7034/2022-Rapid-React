@@ -38,6 +38,7 @@ public final class Constants {
     public final static class shooter {
         
         public static final int shooterTalonID = 6;
+        public static final int shooterMultiplier = 1;
     }
 
     public final static class climb {

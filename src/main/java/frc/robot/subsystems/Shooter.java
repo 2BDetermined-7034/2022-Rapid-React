@@ -17,14 +17,13 @@ public class Shooter extends SubsystemBase {
     public WPI_TalonSRX Motor;
 
     public Shooter() {
+      //
         Motor = new WPI_TalonSRX(Constants.shooter.shooterTalonID);
         Motor.setNeutralMode(NeutralMode.Brake);
     }
 
   @Override
   public void periodic() {
-    Motor.set(/**Vision Function Here? */   0.5);
-    Motor.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override
@@ -32,7 +31,7 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
-  public void move(double speed) {
-      Motor.set(speed);
+  public void goBrr(double speed) {
+      Motor.set(speed * Constants.shooter.shooterMultiplier);
   }
 }
