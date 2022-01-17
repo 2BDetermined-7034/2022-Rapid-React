@@ -1,9 +1,7 @@
 package frc.robot.commands.prototypes.shooters;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.*;
 import frc.robot.subsystems.prototypes.*;
-import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
