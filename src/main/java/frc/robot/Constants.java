@@ -37,7 +37,9 @@ public final class Constants {
 
     public final static class shooter {
         
-        public static final int shooterTalonID = 6;
+        public static final int shooterTalonID1 = 6;
+        public static final int shooterTalonID2 = 5;
+        public static final int shooterTalonID3 = 4;
         public static final int shooterMultiplier = 1;
     }
 
