@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -14,12 +16,17 @@ import frc.robot.Constants;
 public class LegoClimb extends SubsystemBase {
     private CANSparkMax driverNeo;
     private CANSparkMax winchNeo;
+    private Solenoid m_brake;
 
     /**
      * Creates a new TeleClimb
      */
     public LegoClimb() {
         winchNeo = new CANSparkMax(Constants.climb.winchMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+        winchNeo.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
+        m_brake = new Solenoid(Constants.climb.solenoidID);
+
 
         //Putting smartdashboard stuff
         SmartDashboard.putNumber("TeleClimberWinchSpeed", 0);
@@ -27,6 +34,9 @@ public class LegoClimb extends SubsystemBase {
 
     public void runWinch(double speed){
         winchNeo.set(speed);
+    }
+    public void setBrake(boolean broken) {
+        m_brake.set(broken);
     }
 
     @Override

@@ -40,5 +40,6 @@ public final class Constants {
     public final static class climb {
         public static final int driverMotorID = 0;
         public static final int winchMotorID = 0;
+        public static final int solenoidID = 0;
     }
 }
