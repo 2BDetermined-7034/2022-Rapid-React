@@ -21,6 +21,7 @@ public class ShootShooter extends CommandBase {
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
+   * @param speed Fed to the motor
    */
   public ShootShooter(Shooter subsystem, DoubleSupplier speed) {
     m_Shooter = subsystem;

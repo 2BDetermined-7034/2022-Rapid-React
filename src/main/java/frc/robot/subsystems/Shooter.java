@@ -31,6 +31,11 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
+  /**
+   * Method for command
+   * @param speed to be taken from Vision
+   */
+
   public void goBrr(double speed) {
       Motor.set(speed * Constants.shooter.shooterMultiplier);
   }
