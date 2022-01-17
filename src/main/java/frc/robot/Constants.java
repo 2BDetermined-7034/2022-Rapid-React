@@ -41,7 +41,7 @@ public final class Constants {
         public static final boolean HIGH_GEAR = false;
         public static final boolean LOW_GEAR = true;
         // Left
-        public static int driveL1ID = 0;
+        public static int driveL1ID = 6;
         public static int driveL2ID = 0;
         public static int driveL3ID = 0;
         // Right
