@@ -1,29 +1,35 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.subsystems.drive.Drive;
-
-import java.util.function.DoubleSupplier;
 
 
 public class DriveToPoint extends CommandBase {
     private final Drive m_drive;
-    private final double m_xPos;
-    private final double m_yPos;
+    private final double m_targetX;
+    private final double m_targetY;
+    private final boolean m_preAlign;
+    private final double m_confidence;
     private final PIDController m_headingController;
     private final PIDController m_distanceController;
+    private boolean atPoint = false;
 
-    public DriveToPoint(Drive drive, double xPos, double yPos) {
+    public DriveToPoint(Drive drive, double xPos, double yPos, boolean preAlign, double confidence) {
         m_drive = drive;
-        m_xPos = xPos;
-        m_yPos = yPos;
+        m_targetX = xPos;
+        m_targetY = yPos;
+        m_preAlign = preAlign;
+        m_confidence = confidence;
 
         m_headingController = new PIDController(0, 0 ,0);
         m_headingController.setP(Constants.motion.headingkP);
         m_headingController.setI(Constants.motion.headingkI);
         m_headingController.setD(Constants.motion.headingkD);
+        m_headingController.enableContinuousInput(-0.5, 0.5);
 
         m_distanceController = new PIDController(0, 0 ,0);
         m_distanceController.setP(Constants.motion.distancekP);
@@ -38,7 +44,21 @@ public class DriveToPoint extends CommandBase {
      */
     @Override
     public void initialize() {
+        if (m_preAlign) {
+            while (true) {
+                Pose2d robotPos = m_drive.getRobotPos();
 
+                double xDistance = Math.abs(robotPos.getX() - m_targetX);
+                double yDistance = Math.abs(robotPos.getY() - m_targetY);
+
+                double heading = Math.toDegrees(Math.atan2(xDistance, yDistance));
+                if (heading > 180) heading -= 360;
+                double headingControl = MathUtil.clamp(m_headingController.calculate(m_drive.getCurrentAngle() / 360, heading / 360), -1, 1);
+                if (Math.abs(headingControl) < m_confidence) break;
+
+                m_drive.arcadeDrive(0, headingControl);
+            }
+        }
     }
 
     /**
@@ -47,6 +67,20 @@ public class DriveToPoint extends CommandBase {
      */
     @Override
     public void execute() {
+        Pose2d robotPos = m_drive.getRobotPos();
+
+        double xDistance = Math.abs(robotPos.getX() - m_targetX);
+        double yDistance = Math.abs(robotPos.getY() - m_targetY);
+
+        double netDistance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+        double heading = Math.toDegrees(Math.atan2(xDistance, yDistance));
+        if (heading > 180) heading -= 360;
+
+        double distanceControl = MathUtil.clamp(m_headingController.calculate(netDistance, 0), -1, 1);
+        double headingControl = MathUtil.clamp(m_headingController.calculate(m_drive.getCurrentAngle() / 360, heading / 360), -1, 1);
+        if (Math.abs(distanceControl) < m_confidence && Math.abs(headingControl) < m_confidence) atPoint = true;
+
+        m_drive.arcadeDrive(distanceControl, headingControl);
 
     }
 
@@ -66,8 +100,7 @@ public class DriveToPoint extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
-        return false;
+        return atPoint;
     }
 
     /**
