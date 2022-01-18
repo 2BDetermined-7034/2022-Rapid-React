@@ -34,7 +34,7 @@ public class RobotContainer {
   private final ShootBallsHooded m_shootBallsHooded = new ShootBallsHooded(m_hoodedShooter);
 
   private final CargoIntake m_cargoIntake = new CargoIntake();
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> 0.5);
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -49,7 +49,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    SmartDashboard.putData("Run Balls", new ShootBallsHooded(m_hoodedShooter));
+    SmartDashboard.putData("Run Shooter", new ShootBallsHooded(m_hoodedShooter));
+    SmartDashboard.putData("Run Intake", new RunIntakeMotors(m_cargoIntake));
     timer.schedule(new TimerTask() {
       @Override
       public void run() {

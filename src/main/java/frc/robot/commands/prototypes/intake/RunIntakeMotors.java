@@ -9,11 +9,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.function.DoubleSupplier;
 
 public class RunIntakeMotors extends CommandBase {
-    private final DoubleSupplier dubSup;
     private final CargoIntake m_intake;
 
-    public RunIntakeMotors(CargoIntake intakeMotor, DoubleSupplier xSpeed) {
-        dubSup = xSpeed;
+    public RunIntakeMotors(CargoIntake intakeMotor) {
         m_intake = intakeMotor;
         addRequirements(intakeMotor);
     }
