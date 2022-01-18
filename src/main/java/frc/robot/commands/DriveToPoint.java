@@ -63,14 +63,14 @@ public class DriveToPoint extends CommandBase {
 
     /**
      * The main body of a command.  Called repeatedly while the command is scheduled.
-     * (That is, it is called repeatedly until {@link #isFinished()}) returns true.)
+     * (That is, it is called repeatedly until {@link #isFinished()} returns true.)
      */
     @Override
     public void execute() {
         Pose2d robotPos = m_drive.getRobotPos();
 
-        double xDistance = Math.abs(robotPos.getX() - m_targetX);
-        double yDistance = Math.abs(robotPos.getY() - m_targetY);
+        double xDistance = robotPos.getX() - m_targetX;
+        double yDistance = robotPos.getY() - m_targetY;
 
         double netDistance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
         double heading = Math.toDegrees(Math.atan2(xDistance, yDistance));
