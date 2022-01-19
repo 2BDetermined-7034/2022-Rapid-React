@@ -30,7 +30,7 @@ public final class Constants {
         public static final double speed = 0.9;
     }
     public final static class intake {
-        public static final int talonSRX1 = 0;
+        public static final int talonSRX1 = 1;
         public static final double speed = 0.7;
     }
     public final static class climber {
