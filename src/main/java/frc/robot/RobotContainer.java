@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.prototypes.intake.RunIntakeMotors;
-import frc.robot.commands.prototypes.shooters.ShootBallsHooded;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.prototypes.CargoIntake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,7 +16,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import frc.robot.controllers.*;
-import frc.robot.subsystems.prototypes.HoodedShooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,9 +27,6 @@ public class RobotContainer {
   Timer timer = new Timer();
   private final GPad controller = new GPad(Constants.controllers.gamePadPort);
   // The robot's subsystems and commands are defined here...
-
-  private final HoodedShooter m_hoodedShooter = new HoodedShooter();
-  private final ShootBallsHooded m_shootBallsHooded = new ShootBallsHooded(m_hoodedShooter);
 
   private final CargoIntake m_cargoIntake = new CargoIntake();
   private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake);
@@ -49,7 +44,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    SmartDashboard.putData("Run Shooter", new ShootBallsHooded(m_hoodedShooter));
     SmartDashboard.putData("Run Intake", new RunIntakeMotors(m_cargoIntake));
     timer.schedule(new TimerTask() {
       @Override
@@ -57,8 +51,7 @@ public class RobotContainer {
         SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
       }
     }, 0, 1000);
-    controller.getButton("A").whenHeld(m_shootBallsHooded);
-    controller.getButton("B").whenHeld(m_runIntake);
+    controller.getButton("A").whenHeld(m_runIntake);
   }
 
   /**
