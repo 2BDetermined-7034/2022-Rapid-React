@@ -8,10 +8,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.prototypes.intake.RunIntakeMotors;
 import frc.robot.commands.prototypes.shooters.ShootBallsHooded;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.prototypes.CargoIntake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,9 +31,6 @@ public class RobotContainer {
   private final HoodedShooter m_hoodedShooter = new HoodedShooter();
   private final ShootBallsHooded m_shootBallsHooded = new ShootBallsHooded(m_hoodedShooter);
 
-  private final CargoIntake m_cargoIntake = new CargoIntake();
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake);
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -50,15 +45,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     SmartDashboard.putData("Run Shooter", new ShootBallsHooded(m_hoodedShooter));
-    SmartDashboard.putData("Run Intake", new RunIntakeMotors(m_cargoIntake));
     timer.schedule(new TimerTask() {
       @Override
       public void run() {
         SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
+        SmartDashboard.putNumber("Input Voltage", RobotController.getInputVoltage());
+        SmartDashboard.putNumber("Input Current", RobotController.getInputCurrent());
       }
     }, 0, 1000);
     controller.getButton("A").whenHeld(m_shootBallsHooded);
-    controller.getButton("B").whenHeld(m_runIntake);
   }
 
   /**

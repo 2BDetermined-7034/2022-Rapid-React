@@ -27,12 +27,17 @@ public class HoodedShooter extends SubsystemBase {
         m_motor1.setNeutralMode(NeutralMode.Coast);
         m_motor2.setNeutralMode(NeutralMode.Coast);
         m_motor3.setNeutralMode(NeutralMode.Coast);
-        speedControl = new SpeedControllerGroup(m_motor1, m_motor2, m_motor3);
-        SmartDashboard.putNumber("Shooter Speed", -0.7);
+        speedControl = new SpeedControllerGroup(m_motor1, m_motor2);
+        SmartDashboard.putNumber("Shooter Speed", 0.7);
+        SmartDashboard.putNumber("top speed", .5);
     }
 
     public void shootBalls(double speed){
         speedControl.set(speed);
+    }
+
+    public void moveTopMotor(double speed) {
+        m_motor3.set(-speed);
     }
 
     @Override
