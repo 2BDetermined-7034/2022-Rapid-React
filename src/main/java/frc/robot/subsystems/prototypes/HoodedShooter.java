@@ -5,7 +5,6 @@
 package frc.robot.subsystems.prototypes;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -23,7 +22,9 @@ public class HoodedShooter extends SubsystemBase {
     public HoodedShooter() {
         m_motor1 = new WPI_TalonSRX(Constants.shooter.talonSRX1);
         m_motor2 = new WPI_TalonSRX(Constants.shooter.talonSRX2);
+        
         m_motor3 = new WPI_TalonSRX(Constants.shooter.talonSRX3);
+
         m_motor1.setNeutralMode(NeutralMode.Coast);
         m_motor2.setNeutralMode(NeutralMode.Coast);
         m_motor3.setNeutralMode(NeutralMode.Coast);
@@ -36,7 +37,7 @@ public class HoodedShooter extends SubsystemBase {
         speedControl.set(speed);
     }
 
-    public void moveTopMotor(double speed) {
+    public void RunTopMotor(double speed) {
         m_motor3.set(-speed);
     }
 
