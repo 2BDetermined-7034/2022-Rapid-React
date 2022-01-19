@@ -37,7 +37,7 @@ public class HoodedShooter extends SubsystemBase {
         speedControl.set(speed);
     }
 
-    public void RunTopMotor(double speed) {
+    public void runTopMotor(double speed) {
         m_motor3.set(-speed);
     }
 
