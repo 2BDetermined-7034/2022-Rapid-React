@@ -33,6 +33,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
+    m_legoClimb.setDefaultCommand(new LegoSolenoid(m_legoClimb, () -> controller.getRawButtonPressed(3)));
     configureButtonBindings();
   }
 

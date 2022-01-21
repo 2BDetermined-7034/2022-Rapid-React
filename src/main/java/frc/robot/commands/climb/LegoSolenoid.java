@@ -4,6 +4,8 @@
 
 package frc.robot.commands.climb;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LegoClimb;
@@ -19,9 +21,9 @@ public class LegoSolenoid extends CommandBase {
      *
      * @param legoClimb The robot's climber (telescoping)
      */
-    public LegoSolenoid(LegoClimb legoClimb) {
+    public LegoSolenoid(LegoClimb legoClimb, BooleanSupplier erected) {
         m_legoClimb = legoClimb;
-        m_erected = false;
+        m_erected = erected.getAsBoolean();
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_legoClimb);
     }
@@ -35,7 +37,6 @@ public class LegoSolenoid extends CommandBase {
     @Override
     public void execute() {
         m_legoClimb.setBrake(m_erected);
-        m_erected = !m_erected;
     }
 
     // Called once the command ends or is interrupted.
