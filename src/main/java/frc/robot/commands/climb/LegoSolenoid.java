@@ -6,20 +6,22 @@ package frc.robot.commands.climb;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.LegoClimb;
 
 /** An example command that uses an example subsystem. */
-public class RunLegoWinch extends CommandBase {
+public class LegoSolenoid extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final LegoClimb m_legoClimb;
+    private boolean m_erected;
 
     /**
      * Raises the robot's climber (telescoping).
      *
      * @param legoClimb The robot's climber (telescoping)
      */
-    public RunLegoWinch(LegoClimb legoClimb) {
+    public LegoSolenoid(LegoClimb legoClimb) {
         m_legoClimb = legoClimb;
+        m_erected = false;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_legoClimb);
     }
@@ -32,13 +34,13 @@ public class RunLegoWinch extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_legoClimb.runWinch(SmartDashboard.getNumber("TeleClimberWinchSpeed", 0));
+        m_legoClimb.setBrake(m_erected);
+        m_erected = !m_erected;
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_legoClimb.runWinch(0);
     }
 
     // Returns true when the command should end.
