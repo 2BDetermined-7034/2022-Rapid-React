@@ -19,6 +19,9 @@ public final class Constants {
     }
 
     public static final class motion {
+        //Max values
+        public static double maxAcceleration = 1;
+        public static double maxVelocity = 1;
         // Distance PID
         public static double distancekP = 0.5;
         public static double distancekI = 0.0;

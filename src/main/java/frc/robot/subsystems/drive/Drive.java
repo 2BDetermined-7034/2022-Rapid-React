@@ -8,7 +8,10 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,7 +26,9 @@ public class Drive extends SubsystemBase {
     private final AHRS m_gyro;
 
     private final DifferentialDrive m_differentialDrive;
+
     private final DifferentialDriveOdometry m_encoderOdometry;
+    DifferentialDriveKinematics m_kinematics;
 
     public Drive(double startX, double startY) {
         m_left = new CANSparkMax(Constants.driveBase.driveL1ID, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -40,6 +45,7 @@ public class Drive extends SubsystemBase {
         m_right3.follow(m_right);
 
         m_differentialDrive = new DifferentialDrive(m_left, m_right);
+        m_kinematics = new DifferentialDriveKinematics(Constants.driveBase.width);
 
         m_right.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_right2.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -72,6 +78,12 @@ public class Drive extends SubsystemBase {
         m_differentialDrive.arcadeDrive(xSpeed, zRotation);
     }
 
+    public void kinoDrive(ChassisSpeeds chassisSpeeds){
+        DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
+        double leftVelocity = wheelSpeeds.leftMetersPerSecond;
+        double rightVelocity = wheelSpeeds.rightMetersPerSecond;
+        m_differentialDrive.tankDrive(leftVelocity, rightVelocity);
+    }
     /**
      * A simple function that returns the NavX value scoped
      * @return NavX in range -180 to 180
@@ -121,6 +133,14 @@ public class Drive extends SubsystemBase {
      */
     public Pose2d getRobotPos(){
         return m_encoderOdometry.getPoseMeters();
+    }
+
+    /**
+     * Method to get right encoder position
+     * @return distance (meters?)
+     */
+    public double getRightEncoderPosition(){
+        return m_rightEnc.getPosition();
     }
 
     @Override

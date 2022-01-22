@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package lib.motion;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;

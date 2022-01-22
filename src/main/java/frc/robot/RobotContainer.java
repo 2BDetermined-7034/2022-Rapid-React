@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveCommand;
 import frc.robot.controllers.gPad;
 import frc.robot.subsystems.drive.Drive;
+import lib.motion.DriveToPoint;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -56,6 +57,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     //Returns the "auto" command, which we want to run in autonomous.
-    return null;
+    return new DriveToPoint(m_drive, 0.5, 0.5, false, 0.05);
   }
 }
