@@ -7,8 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.climb.*;
-import frc.robot.commands.climb.RaiseClimber;
-import frc.robot.commands.climb.RunWinch;
 import frc.robot.controllers.GPad;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
@@ -26,13 +24,15 @@ public class RobotContainer {
   private final RunWinch m_runWinch = new RunWinch(m_teleClimb);
 
   private final LegoClimb m_legoClimb = new LegoClimb();
-  private final RunLegoWinch m_runLegoWinch = new RunLegoWinch(m_legoClimb);
+  //private final RunLegoWinch m_runLegoWinch = new RunLegoWinch(m_legoClimb);
 
   private final GPad controller = new GPad(Constants.controllers.gamePadPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
+    m_legoClimb.register();
+
     m_legoClimb.setDefaultCommand(new LegoSolenoid(m_legoClimb, () -> controller.getRawButtonPressed(3)));
     configureButtonBindings();
   }
@@ -46,8 +46,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     controller.getButton("LT").whileHeld(m_raiseClimber);
     controller.getButton("RT").whileHeld(m_runWinch);
-    controller.getButton("A").whileHeld(m_runLegoWinch);
-    controller.getButton("B").whileHeld(m_runLegoWinch);
+    controller.getButton("A").whileHeld(new RunLegoWinch(m_legoClimb, .4));
+    controller.getButton("B").whileHeld(new RunLegoWinch(m_legoClimb, -.4));
   }
 
   /**

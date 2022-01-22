@@ -13,13 +13,16 @@ public class RunLegoWinch extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final LegoClimb m_legoClimb;
 
+    private double m_speed;
+
     /**
      * Raises the robot's climber (telescoping).
      *
      * @param legoClimb The robot's climber (telescoping)
      */
-    public RunLegoWinch(LegoClimb legoClimb) {
+    public RunLegoWinch(LegoClimb legoClimb, double speed) {
         m_legoClimb = legoClimb;
+        m_speed = speed;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_legoClimb);
     }
@@ -32,7 +35,8 @@ public class RunLegoWinch extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_legoClimb.runWinch(SmartDashboard.getNumber("TeleClimberWinchSpeed", 0));
+        //m_legoClimb.runWinch(SmartDashboard.getNumber("TeleClimberWinchSpeed", 0));
+        m_legoClimb.runWinch(m_speed);
     }
 
     // Called once the command ends or is interrupted.
