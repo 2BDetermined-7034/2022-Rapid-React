@@ -29,7 +29,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final HoodedShooter m_hoodedShooter = new HoodedShooter();
-  private final ShootBallsHooded m_shootBallsHooded = new ShootBallsHooded(m_hoodedShooter);
+  private final ShootBallsHooded m_shootBallsHooded = new ShootBallsHooded(m_hoodedShooter, controller);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -44,7 +44,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    SmartDashboard.putData("Run Shooter", new ShootBallsHooded(m_hoodedShooter));
+    SmartDashboard.putData("Run Shooter", new ShootBallsHooded(m_hoodedShooter, controller));
     timer.schedule(new TimerTask() {
       @Override
       public void run() {
