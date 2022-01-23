@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveCommand;
 import frc.robot.controllers.gPad;
 import frc.robot.subsystems.drive.Drive;
+import lib.motion.DriveToPoint;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -23,39 +24,39 @@ import frc.robot.subsystems.drive.Drive;
  */
 public class RobotContainer {
 
-  private final Drive m_drive = new Drive(Constants.driveBase.startX, Constants.driveBase.startY);
-  public final gPad m_gPad = new gPad(Constants.controller.gamePadPort);
+    private final Drive m_drive = new Drive(Constants.driveBase.startX, Constants.driveBase.startY);
+    public final gPad m_gPad = new gPad(Constants.controller.gamePadPort);
 
-  public RobotContainer() {
-    m_drive.register();
-    
-    m_drive.setDefaultCommand(new DriveCommand(
-            m_drive,
-            () -> m_gPad.getY(GenericHID.Hand.kLeft),
-            () -> m_gPad.getX(GenericHID.Hand.kRight)
-        )
-    );
+    public RobotContainer() {
+        m_drive.register();
 
-    configureButtonBindings();
-  }
+        m_drive.setDefaultCommand(new DriveCommand(
+                        m_drive,
+                        () -> m_gPad.getY(GenericHID.Hand.kLeft),
+                        () -> m_gPad.getX(GenericHID.Hand.kRight)
+                )
+        );
 
-  /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
- 
-  }
+        configureButtonBindings();
+    }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return The command to run in autonomous.
-   */
-  public Command getAutonomousCommand() {
-    //Returns the "auto" command, which we want to run in autonomous.
-    return null;
-  }
+    /**
+     * Use this method to define your button->command mappings.  Buttons can be created by
+     * instantiating a {@link GenericHID} or one of its subclasses ({@link
+     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
+     * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     */
+    private void configureButtonBindings() {
+
+    }
+
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return The command to run in autonomous.
+     */
+    public Command getAutonomousCommand() {
+        //Returns the "auto" command, which we want to run in autonomous.
+        return new DriveToPoint(m_drive, 0.5, 0.5, false, 0.05);
+    }
 }
