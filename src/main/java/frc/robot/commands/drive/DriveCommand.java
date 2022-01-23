@@ -1,29 +1,21 @@
-package frc.robot.commands;
+package frc.robot.commands.drive;
 
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.drive.Drive;
 
-public class DrivePath extends CommandBase {
+import java.util.function.DoubleSupplier;
+
+
+public class DriveCommand extends CommandBase {
     private final Drive m_drive;
-    private PathPlannerTrajectory path;
-    private final double k_maxVelocity;
-    private final double k_maxAcceleration;
-    private final Timer timer;
-    private final RamseteController controller = new RamseteController(2.1, 0.8);
 
+    private final DoubleSupplier m_driveY;
+    private final DoubleSupplier m_driveX;
 
-    public DrivePath(Drive drive) {
+    public DriveCommand(Drive drive, DoubleSupplier joystickY, DoubleSupplier joystickX) {
         m_drive = drive;
-        k_maxAcceleration = Constants.motion.maxAcceleration;
-        k_maxVelocity = Constants.motion.maxVelocity;
-        timer = new Timer();
+        m_driveY = joystickY;
+        m_driveX = joystickX;
 
         addRequirements(m_drive);
     }
@@ -33,20 +25,16 @@ public class DrivePath extends CommandBase {
      */
     @Override
     public void initialize() {
-        path = PathPlanner.loadPath("NewPath", k_maxVelocity, k_maxAcceleration);
-        timer.reset();
-        timer.start();
+
     }
 
     /**
      * The main body of a command.  Called repeatedly while the command is scheduled.
-     * (That is, it is called repeatedly until {@link #isFinished()} returns true.)
+     * (That is, it is called repeatedly until {@link #isFinished()}) returns true.)
      */
     @Override
     public void execute() {
-        //Trajectory.State goal = path.sample(timer.get());
-        //ChassisSpeeds adjustedSpeeds = controller.calculate(m_drive.getRobotPos(), goal);
-        //m_drive.kinoDrive(adjustedSpeeds);
+        m_drive.arcadeDrive(m_driveY.getAsDouble(), m_driveX.getAsDouble());
     }
 
     /**

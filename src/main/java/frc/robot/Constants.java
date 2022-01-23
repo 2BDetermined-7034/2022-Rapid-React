@@ -15,7 +15,9 @@ package frc.robot;
 public final class Constants {
 
     public static final class controller {
-        public static int gamePadPort = 1;
+        public static final int gamePadPort = 0;
+        public static final int joystickPort = 1;
+        public static final int buttonPadPort = 2;
     }
 
     public static final class motion {
@@ -57,5 +59,27 @@ public final class Constants {
         public static final double xSpeed = 0.7;
         public static final double xRot = 0.6;
 
+    }
+
+    public final static class shooter {
+        public static final int talonSRX1 = 5;
+        public static final int talonSRX2 = 4;
+        public static final int talonSRX3 = 3;
+        public static final double speed = 0.9;
+    }
+
+    public final static class intake {
+        public static final int intakeTalon = 1;
+        public static final int solenoid = 0;
+        public static final double speed = 0.5;
+    }
+
+    public final static class climber {
+        public static final int driverMotorID = 0;
+        public static final int winchMotorID = 0;
+
+        public static final double driverkP = 0.05;
+        public static final double driverkI = 0;
+        public static final double driverkD = 0;
     }
 }
