@@ -41,13 +41,13 @@ public final class Constants {
         public static final boolean HIGH_GEAR = false;
         public static final boolean LOW_GEAR = true;
         // Left
-        public static int driveL1ID = 3;
-        public static int driveL2ID = 5;
-        public static int driveL3ID = 6;
+        public static int driveL1ID = 4;
+        public static int driveL2ID = 9;
+        public static int driveL3ID = 42;
         // Right
-        public static int driveR1ID = 0;
-        public static int driveR2ID = 0;
-        public static int driveR3ID = 0;
+        public static int driveR1ID = 3;
+        public static int driveR2ID = 1;
+        public static int driveR3ID = 7;
         //Shifter
         public static int shifterID = 0;
         // Speed
