@@ -31,9 +31,9 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    m_legoClimb.register();
+    //m_legoClimb.register();
 
-    m_legoClimb.setDefaultCommand(new LegoSolenoid(m_legoClimb, () -> controller.getRawButtonPressed(3)));
+    //m_legoClimb.setDefaultCommand(new LegoSolenoid(m_legoClimb, () -> controller.getRawButtonPressed(3)));
     configureButtonBindings();
   }
 
@@ -44,10 +44,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    controller.getButton("LT").whileHeld(m_raiseClimber);
-    controller.getButton("RT").whileHeld(m_runWinch);
-    controller.getButton("A").whileHeld(new RunLegoWinch(m_legoClimb, .4));
-    controller.getButton("B").whileHeld(new RunLegoWinch(m_legoClimb, -.4));
+    //controller.getButton("LT").whileHeld(m_raiseClimber);
+    //controller.getButton("RT").whileHeld(m_runWinch);
+    controller.getButton("A").whileHeld(new RunLegoWinch(m_legoClimb, .5));
+    controller.getButton("B").whileHeld(new RunLegoWinch(m_legoClimb, -.5));
   }
 
   /**

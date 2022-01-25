@@ -4,17 +4,22 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.*;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class LegoClimb extends SubsystemBase {
+public class GarboClimb extends SubsystemBase {
     private CANSparkMax driverNeo;
     private CANSparkMax winchNeo;
     private Solenoid m_brake;
@@ -22,7 +27,7 @@ public class LegoClimb extends SubsystemBase {
     /**
      * Creates a new TeleClimb
      */
-    public LegoClimb() {
+    public GarboClimb() {
         winchNeo = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
         winchNeo.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
