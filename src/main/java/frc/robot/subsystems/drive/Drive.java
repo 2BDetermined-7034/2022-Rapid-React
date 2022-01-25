@@ -20,6 +20,7 @@ public class Drive extends SubsystemBase {
 
     private final CANSparkMax m_left, m_left2, m_left3, m_right, m_right2,  m_right3;
     private final CANEncoder m_leftEnc, m_rightEnc;
+    private final CANPIDController m_leftPID, m_rightPID;
 
     private final Solenoid m_shifter;
 
@@ -86,6 +87,11 @@ public class Drive extends SubsystemBase {
         double leftVelocity = wheelSpeeds.leftMetersPerSecond;
         double rightVelocity = wheelSpeeds.rightMetersPerSecond;
         m_differentialDrive.tankDrive(leftVelocity, rightVelocity);
+    }
+
+    public void setPosition(double position){
+        m_rightPID.setReference(position, ControlType.kPosition);
+        m_leftPID.setReference(position, ControlType.kPosition);
     }
     /**
      * A simple function that returns the NavX value scoped
