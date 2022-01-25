@@ -58,12 +58,15 @@ public class Drive extends SubsystemBase {
         m_leftEnc = m_left.getEncoder();
         m_rightEnc = m_right.getEncoder();
 
+        m_leftPID = m_left.getPIDController();
+        m_rightPID = m_right.getPIDController();
+
         m_gyro = new AHRS(SPI.Port.kMXP);
         m_shifter = new Solenoid(Constants.driveBase.shifterID);
 
         shift(Constants.driveBase.LOW_GEAR);
 
-        m_encoderOdometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getCurrentAngle()), new Pose2d(startX, startY, new Rotation2d()));
+        m_encoderOdometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-m_gyro.getYaw()), new Pose2d(startX, startY, new Rotation2d()));
     }
 
     /**
@@ -118,7 +121,7 @@ public class Drive extends SubsystemBase {
      * @param gear high is false, low is true
      */
     public void setEncoderRatio(boolean gear){
-        if (gear == Constants.driveBase.LOW_GEAR){
+        if (gear == Constants.driveBase.HIGH_GEAR){
             m_leftEnc.setPositionConversionFactor(Constants.driveBase.highRatio);
             m_rightEnc.setPositionConversionFactor(Constants.driveBase.highRatio);
         } else {
@@ -146,6 +149,8 @@ public class Drive extends SubsystemBase {
     @Override
     public void periodic() {
         m_encoderOdometry.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), m_leftEnc.getPosition(), m_rightEnc.getPosition());
+        SmartDashboard.putNumber("Right", m_rightEnc.getPosition());
+        SmartDashboard.putNumber("Left", m_leftEnc.getPosition());
         SmartDashboard.putNumber("X", m_encoderOdometry.getPoseMeters().getX());
         SmartDashboard.putNumber("Y", m_encoderOdometry.getPoseMeters().getY());
     }

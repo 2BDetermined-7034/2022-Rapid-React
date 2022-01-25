@@ -17,8 +17,6 @@ public class PositionController {
     PositionController(Drive drivetrain, Pose2d startingPos){
         m_wpiOdometryController = new DifferentialDriveOdometry(Rotation2d.fromDegrees(drivetrain.getCurrentAngle()), startingPos);
 
-
-
     }
 
 

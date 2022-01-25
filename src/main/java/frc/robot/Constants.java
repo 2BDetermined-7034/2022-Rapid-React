@@ -32,7 +32,6 @@ public final class Constants {
         public static double headingkP = 0.5;
         public static double headingkI = 0.0;
         public static double headingkD = 0.0;
-
     }
 
     public static final class driveBase {
@@ -41,8 +40,8 @@ public final class Constants {
         public static double startY = 0;
         public static double length = 0;
         public static double width = 0;
-        public static double highRatio = 6.86;
-        public static double lowRatio = 0;
+        public static double highRatio = 0;
+        public static double lowRatio = 1/15.32;
         public static final boolean HIGH_GEAR = false;
         public static final boolean LOW_GEAR = true;
         // Left
