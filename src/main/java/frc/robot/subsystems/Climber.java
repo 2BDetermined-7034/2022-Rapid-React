@@ -4,8 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.*;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,6 +13,8 @@ import frc.robot.Constants;
 public class Climber extends SubsystemBase {
     private final CANSparkMax m_winchNeo;
     private final Solenoid m_solenoid;
+    private final CANEncoder m_encoder;
+    private final CANPIDController m_pid;
 
     /**
      * Creates a new TeleClimb
@@ -24,9 +25,14 @@ public class Climber extends SubsystemBase {
 
         m_solenoid = new Solenoid(Constants.climb.solenoidID);
 
+        m_pid = new CANPIDController(m_winchNeo);
 
-        //Putting smartdashboard stuff
-        SmartDashboard.putNumber("TeleClimberWinchSpeed", 0);
+        m_encoder = m_winchNeo.getEncoder();
+        m_encoder.setPosition(0);
+
+        m_pid.setP(Constants.climb.kP);
+        m_pid.setI(Constants.climb.kI);
+        m_pid.setD(Constants.climb.kD);
     }
 
     public void runWinch(double speed){
@@ -36,9 +42,15 @@ public class Climber extends SubsystemBase {
         m_solenoid.set(broken);
     }
 
+    public CANError setWinchPos(double angle){
+        return(m_pid.setReference(angle, ControlType.kPosition));
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        // For testing purposes, put the encoder's value to SmartDashboard
+        SmartDashboard.putNumber("Encoder Value", m_encoder.getPosition());
     }
 
     @Override
