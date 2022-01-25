@@ -46,6 +46,10 @@ public class Climber extends SubsystemBase {
         return(m_pid.setReference(angle, ControlType.kPosition));
     }
 
+    public void resetEncoder(){
+        m_encoder.setPosition(0);
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run

@@ -44,6 +44,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     m_controller.getButton("A").whileHeld(m_runWinchPos);
     m_controller.getButton("B").whileHeld(m_runWinchNeg);
+    m_controller.getButton("START").whenPressed(new ResetClimbEncoder(m_climber));
   }
 
   /**
