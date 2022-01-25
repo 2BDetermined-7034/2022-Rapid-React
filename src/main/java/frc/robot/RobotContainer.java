@@ -18,22 +18,20 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final GPad m_controller = new GPad(Constants.controllers.gamePadPort);
+
   // The robot's subsystems and commands are defined here...
-  private final TeleClimb m_teleClimb = new TeleClimb();
-  private final RaiseClimber m_raiseClimber = new RaiseClimber(m_teleClimb);
-  private final RunWinch m_runWinch = new RunWinch(m_teleClimb);
-
-  private final LegoClimb m_legoClimb = new LegoClimb();
-  //private final RunLegoWinch m_runLegoWinch = new RunLegoWinch(m_legoClimb);
-
-  private final GPad controller = new GPad(Constants.controllers.gamePadPort);
+  private final Climber m_climber = new Climber();
+  private final RunSolenoid m_runSolenoid = new RunSolenoid(m_climber, () -> m_controller.getRawButtonPressed(3));
+  private final RunWinch m_runWinchPos = new RunWinch(m_climber, Constants.climb.winchSpeed);
+  private final RunWinch m_runWinchNeg = new RunWinch(m_climber, -Constants.climb.winchSpeed);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    //m_legoClimb.register();
+    m_climber.register();
+    m_climber.setDefaultCommand(m_runSolenoid);
 
-    //m_legoClimb.setDefaultCommand(new LegoSolenoid(m_legoClimb, () -> controller.getRawButtonPressed(3)));
     configureButtonBindings();
   }
 
@@ -44,10 +42,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //controller.getButton("LT").whileHeld(m_raiseClimber);
-    //controller.getButton("RT").whileHeld(m_runWinch);
-    controller.getButton("A").whileHeld(new RunLegoWinch(m_legoClimb, .5));
-    controller.getButton("B").whileHeld(new RunLegoWinch(m_legoClimb, -.5));
+    m_controller.getButton("A").whileHeld(m_runWinchPos);
+    m_controller.getButton("B").whileHeld(m_runWinchNeg);
   }
 
   /**

@@ -6,26 +6,25 @@ package frc.robot.commands.climb;
 
 import java.util.function.BooleanSupplier;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.LegoClimb;
+import frc.robot.subsystems.Climber;
 
 /** An example command that uses an example subsystem. */
-public class LegoSolenoid extends CommandBase {
+public class RunSolenoid extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final LegoClimb m_legoClimb;
+    private final Climber m_climber;
     private boolean m_erected;
 
     /**
      * Raises the robot's climber (telescoping).
      *
-     * @param legoClimb The robot's climber (telescoping)
+     * @param climber The robot's climber (telescoping)
      */
-    public LegoSolenoid(LegoClimb legoClimb, BooleanSupplier erected) {
-        m_legoClimb = legoClimb;
+    public RunSolenoid(Climber climber, BooleanSupplier erected) {
+        m_climber = climber;
         m_erected = erected.getAsBoolean();
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(m_legoClimb);
+        addRequirements(m_climber);
     }
 
     // Called when the command is initially scheduled.
@@ -36,7 +35,7 @@ public class LegoSolenoid extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_legoClimb.setBrake(m_erected);
+        m_climber.setSolenoid(m_erected);
     }
 
     // Called once the command ends or is interrupted.

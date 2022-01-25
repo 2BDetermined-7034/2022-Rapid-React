@@ -38,9 +38,9 @@ public final class Constants {
     }
 
     public final static class climb {
-        public static final int driverMotorID = 1;
         public static final int winchMotorID = 1;
         public static final int solenoidID = 1;
+        public static final double winchSpeed = 0.5;
     }
 
 }
