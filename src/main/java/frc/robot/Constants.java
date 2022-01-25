@@ -55,7 +55,7 @@ public final class Constants {
         //Shifter
         public static int shifterID = 0;
         // Speed
-        public static final double xSpeed = 1;
+        public static final double xSpeed = 0.7;
         public static final double xRot = 0.6;
 
     }
@@ -69,7 +69,7 @@ public final class Constants {
 
     public final static class intake {
         public static final int intakeTalon = 1;
-        public static final int solenoid = 0;
+        public static final int solenoid = 1;
         public static final double speed = 0.5;
     }
 

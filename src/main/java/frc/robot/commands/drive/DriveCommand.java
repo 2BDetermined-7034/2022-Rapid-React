@@ -35,6 +35,7 @@ public class DriveCommand extends CommandBase {
     @Override
     public void execute() {
         m_drive.arcadeDrive(m_driveY.getAsDouble(), -m_driveX.getAsDouble());
+        m_drive.debugNavX();
     }
 
     /**
