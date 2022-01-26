@@ -42,8 +42,8 @@ public final class Constants {
         public static double width = 0;
         public static double highRatio = 0;
         public static double lowRatio = 1/15.32;
-        public static final boolean HIGH_GEAR = false;
-        public static final boolean LOW_GEAR = true;
+        public static final boolean HIGH_GEAR = true;
+        public static final boolean LOW_GEAR = false;
         // Left
         public static int driveL1ID = 4;
         public static int driveL2ID = 9;
@@ -55,8 +55,8 @@ public final class Constants {
         //Shifter
         public static int shifterID = 0;
         // Speed
-        public static final double xSpeed = 0.7;
-        public static final double xRot = 0.6;
+        public static final double xSpeed = 0.6;
+        public static final double xRot = 0.5;
 
     }
 

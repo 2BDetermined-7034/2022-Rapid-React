@@ -10,10 +10,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drive.DriveCommand;
 import frc.robot.commands.drive.DrivePath;
-import frc.robot.commands.drive.DriveToPoint;
 import frc.robot.commands.intake.RunIntakeMotors;
 import frc.robot.controllers.gPad;
 import frc.robot.subsystems.drive.Drive;
@@ -27,18 +27,22 @@ import frc.robot.subsystems.intake.CargoIntake;
  */
 public class RobotContainer {
 
+    // Drive
     private final Drive m_drive = new Drive(Constants.driveBase.startX, Constants.driveBase.startY);
     public final gPad m_gPad = new gPad(Constants.controller.gamePadPort);
 
+    // Intake
     private final CargoIntake m_cargoIntake = new CargoIntake();
     private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> Constants.intake.speed, m_gPad);
     private final RunIntakeMotors m_revINtake = new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_gPad);
+
 
     public RobotContainer() {
         m_drive.register();
 
         m_drive.setDefaultCommand(new DriveCommand(
                         m_drive,
+                        m_gPad,
                         () -> m_gPad.getY(GenericHID.Hand.kLeft),
                         () -> m_gPad.getX(GenericHID.Hand.kRight)
                 )
@@ -54,6 +58,9 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        // Add Button
+        SmartDashboard.putData(m_runIntake);
+        // Controller button configuration
         m_gPad.getButton("A").whenHeld(m_runIntake);
         m_gPad.getButton("B").whenHeld(m_revINtake);
     }
