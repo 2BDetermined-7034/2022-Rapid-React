@@ -33,9 +33,7 @@ public class DrivePath extends CommandBase {
      */
     @Override
     public void initialize() {
-        path = PathPlanner.loadPath("NewPath", k_maxVelocity, k_maxAcceleration);
-        timer.reset();
-        timer.start();
+
     }
 
     /**
@@ -47,6 +45,7 @@ public class DrivePath extends CommandBase {
         //Trajectory.State goal = path.sample(timer.get());
         //ChassisSpeeds adjustedSpeeds = controller.calculate(m_drive.getRobotPos(), goal);
         //m_drive.kinoDrive(adjustedSpeeds);
+        m_drive.setPosition(1);
     }
 
     /**

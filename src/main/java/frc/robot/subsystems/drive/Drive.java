@@ -61,6 +61,8 @@ public class Drive extends SubsystemBase {
 
         m_leftPID = m_left.getPIDController();
         m_rightPID = m_right.getPIDController();
+        m_leftPID.setP(0.1);
+        m_rightPID.setP(0.1);
 
         m_gyro = new AHRS(SPI.Port.kMXP);
         m_shifter = new Solenoid(Constants.driveBase.shifterID);
@@ -76,7 +78,6 @@ public class Drive extends SubsystemBase {
      * @param zRotation sideways rotation in speed -1 to 1
      */
     public void arcadeDrive(double xSpeed, double zRotation){
-        SmartDashboard.putNumber("Sad", xSpeed);
         xSpeed *= Constants.driveBase.xSpeed;
         zRotation *= Constants.driveBase.xRot;
         m_differentialDrive.arcadeDrive(xSpeed, zRotation);
@@ -107,10 +108,14 @@ public class Drive extends SubsystemBase {
     }
 
     /**
-     * Simple function to print NavX values
+     * Simple function to print drive values
      */
-    public void debugNavX(){
+    public void debug(){
         SmartDashboard.putNumber("NavX", getCurrentAngle());
+        SmartDashboard.putNumber("Right Encoder", getRightEncoderPosition());
+        SmartDashboard.putNumber("Left Encoder", getLeftEncoderPosition());
+        SmartDashboard.putNumber("Odometry X", m_encoderOdometry.getPoseMeters().getX());
+        SmartDashboard.putNumber("Odometry Y", m_encoderOdometry.getPoseMeters().getY());
     }
 
     /**
@@ -151,13 +156,18 @@ public class Drive extends SubsystemBase {
     public double getRightEncoderPosition(){
         return m_rightEnc.getPosition();
     }
+    /**
+     * Method to get right encoder position
+     * @return distance (meters?)
+     */
+    public double getLeftEncoderPosition(){
+        return m_leftEnc.getPosition();
+    }
+
 
     @Override
     public void periodic() {
         m_encoderOdometry.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), m_leftEnc.getPosition(), m_rightEnc.getPosition());
-        SmartDashboard.putNumber("Right", m_rightEnc.getPosition());
-        SmartDashboard.putNumber("Left", m_leftEnc.getPosition());
-        SmartDashboard.putNumber("X", m_encoderOdometry.getPoseMeters().getX());
-        SmartDashboard.putNumber("Y", m_encoderOdometry.getPoseMeters().getY());
+        debug();
     }
 }
