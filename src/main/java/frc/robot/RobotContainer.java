@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drive.DriveCommand;
+import frc.robot.commands.drive.DrivePath;
 import frc.robot.commands.drive.DriveToPoint;
 import frc.robot.controllers.gPad;
 import frc.robot.subsystems.drive.Drive;
@@ -57,6 +58,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         //Returns the "auto" command, which we want to run in autonomous.
-        return new DriveToPoint(m_drive, 0.5, 0.5, false, 0.05);
+        return new DrivePath(m_drive);
     }
 }

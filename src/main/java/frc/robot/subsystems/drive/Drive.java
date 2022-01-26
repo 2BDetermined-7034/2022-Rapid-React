@@ -61,8 +61,8 @@ public class Drive extends SubsystemBase {
 
         m_leftPID = m_left.getPIDController();
         m_rightPID = m_right.getPIDController();
-        m_leftPID.setP(0.1);
-        m_rightPID.setP(0.1);
+        m_leftPID.setP(0.5);
+        m_rightPID.setP(0.5);
 
         m_gyro = new AHRS(SPI.Port.kMXP);
         m_shifter = new Solenoid(Constants.driveBase.shifterID);
