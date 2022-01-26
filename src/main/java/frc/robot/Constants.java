@@ -13,6 +13,11 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+/*
+    public final static class limelight {
+        public static double Vis_LLAngle = 20.5;
+    }
+*/
 
     public final static class controllers {
         public static final int gamePadPort = 0;
