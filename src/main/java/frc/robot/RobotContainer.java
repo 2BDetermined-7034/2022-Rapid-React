@@ -14,8 +14,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drive.DriveCommand;
 import frc.robot.commands.drive.DrivePath;
 import frc.robot.commands.drive.DriveToPoint;
+import frc.robot.commands.intake.RunIntakeMotors;
 import frc.robot.controllers.gPad;
 import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.intake.CargoIntake;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -27,6 +29,10 @@ public class RobotContainer {
 
     private final Drive m_drive = new Drive(Constants.driveBase.startX, Constants.driveBase.startY);
     public final gPad m_gPad = new gPad(Constants.controller.gamePadPort);
+
+    private final CargoIntake m_cargoIntake = new CargoIntake();
+    private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> Constants.intake.speed, m_gPad);
+    private final RunIntakeMotors m_revINtake = new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_gPad);
 
     public RobotContainer() {
         m_drive.register();
@@ -48,7 +54,8 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-
+        m_gPad.getButton("A").whenHeld(m_runIntake);
+        m_gPad.getButton("B").whenHeld(m_revINtake);
     }
 
     /**

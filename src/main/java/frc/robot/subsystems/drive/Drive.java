@@ -92,7 +92,7 @@ public class Drive extends SubsystemBase {
 
     public void setPosition(double position){
         m_rightPID.setReference(position, ControlType.kPosition);
-        m_leftPID.setReference(position, ControlType.kPosition);
+        m_leftPID.setReference(-position, ControlType.kPosition);
     }
     /**
      * A simple function that returns the NavX value scoped
@@ -161,7 +161,7 @@ public class Drive extends SubsystemBase {
      * @return distance (meters?)
      */
     public double getLeftEncoderPosition(){
-        return m_leftEnc.getPosition();
+        return -m_leftEnc.getPosition();
     }
 
 
