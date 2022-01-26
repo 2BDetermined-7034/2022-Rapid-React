@@ -1,6 +1,8 @@
 package frc.robot.commands.drive;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.controllers.gPad;
 import frc.robot.subsystems.drive.Drive;
 
 import java.util.function.DoubleSupplier;
@@ -8,11 +10,12 @@ import java.util.function.DoubleSupplier;
 
 public class DriveCommand extends CommandBase {
     private final Drive m_drive;
-
+    private final gPad m_gPad;
     private final DoubleSupplier m_driveY;
     private final DoubleSupplier m_driveX;
 
-    public DriveCommand(Drive drive, DoubleSupplier joystickY, DoubleSupplier joystickX) {
+    public DriveCommand(Drive drive, gPad gamepad, DoubleSupplier joystickY, DoubleSupplier joystickX) {
+        m_gPad = gamepad;
         m_drive = drive;
         m_driveY = joystickY;
         m_driveX = joystickX;
@@ -35,6 +38,8 @@ public class DriveCommand extends CommandBase {
     @Override
     public void execute() {
         m_drive.arcadeDrive(m_driveY.getAsDouble(), -m_driveX.getAsDouble());
+        m_gPad.setRumble(RumbleType.kLeftRumble, m_driveY.getAsDouble());
+        m_gPad.setRumble(RumbleType.kRightRumble, m_driveX.getAsDouble());
         //m_drive.debugNavX();
     }
 

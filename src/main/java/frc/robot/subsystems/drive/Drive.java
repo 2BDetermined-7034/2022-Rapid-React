@@ -3,6 +3,7 @@ package frc.robot.subsystems.drive;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.*;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -70,6 +71,9 @@ public class Drive extends SubsystemBase {
         shift(Constants.driveBase.LOW_GEAR);
 
         m_encoderOdometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-m_gyro.getYaw()), new Pose2d(startX, startY, new Rotation2d()));
+
+        SmartDashboard.putNumber("Input Voltage", RobotController.getInputVoltage());
+        SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
     }
 
     /**

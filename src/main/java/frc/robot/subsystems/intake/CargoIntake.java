@@ -3,7 +3,6 @@ package frc.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -15,8 +14,9 @@ public class CargoIntake extends SubsystemBase {
 
 
     public CargoIntake() {
-        m_solenoid = new Solenoid(Constants.intake.solenoid);
-        cargoMotor = new WPI_TalonSRX(Constants.intake.intakeTalon);
+        SmartDashboard.putNumber("Intake Speed", 0.5);
+        this.m_solenoid = new Solenoid(Constants.intake.solenoid);
+        this.cargoMotor = new WPI_TalonSRX(Constants.intake.intakeTalon);
     }
 
     public void mmmRunMotor(double speed) {

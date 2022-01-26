@@ -1,5 +1,6 @@
 package frc.robot.commands.intake;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.controllers.gPad;
 import frc.robot.subsystems.intake.CargoIntake;
@@ -11,9 +12,9 @@ public class RunIntakeMotors extends CommandBase {
     private final DoubleSupplier fowS;
     private final gPad m_gpad;
     public RunIntakeMotors(CargoIntake intakeMotor, DoubleSupplier speed, gPad gamepad) {
-        fowS = speed;
-        m_intake = intakeMotor;
-        m_gpad = gamepad;
+        this.fowS = speed;
+        this.m_intake = intakeMotor;
+        this.m_gpad = gamepad;
         addRequirements(intakeMotor);
     }
 
@@ -23,15 +24,21 @@ public class RunIntakeMotors extends CommandBase {
 
     @Override
     public void execute() {
-        // double speed = SmartDashboard.getNumber("Intake Speed", 0.4);
+        double dashSpeed = SmartDashboard.getNumber("Intake Speed", 0.4);
         //double speed = -Constants.intake.speed;
 
+m_intake.mmmRunMotor(dashSpeed);
         double speed = fowS.getAsDouble();
-        if(speed == .5) {
-            m_intake.mmmRunMotor(.5);
+
+        /*
+        if(dashSpeed > 0.1) {
+            m_intake.mmmRunMotor(dashSpeed);
         } else {
-            m_intake.mmmRunMotor(-.5);
+            m_intake.mmmRunMotor(-dashSpeed);
         }
+         */
+
+
         //Determines if the intake should run the intake backwards or forwards.
 
         //If reverseDoubleSupp is getting input (the right bumper is being held), run the intake backwards based on right bumper pressure.
