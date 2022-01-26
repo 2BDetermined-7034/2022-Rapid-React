@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drive.DriveCommand;
 import frc.robot.commands.intake.RunIntakeMotors;
+import frc.robot.commands.intake.RunIntakeSolenoid;
 import frc.robot.controllers.gPad;
 import frc.robot.subsystems.intake.CargoIntake;
 import frc.robot.subsystems.drive.Drive;
@@ -28,13 +29,15 @@ public class RobotContainer {
   public final gPad m_gPad = new gPad(Constants.controller.gamePadPort);
 
   private final CargoIntake m_cargoIntake = new CargoIntake();
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> 0, () -> -.5, m_gPad);
-  private final RunIntakeMotors m_revINtake = new RunIntakeMotors(m_cargoIntake, () -> .5, () -> 0, m_gPad);
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> -Constants.intake.speed, m_gPad);
+  private final RunIntakeMotors m_revINtake = new RunIntakeMotors(m_cargoIntake, () -> Constants.intake.speed, m_gPad);
 
-
+  private final RunIntakeSolenoid m_runSolenoid = new RunIntakeSolenoid(m_cargoIntake, () -> m_gPad.getRawButtonPressed(3));
   public RobotContainer() {
     m_drive.register();
+    m_cargoIntake.register();
 
+    m_cargoIntake.setDefaultCommand(m_runSolenoid);
     m_drive.setDefaultCommand(new DriveCommand(
             m_drive,
             () -> m_gPad.getY(GenericHID.Hand.kLeft),

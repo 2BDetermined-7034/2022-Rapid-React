@@ -9,12 +9,10 @@ import java.util.function.DoubleSupplier;
 public class RunIntakeMotors extends CommandBase {
     private final CargoIntake m_intake;
     private final DoubleSupplier fowS;
-    private final DoubleSupplier revS;
     private final gPad m_gpad;
-    public RunIntakeMotors(CargoIntake intakeMotor, DoubleSupplier speed,  DoubleSupplier revSpeed,  gPad gamepad) {
+    public RunIntakeMotors(CargoIntake intakeMotor, DoubleSupplier speed, gPad gamepad) {
         fowS = speed;
         m_intake = intakeMotor;
-        revS = revSpeed;
         m_gpad = gamepad;
         addRequirements(intakeMotor);
     }
@@ -29,8 +27,6 @@ public class RunIntakeMotors extends CommandBase {
         //double speed = -Constants.intake.speed;
 
         double speed = fowS.getAsDouble();
-        double reverseSpeed = revS.getAsDouble();
-
         if(speed == .5) {
             m_intake.mmmRunMotor(.5);
         } else {
