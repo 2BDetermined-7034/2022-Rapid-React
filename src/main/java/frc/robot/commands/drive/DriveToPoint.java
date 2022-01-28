@@ -18,6 +18,14 @@ public class DriveToPoint extends CommandBase {
     private final PIDController m_distanceController;
     private boolean atPoint = false;
 
+    /**
+     *
+     * @param drive Drivebase motors
+     * @param xPos X position
+     * @param yPos Y Position
+     * @param preAlign Boolean - true or fasle
+     * @param confidence Double
+     */
     public DriveToPoint(Drive drive, double xPos, double yPos, boolean preAlign, double confidence) {
         m_drive = drive;
         m_targetX = xPos;

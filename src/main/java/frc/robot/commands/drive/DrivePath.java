@@ -18,6 +18,10 @@ public class DrivePath extends CommandBase {
     private final Timer timer;
     private final RamseteController controller = new RamseteController(2.1, 0.8);
 
+    /**
+     *
+     * @param drive THe drivebase motors.
+     */
 
     public DrivePath(Drive drive) {
         m_drive = drive;

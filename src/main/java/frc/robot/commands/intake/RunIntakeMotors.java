@@ -11,6 +11,13 @@ public class RunIntakeMotors extends CommandBase {
     private final CargoIntake m_intake;
     private final DoubleSupplier fowS;
     private final gPad m_gpad;
+
+    /**
+     *
+     * @param intakeMotor The intake motor
+     * @param speed The speed you want the intake to move at.
+     * @param gamepad The game controller
+     */
     public RunIntakeMotors(CargoIntake intakeMotor, DoubleSupplier speed, gPad gamepad) {
         this.fowS = speed;
         this.m_intake = intakeMotor;

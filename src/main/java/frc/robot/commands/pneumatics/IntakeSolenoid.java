@@ -1,4 +1,4 @@
-package frc.robot.commands.intake;
+package frc.robot.commands.pneumatics;
 
 import java.util.function.BooleanSupplier;
 
@@ -6,19 +6,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.intake.CargoIntake;
 
 /** An example command that uses an example subsystem. */
-public class RunIntakeSolenoid extends CommandBase {
+public class IntakeSolenoid extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final CargoIntake m_intake;
-    private boolean m_erected;
+    private boolean m_boner;
 
     /**
-     * Raises the robot's climber (telescoping).
      *
-     * @param intake The robot's climber (telescoping)
+     * @param intake The robot's intake
+     * @param boner Either true or false, or controller input.
      */
-    public RunIntakeSolenoid(CargoIntake intake, BooleanSupplier erected) {
-        m_intake = intake;
-        m_erected = erected.getAsBoolean();
+    public IntakeSolenoid(CargoIntake intake, BooleanSupplier boner) {
+        this.m_intake = intake;
+        this.m_boner = boner.getAsBoolean();
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_intake);
     }
@@ -31,7 +31,7 @@ public class RunIntakeSolenoid extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_intake.setSolenoid(m_erected);
+        m_intake.setSolenoid(m_boner);
     }
 
     // Called once the command ends or is interrupted.

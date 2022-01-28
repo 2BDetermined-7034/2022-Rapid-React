@@ -72,8 +72,6 @@ public class Drive extends SubsystemBase {
 
         m_encoderOdometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-m_gyro.getYaw()), new Pose2d(startX, startY, new Rotation2d()));
 
-        SmartDashboard.putNumber("Input Voltage", RobotController.getInputVoltage());
-        SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
     }
 
     /**
@@ -98,6 +96,7 @@ public class Drive extends SubsystemBase {
         m_rightPID.setReference(position, ControlType.kPosition);
         m_leftPID.setReference(-position, ControlType.kPosition);
     }
+
     /**
      * A simple function that returns the NavX value scoped
      * @return NavX in range -180 to 180
@@ -167,6 +166,8 @@ public class Drive extends SubsystemBase {
     public double getLeftEncoderPosition(){
         return -m_leftEnc.getPosition();
     }
+
+
 
 
     @Override
