@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -31,11 +32,15 @@ public class limelight extends SubsystemBase {
   public double getLastDetected() { return m_table.getEntry("tv").getLastChange(); }
 
   public double getEstimatedDistance() {
-    return 2.494*Math.pow(Math.tan(Math.toRadians(20.5+getYAngle())), -1);
+    return 3.845*Math.pow(Math.tan(Math.toRadians(getYAngle())), -1);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber(getName() + " X Angle", getXAngle());
+    SmartDashboard.putNumber(getName() + " Y Angle", getYAngle());
+    SmartDashboard.putBoolean(getName() + " Detected", getDetected());
+    SmartDashboard.putNumber(getName() + " Distance", getEstimatedDistance());
   }
 }

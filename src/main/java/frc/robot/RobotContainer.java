@@ -29,8 +29,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    SmartDashboard.putData("ty:", new InstantCommand(() -> m_limeLight.getYAngle()));
-    SmartDashboard.putData("dist?:", new InstantCommand(() -> m_limeLight.getEstimatedDistance()));
+    SmartDashboard.putNumber("ty: (data)", m_limeLight.getYAngle());
+    SmartDashboard.putNumber("dist?: (data)", m_limeLight.getEstimatedDistance());
 
     configureButtonBindings();
   }
