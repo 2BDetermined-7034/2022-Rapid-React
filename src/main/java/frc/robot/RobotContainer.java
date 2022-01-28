@@ -38,14 +38,15 @@ public class RobotContainer {
     private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> Constants.intake.speed, m_gPad);
     private final RunIntakeMotors m_revINtake = new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_gPad);
 
-    private final IntakeSolenoid m_sol = new IntakeSolenoid(m_cargoIntake, () -> m_gPad.getRawButtonPressed(3));
+    private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.solenoid_TRUE);
+    private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.solenoid_FALSE);
     public RobotContainer() {
         // Register
         m_drive.register();
         m_cargoIntake.register();
 
         // Default commands
-        m_cargoIntake.setDefaultCommand(m_sol);
+        m_cargoIntake.setDefaultCommand(m_solDown);
 
         m_drive.setDefaultCommand(new DriveCommand(
                         m_drive,
@@ -66,9 +67,14 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Add Button
-        SmartDashboard.putData(m_runIntake);
-        // Controller button configuration
 
+        SmartDashboard.putData(m_runIntake);
+        SmartDashboard.putData("Put Intake Down", m_solDown);
+        SmartDashboard.putData("Put Intake Up", m_solUp);
+
+        // Controller button configuration
+        m_gPad.getButton("X").whenPressed(m_solDown);
+        m_gPad.getButton("Y").whenPressed(m_solUp);
         m_gPad.getButton("A").whenHeld(m_runIntake);
         m_gPad.getButton("B").whenHeld(m_revINtake);
     }

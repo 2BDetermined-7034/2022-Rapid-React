@@ -71,6 +71,8 @@ public final class Constants {
         public static final int intakeTalon = 1;
         public static final int solenoid = 1;
         public static final double speed = 0.5;
+        public static boolean solenoid_TRUE = true;
+        public static boolean solenoid_FALSE = false;
     }
 
     public final static class climber {
