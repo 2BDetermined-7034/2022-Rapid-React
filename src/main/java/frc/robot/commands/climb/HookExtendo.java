@@ -5,13 +5,17 @@ import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.util.function.BooleanSupplier;
+
 public class HookExtendo extends CommandBase {
     public final Climber m_climber;
     public final boolean m_direction;
+    public final boolean m_stopIt;
 
-    public HookExtendo(Climber climber, boolean direction) {
+    public HookExtendo(Climber climber, boolean direction, BooleanSupplier stopIt) {
         m_climber = climber;
         m_direction = direction;
+        m_stopIt = stopIt.getAsBoolean();
 
         addRequirements(m_climber);
     }
@@ -31,7 +35,7 @@ public class HookExtendo extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return(m_stopIt);
     }
 
     @Override

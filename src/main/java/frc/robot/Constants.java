@@ -39,7 +39,8 @@ public final class Constants {
 
     public final static class climb {
         public static final int winchMotorID = 1;
-        public static final int solenoidID = 1;
+        public static final int solenoidForwardID = 1;
+        public static final int solenoidBackID = 2;
         public static final double winchSpeed = 0.5;
         //PID Values
         public static final double kP = 0.05;
@@ -47,7 +48,7 @@ public final class Constants {
         public static final double kD = 0;
         //Encoder garbage (maybe remove if not being used)
         public static final double degreesPerRot = 360;
-        public static final double extendedValue = 60;
+        public static final double extendedValue = -150;
     }
 
 }

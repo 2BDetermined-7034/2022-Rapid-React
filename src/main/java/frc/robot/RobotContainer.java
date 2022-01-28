@@ -25,11 +25,11 @@ public class RobotContainer {
 
   //Climber subsystem and commands
   private final Climber m_climber = new Climber();
-  private final RunSolenoid m_runSolenoid = new RunSolenoid(m_climber, () -> m_controller.getRawButtonPressed(3));
+  private final RunSolenoid m_runSolenoid = new RunSolenoid(m_climber, () -> m_controller.getRawButtonPressed(4));
   private final RunWinch m_runWinchPos = new RunWinch(m_climber, Constants.climb.winchSpeed);
   private final RunWinch m_runWinchNeg = new RunWinch(m_climber, -Constants.climb.winchSpeed);
-  private final HookExtendo m_extendHook = new HookExtendo(m_climber, true);
-  private final HookExtendo m_retractHook = new HookExtendo(m_climber, false);
+  private final HookExtendo m_extendHook = new HookExtendo(m_climber, true, () -> m_controller.getRawButtonPressed(5));
+  private final HookExtendo m_retractHook = new HookExtendo(m_climber, false, () -> m_controller.getRawButtonPressed(5));
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

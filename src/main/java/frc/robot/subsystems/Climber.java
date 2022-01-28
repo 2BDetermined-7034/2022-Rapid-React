@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.*;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,7 +13,7 @@ import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
     private final CANSparkMax m_winchNeo;
-    private final Solenoid m_solenoid;
+    private final DoubleSolenoid m_solenoid;
     private final CANEncoder m_encoder;
     private final CANPIDController m_pid;
 
@@ -23,7 +24,7 @@ public class Climber extends SubsystemBase {
         m_winchNeo = new CANSparkMax(Constants.climb.winchMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_winchNeo.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
-        m_solenoid = new Solenoid(Constants.climb.solenoidID);
+        m_solenoid = new DoubleSolenoid(Constants.climb.solenoidForwardID, Constants.climb.solenoidBackID);
 
         m_pid = new CANPIDController(m_winchNeo);
 
@@ -42,7 +43,11 @@ public class Climber extends SubsystemBase {
         m_winchNeo.set(speed);
     }
     public void setSolenoid(boolean broken) {
-        m_solenoid.set(broken);
+        if(broken){
+            m_solenoid.set(DoubleSolenoid.Value.kForward);
+        }else{
+            m_solenoid.set(DoubleSolenoid.Value.kReverse);
+        }
     }
 
     public CANError setWinchPos(double angle){
