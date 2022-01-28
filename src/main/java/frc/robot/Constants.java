@@ -45,8 +45,9 @@ public final class Constants {
         public static final double kP = 0.05;
         public static final double kI = 0;
         public static final double kD = 0;
-        //Encoder garbage
+        //Encoder garbage (maybe remove if not being used)
         public static final double degreesPerRot = 360;
+        public static final double extendedValue = 60;
     }
 
 }

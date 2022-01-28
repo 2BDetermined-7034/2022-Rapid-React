@@ -22,10 +22,14 @@ public class RobotContainer {
   private final GPad m_controller = new GPad(Constants.controllers.gamePadPort);
 
   // The robot's subsystems and commands are defined here...
+
+  //Climber subsystem and commands
   private final Climber m_climber = new Climber();
   private final RunSolenoid m_runSolenoid = new RunSolenoid(m_climber, () -> m_controller.getRawButtonPressed(3));
   private final RunWinch m_runWinchPos = new RunWinch(m_climber, Constants.climb.winchSpeed);
   private final RunWinch m_runWinchNeg = new RunWinch(m_climber, -Constants.climb.winchSpeed);
+  private final HookExtendo m_extendHook = new HookExtendo(m_climber, true);
+  private final HookExtendo m_retractHook = new HookExtendo(m_climber, false);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -45,6 +49,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     m_controller.getButton("A").whileHeld(m_runWinchPos);
     m_controller.getButton("B").whileHeld(m_runWinchNeg);
+    m_controller.getButton("X").whileHeld(m_extendHook);
+    m_controller.getButton("Y").whileHeld(m_retractHook);
+
     m_controller.getButton("START").whenPressed(new ResetClimbEncoder(m_climber));
   }
 

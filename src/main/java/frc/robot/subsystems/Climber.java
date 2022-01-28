@@ -33,6 +33,9 @@ public class Climber extends SubsystemBase {
         m_pid.setP(Constants.climb.kP);
         m_pid.setI(Constants.climb.kI);
         m_pid.setD(Constants.climb.kD);
+
+        //TEMP SMARTDASHBOARD PUTNUMBER
+        SmartDashboard.putNumber("ExtendedValue", Constants.climb.extendedValue);
     }
 
     public void runWinch(double speed){
@@ -48,6 +51,10 @@ public class Climber extends SubsystemBase {
 
     public void resetEncoder(){
         m_encoder.setPosition(0);
+    }
+
+    public void setEncoder(double pos) {
+        m_encoder.setPosition(pos);
     }
 
     @Override
