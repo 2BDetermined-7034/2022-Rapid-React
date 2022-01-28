@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drive.DriveCommand;
 import frc.robot.commands.drive.DrivePath;
+import frc.robot.commands.intake.IntakeSolenoid;
 import frc.robot.commands.intake.RunIntakeMotors;
 import frc.robot.controllers.gPad;
 import frc.robot.subsystems.drive.Drive;
@@ -36,9 +38,14 @@ public class RobotContainer {
     private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> Constants.intake.speed, m_gPad);
     private final RunIntakeMotors m_revINtake = new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_gPad);
 
-
+    private final IntakeSolenoid m_sol = new IntakeSolenoid(m_cargoIntake, () -> m_gPad.getRawButtonPressed(3));
     public RobotContainer() {
+        // Register
         m_drive.register();
+        m_cargoIntake.register();
+
+        // Default commands
+        m_cargoIntake.setDefaultCommand(m_sol);
 
         m_drive.setDefaultCommand(new DriveCommand(
                         m_drive,
@@ -61,6 +68,7 @@ public class RobotContainer {
         // Add Button
         SmartDashboard.putData(m_runIntake);
         // Controller button configuration
+
         m_gPad.getButton("A").whenHeld(m_runIntake);
         m_gPad.getButton("B").whenHeld(m_revINtake);
     }

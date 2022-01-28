@@ -14,6 +14,13 @@ public class DriveCommand extends CommandBase {
     private final DoubleSupplier m_driveY;
     private final DoubleSupplier m_driveX;
 
+    /**
+     *
+     * @param drive The drivebase motors
+     * @param gamepad The gamepad
+     * @param joystickY The joystick Y axis
+     * @param joystickX The joystick X axis.
+     */
     public DriveCommand(Drive drive, gPad gamepad, DoubleSupplier joystickY, DoubleSupplier joystickX) {
         m_gPad = gamepad;
         m_drive = drive;
