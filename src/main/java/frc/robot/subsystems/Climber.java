@@ -44,9 +44,9 @@ public class Climber extends SubsystemBase {
     }
     public void setSolenoid(boolean broken) {
         if(broken){
-            m_solenoid.set(DoubleSolenoid.Value.kForward);
-        }else{
             m_solenoid.set(DoubleSolenoid.Value.kReverse);
+        }else{
+            m_solenoid.set(DoubleSolenoid.Value.kForward);
         }
     }
 
@@ -64,9 +64,17 @@ public class Climber extends SubsystemBase {
 
     @Override
     public void periodic() {
+        String test = "";
+        if(m_solenoid.get() == DoubleSolenoid.Value.kForward){
+            test = "Forward";
+        }else{
+            test = "Backward";
+        }
+
         // This method will be called once per scheduler run
         // For testing purposes, put the encoder's value to SmartDashboard
         SmartDashboard.putNumber("Encoder Value", m_encoder.getPosition());
+        SmartDashboard.putString("Solenoid State", test);
     }
 
     @Override

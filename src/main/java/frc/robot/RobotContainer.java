@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ser.impl.ReadOnlyClassToSerializerMap;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.climb.*;
+import frc.robot.commands.pneumatics.*;
 import frc.robot.controllers.GPad;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
@@ -23,6 +24,10 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
 
+  //Pneumatics subsystem and commands
+  private final Pneumatics m_compressor = new Pneumatics();
+  private final RunCompressor m_runCompressor = new RunCompressor(m_compressor);
+
   //Climber subsystem and commands
   private final Climber m_climber = new Climber();
   private final RunSolenoid m_runSolenoid = new RunSolenoid(m_climber, () -> m_controller.getRawButtonPressed(4));
@@ -36,6 +41,7 @@ public class RobotContainer {
     // Configure the button bindings
     m_climber.register();
     m_climber.setDefaultCommand(m_runSolenoid);
+    m_compressor.setDefaultCommand(m_runCompressor);
 
     configureButtonBindings();
   }
