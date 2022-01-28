@@ -1,4 +1,4 @@
-package frc.robot.commands.intake;
+package frc.robot.commands.pneumatics;
 
 import java.util.function.BooleanSupplier;
 

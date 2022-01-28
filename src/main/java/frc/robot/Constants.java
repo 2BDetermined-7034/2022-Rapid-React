@@ -69,7 +69,8 @@ public final class Constants {
 
     public final static class intake {
         public static final int intakeTalon = 1;
-        public static final int solenoid = 1;
+        public static final int solenoidForward = 1;
+        public static final int solenoidReverse = 2;
         public static final double speed = 0.5;
         public static boolean solenoid_TRUE = true;
         public static boolean solenoid_FALSE = false;
