@@ -1,0 +1,1 @@
+Everything in this "lib" folder is experimental for advanced control theory. Most of this will likely be unused but just in case I'm leaving it here

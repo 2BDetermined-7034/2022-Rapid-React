@@ -18,31 +18,65 @@ public final class Constants {
         public static double Vis_LLAngle = 20.5;
     }
 */
-
-    public final static class controllers {
+    public final static class controller {
         public static final int gamePadPort = 0;
         public static final int joystickPort = 1;
         public static final int buttonPadPort = 2;
     }
-    public final static class driveBase {
-        public static final int neoMotorLeft1 = 1;
-        public static final int neoMotorLeft2 = 2;
-        public static final int neoMotorLeft3 =3;
-        public static final int neoMotorRight4 = 4;
-        public static final int neoMotorRight5 = 5;
-        public static final int neoMotorRight6 = 6;
-    }
 
-    public final static class intake {
-        public static final int intakeMotor = 1;
-        public static double intakeSpeed = 0.7;
+    public static final class driveBase {
+        // Odometry
+        public static double startX = 0;
+        public static double startY = 0;
+        public static double length = 0;
+        public static double width = 0;
+        public static double highRatio = 0;
+        public static double lowRatio = 1/15.32;
+        public static final boolean HIGH_GEAR = true;
+        public static final boolean LOW_GEAR = false;
+        // Left
+        public static int driveL1ID = 4;
+        public static int driveL2ID = 9;
+        public static int driveL3ID = 42;
+        // Right
+        public static int driveR1ID = 3;
+        public static int driveR2ID = 1;
+        public static int driveR3ID = 7;
+        //Shifter
+        public static int shifterID = 0;
+        // Speed
+        public static final double xSpeed = 0.6;
+        public static final double xRot = 0.5;
+
     }
 
     public final static class shooter {
-
+        public static final int talonSRX1 = 5;
+        public static final int talonSRX2 = 4;
+        public static final int talonSRX3 = 3;
+        public static final double speed = 0.9;
     }
 
-    public final static class climb {
+    public final static class intake {
+        public static final int intakeTalon = 1;
+        public static final int solenoidForward = 1;
+        public static final int solenoidReverse = 2;
+        public static final double speed = 0.5;
+        public static boolean solenoid_TRUE = true;
+        public static boolean solenoid_FALSE = false;
+    }
 
+    public static final class motion {
+        //Max values
+        public static double maxAcceleration = 1;
+        public static double maxVelocity = 1;
+        // Distance PID
+        public static double distancekP = 0.5;
+        public static double distancekI = 0.0;
+        public static double distancekD = 0.0;
+        //Heading PID
+        public static double headingkP = 0.5;
+        public static double headingkI = 0.0;
+        public static double headingkD = 0.0;
     }
 }
