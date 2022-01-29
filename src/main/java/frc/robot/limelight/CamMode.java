@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.limelight;
+package frc.robot.limelight;
 
 /**
  * Add your docs here.
