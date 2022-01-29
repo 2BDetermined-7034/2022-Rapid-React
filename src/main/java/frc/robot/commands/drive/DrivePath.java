@@ -46,7 +46,7 @@ public class DrivePath extends CommandBase {
         //Trajectory.State goal = path.sample(timer.get());
         //ChassisSpeeds adjustedSpeeds = controller.calculate(m_drive.getRobotPos(), goal);
         //m_drive.kinoDrive(adjustedSpeeds);
-        m_drive.setPosition(1);
+        m_drive.setPosition(-1);
     }
 
     /**
