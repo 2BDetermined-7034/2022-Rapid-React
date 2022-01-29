@@ -25,6 +25,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
  */
 public class RobotContainer {
 
+  // The robot's subsystems and commands are defined here...
+  private final Shooter m_Shooter = new Shooter();
+  private final RunShooter m_RunShooter = new RunShooter(m_Shooter, null);
+
   private final limelight m_limeLight = new limelight();
 
   // Drive
@@ -40,6 +44,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    SmartDashboard.putNumber("ShooterSpeed", 0);
+    // Configure the button bindings
     SmartDashboard.putNumber("ty: (data)", m_limeLight.getYAngle());
     SmartDashboard.putNumber("dist?: (data)", m_limeLight.getEstimatedDistance());
 

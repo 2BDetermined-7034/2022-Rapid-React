@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -51,10 +53,11 @@ public final class Constants {
     }
 
     public final static class shooter {
-        public static final int talonSRX1 = 5;
-        public static final int talonSRX2 = 4;
-        public static final int talonSRX3 = 3;
-        public static final double speed = 0.9;
+
+        public static final int shooterTalonID1 = 6;
+        public static final int shooterTalonID2 = 5;
+        public static final int shooterTalonID3 = 4;
+        public static final int shooterMultiplier = 1;
     }
 
     public final static class intake {
