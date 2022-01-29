@@ -157,14 +157,14 @@ public class Drive extends SubsystemBase {
      * @return distance (meters?)
      */
     public double getRightEncoderPosition(){
-        return m_rightEnc.getPosition();
+        return m_rightEnc.getPosition() * Constants.driveBase.meterRatio;
     }
     /**
      * Method to get right encoder position
      * @return distance (meters?)
      */
     public double getLeftEncoderPosition(){
-        return -m_leftEnc.getPosition();
+        return -m_leftEnc.getPosition() * Constants.driveBase.meterRatio;
     }
 
 
