@@ -39,8 +39,8 @@ public final class Constants {
 
     public final static class climb {
         public static final int winchMotorID = 1;
-        public static final int solenoidForwardID = 0;
-        public static final int solenoidBackID = 7;
+        public static final int solenoidForwardID = 1;
+        public static final int solenoidBackID = 0;
         public static final double winchSpeed = 0.5;
         //PID Values
         public static final double kP = 0.05;

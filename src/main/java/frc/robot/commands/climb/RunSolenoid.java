@@ -6,6 +6,7 @@ package frc.robot.commands.climb;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
@@ -13,7 +14,7 @@ import frc.robot.subsystems.Climber;
 public class RunSolenoid extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Climber m_climber;
-    private boolean m_erected;
+    private BooleanSupplier m_erected;
 
     /**
      * Raises the robot's climber (telescoping).
@@ -22,7 +23,7 @@ public class RunSolenoid extends CommandBase {
      */
     public RunSolenoid(Climber climber, BooleanSupplier erected) {
         m_climber = climber;
-        m_erected = erected.getAsBoolean();
+        m_erected = erected;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_climber);
     }
@@ -35,7 +36,8 @@ public class RunSolenoid extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_climber.setSolenoid(m_erected);
+        SmartDashboard.putBoolean("test", m_erected.getAsBoolean());
+        m_climber.setSolenoid(m_erected.getAsBoolean());
     }
 
     // Called once the command ends or is interrupted.

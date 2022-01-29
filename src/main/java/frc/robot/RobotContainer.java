@@ -4,13 +4,17 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import com.fasterxml.jackson.databind.ser.impl.ReadOnlyClassToSerializerMap;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.climb.*;
 import frc.robot.commands.pneumatics.*;
 import frc.robot.controllers.GPad;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.*;
 
 /**
@@ -30,7 +34,8 @@ public class RobotContainer {
 
   //Climber subsystem and commands
   private final Climber m_climber = new Climber();
-  private final RunSolenoid m_runSolenoid = new RunSolenoid(m_climber, () -> m_controller.getRawButtonPressed(4));
+  private final RunSolenoid m_runSolenoidForward = new RunSolenoid(m_climber, () -> true);
+  private final RunSolenoid m_runSolenoidBackward = new RunSolenoid(m_climber, () -> false);
   private final RunWinch m_runWinchPos = new RunWinch(m_climber, Constants.climb.winchSpeed);
   private final RunWinch m_runWinchNeg = new RunWinch(m_climber, -Constants.climb.winchSpeed);
   private final HookExtendo m_extendHook = new HookExtendo(m_climber, true, () -> m_controller.getRawButtonPressed(5));
@@ -40,8 +45,12 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     m_climber.register();
-    m_climber.setDefaultCommand(m_runSolenoid);
-    m_compressor.setDefaultCommand(m_runCompressor);
+    m_compressor.register();
+
+    SmartDashboard.putData("Toggle Compressor:", new InstantCommand(() -> m_compressor.toggleCompressor()));
+    
+    //m_climber.setDefaultCommand(m_runSolenoidForward);
+    //m_compressor.setDefaultCommand(m_runCompressor);
 
     configureButtonBindings();
   }
@@ -56,9 +65,12 @@ public class RobotContainer {
     m_controller.getButton("A").whileHeld(m_runWinchPos);
     m_controller.getButton("B").whileHeld(m_runWinchNeg);
     m_controller.getButton("X").whileHeld(m_extendHook);
-    m_controller.getButton("Y").whileHeld(m_retractHook);
+    //m_controller.getButton("Y").whenPressed(m_retractHook);
 
-    m_controller.getButton("BACK").whileHeld(m_runCompressor);
+    m_controller.getButton("RB").whenPressed(m_runSolenoidForward);
+    m_controller.getButton("LB").whenPressed(m_runSolenoidBackward);
+
+    m_controller.getButton("BACK").whenHeld(m_runCompressor);
 
     m_controller.getButton("START").whenPressed(new ResetClimbEncoder(m_climber));
   }

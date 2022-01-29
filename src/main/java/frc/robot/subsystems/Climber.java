@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -43,11 +44,11 @@ public class Climber extends SubsystemBase {
         m_winchNeo.set(speed);
     }
     public void setSolenoid(boolean broken) {
-        if(broken){
-            m_solenoid.set(DoubleSolenoid.Value.kReverse);
-        }else{
-            m_solenoid.set(DoubleSolenoid.Value.kForward);
-        }
+        m_solenoid.set(broken ? Value.kForward : Value.kReverse);
+        SmartDashboard.putBoolean("broken?", broken);
+    }
+    public void toggleSolenoid(){
+        m_solenoid.toggle();
     }
 
     public CANError setWinchPos(double angle){
