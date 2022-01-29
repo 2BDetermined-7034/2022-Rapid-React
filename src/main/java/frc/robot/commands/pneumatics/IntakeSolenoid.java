@@ -2,6 +2,7 @@ package frc.robot.commands.pneumatics;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.intake.CargoIntake;
 
@@ -31,6 +32,7 @@ public class IntakeSolenoid extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        SmartDashboard.putBoolean("Intake out", m_boner);
         m_intake.setSolenoid(m_boner);
     }
 

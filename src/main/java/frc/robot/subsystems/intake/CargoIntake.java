@@ -24,14 +24,13 @@ public class CargoIntake extends SubsystemBase {
      * @param speed The speed you want to move the motor at.
      */
     public void mmmRunMotor(double speed) {
-        cargoMotor.set(speed);
+        cargoMotor.set(speed * Constants.intake.speed);
     }
 
     /**
      * @param thing Boolean - either true (out) or false (in).
      */
     public void setSolenoid(boolean thing) {
-        SmartDashboard.putBoolean("Intake Solenoid", thing);
         if (thing) {
             m_solenoid.set(Value.kForward);
         } else {
