@@ -9,13 +9,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.controllers.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.drive.Drive;
-import frc.robot.subsystems.intake.CargoIntake;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.pneumatics.*;
 import frc.robot.commands.intake.*;
+import frc.robot.commands.shooter.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,11 +31,11 @@ public class RobotContainer {
 
   // Drive
   private final Drive m_drive = new Drive(Constants.driveBase.startX, Constants.driveBase.startY);
-  public final gPad m_gPad = new gPad(Constants.controller.gamePadPort);
+  public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
 
   private final CargoIntake m_cargoIntake = new CargoIntake();
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> Constants.intake.speed, m_gPad);
-  private final RunIntakeMotors m_revINtake = new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_gPad);
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> Constants.intake.speed, m_GPad);
+  private final RunIntakeMotors m_revINtake = new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_GPad);
 
   private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.solenoid_TRUE);
   private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.solenoid_FALSE);
@@ -58,9 +56,9 @@ public class RobotContainer {
 
     m_drive.setDefaultCommand(new DriveCommand(
                     m_drive,
-                    m_gPad,
-                    () -> m_gPad.getY(GenericHID.Hand.kLeft),
-                    () -> m_gPad.getX(GenericHID.Hand.kRight)
+                    m_GPad,
+                    () -> m_GPad.getY(GenericHID.Hand.kLeft),
+                    () -> m_GPad.getX(GenericHID.Hand.kRight)
             )
     );
 
@@ -81,10 +79,10 @@ public class RobotContainer {
         SmartDashboard.putData("Put Intake Up", m_solUp);
 
         // Controller button configuration
-        m_gPad.getButton("X").whenPressed(m_solDown);
-        m_gPad.getButton("Y").whenPressed(m_solUp);
-        m_gPad.getButton("A").whenHeld(m_runIntake);
-        m_gPad.getButton("B").whenHeld(m_revINtake);
+        m_GPad.getButton("X").whenPressed(m_solDown);
+        m_GPad.getButton("Y").whenPressed(m_solUp);
+        m_GPad.getButton("A").whenHeld(m_runIntake);
+        m_GPad.getButton("B").whenHeld(m_revINtake);
     }
 
     /**

@@ -1,10 +1,9 @@
 package lib.position;
 
-import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
-import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.Drive;
 
 public class PositionController {
 

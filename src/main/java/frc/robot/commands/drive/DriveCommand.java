@@ -2,15 +2,15 @@ package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.controllers.gPad;
-import frc.robot.subsystems.drive.Drive;
+import frc.robot.controllers.GPad;
+import frc.robot.subsystems.Drive;
 
 import java.util.function.DoubleSupplier;
 
 
 public class DriveCommand extends CommandBase {
     private final Drive m_drive;
-    private final gPad m_gPad;
+    private final GPad m_gPad;
     private final DoubleSupplier m_driveY;
     private final DoubleSupplier m_driveX;
 
@@ -21,7 +21,7 @@ public class DriveCommand extends CommandBase {
      * @param joystickY The joystick Y axis
      * @param joystickX The joystick X axis.
      */
-    public DriveCommand(Drive drive, gPad gamepad, DoubleSupplier joystickY, DoubleSupplier joystickX) {
+    public DriveCommand(Drive drive, GPad gamepad, DoubleSupplier joystickY, DoubleSupplier joystickX) {
         m_gPad = gamepad;
         m_drive = drive;
         m_driveY = joystickY;
