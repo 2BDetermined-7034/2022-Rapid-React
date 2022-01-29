@@ -20,8 +20,8 @@ import frc.robot.Constants;
 public class Drive extends SubsystemBase {
 
     private final CANSparkMax m_left, m_left2, m_left3, m_right, m_right2,  m_right3;
-    private final RelativeEncoder m_leftEnc, m_rightEnc;
-    private final SparkMaxPIDController m_leftPID, m_rightPID;
+    private final CANEncoder m_leftEnc, m_rightEnc;
+    private final CANPIDController m_leftPID, m_rightPID;
 
     private final Solenoid m_shifter;
 
@@ -93,8 +93,8 @@ public class Drive extends SubsystemBase {
     }
 
     public void setPosition(double position){
-        m_rightPID.setReference(position, CANSparkMax.ControlType.kPosition);
-        m_leftPID.setReference(-position, CANSparkMax.ControlType.kPosition);
+        m_rightPID.setReference(position, ControlType.kPosition);
+        m_leftPID.setReference(-position, ControlType.kPosition);
     }
 
     /**
