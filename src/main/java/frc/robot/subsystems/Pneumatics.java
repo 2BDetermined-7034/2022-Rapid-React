@@ -16,14 +16,15 @@ public class Pneumatics extends SubsystemBase {
     public Compressor comp;
 
     public Pneumatics() {
-        comp = new Compressor(1);
+        comp = new Compressor(0);
+        comp.start();
     }
 
     public boolean setCompressor(boolean on) {
         if (on) { comp.start(); }
         else { comp.stop(); }
         return comp.enabled();
-    }
+      }
 
     public boolean toggleCompressor() { return setCompressor(!comp.enabled()); }
 

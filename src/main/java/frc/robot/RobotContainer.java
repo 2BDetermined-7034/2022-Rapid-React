@@ -58,6 +58,8 @@ public class RobotContainer {
     m_controller.getButton("X").whileHeld(m_extendHook);
     m_controller.getButton("Y").whileHeld(m_retractHook);
 
+    m_controller.getButton("BACK").whileHeld(m_runCompressor);
+
     m_controller.getButton("START").whenPressed(new ResetClimbEncoder(m_climber));
   }
 
