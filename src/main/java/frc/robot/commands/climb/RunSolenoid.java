@@ -36,7 +36,7 @@ public class RunSolenoid extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.putBoolean("test", m_erected.getAsBoolean());
+        SmartDashboard.putBoolean("Solenoid out", m_erected.getAsBoolean());
         m_climber.setSolenoid(m_erected.getAsBoolean());
     }
 

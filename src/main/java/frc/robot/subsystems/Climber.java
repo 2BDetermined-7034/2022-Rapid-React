@@ -45,7 +45,6 @@ public class Climber extends SubsystemBase {
     }
     public void setSolenoid(boolean broken) {
         m_solenoid.set(broken ? Value.kForward : Value.kReverse);
-        SmartDashboard.putBoolean("broken?", broken);
     }
     public void toggleSolenoid(){
         m_solenoid.toggle();

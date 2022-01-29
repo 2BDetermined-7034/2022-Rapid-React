@@ -47,7 +47,7 @@ public class RobotContainer {
     m_climber.register();
     m_compressor.register();
 
-    SmartDashboard.putData("Toggle Compressor:", new InstantCommand(() -> m_compressor.toggleCompressor()));
+    SmartDashboard.putData("Toggle Compressor:", new InstantCommand(m_compressor::toggleCompressor));
     
     //m_climber.setDefaultCommand(m_runSolenoidForward);
     //m_compressor.setDefaultCommand(m_runCompressor);
@@ -67,8 +67,8 @@ public class RobotContainer {
     m_controller.getButton("X").whileHeld(m_extendHook);
     //m_controller.getButton("Y").whenPressed(m_retractHook);
 
-    m_controller.getButton("RB").whenPressed(m_runSolenoidForward);
-    m_controller.getButton("LB").whenPressed(m_runSolenoidBackward);
+    m_controller.getButton("LB").whenPressed(m_runSolenoidForward);
+    m_controller.getButton("RB").whenPressed(m_runSolenoidBackward);
 
     m_controller.getButton("BACK").whenHeld(m_runCompressor);
 
