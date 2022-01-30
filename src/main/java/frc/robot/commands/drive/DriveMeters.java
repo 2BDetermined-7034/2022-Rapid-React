@@ -7,25 +7,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drive;
 
-public class DrivePath extends CommandBase {
+public class DriveMeters extends CommandBase {
     private final Drive m_drive;
-    private PathPlannerTrajectory path;
-    private final double k_maxVelocity;
-    private final double k_maxAcceleration;
-    private final Timer timer;
-    private final RamseteController controller = new RamseteController(Constants.motion.b, Constants.motion.zeta);
-
+    private final double m_distance;
     /**
      *
      * @param drive THe drivebase motors.
      */
 
-    public DrivePath(Drive drive) {
+    public DriveMeters(Drive drive, double meters) {
         m_drive = drive;
-        k_maxAcceleration = Constants.motion.maxAcceleration;
-        k_maxVelocity = Constants.motion.maxVelocity;
-        timer = new Timer();
-
+        m_distance = meters;
         addRequirements(m_drive);
     }
 
@@ -43,9 +35,7 @@ public class DrivePath extends CommandBase {
      */
     @Override
     public void execute() {
-        //Trajectory.State goal = path.sample(timer.get());
-        //ChassisSpeeds adjustedSpeeds = controller.calculate(m_drive.getRobotPos(), goal);
-        //m_drive.kinoDrive(adjustedSpeeds);
+        m_drive.setPosition(m_distance);
     }
 
     /**

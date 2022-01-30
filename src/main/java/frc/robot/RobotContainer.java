@@ -27,7 +27,7 @@ public class RobotContainer {
   private final Shooter m_Shooter = new Shooter();
   private final RunShooter m_RunShooter = new RunShooter(m_Shooter, null);
 
-  private final limelight m_limeLight = new limelight();
+  private final LimeLight m_limeLight = new LimeLight();
 
   // Drive
   private final Drive m_drive = new Drive(Constants.driveBase.startX, Constants.driveBase.startY);
@@ -79,10 +79,9 @@ public class RobotContainer {
         SmartDashboard.putData("Put Intake Up", m_solUp);
 
         // Controller button configuration
+        m_GPad.getButton("RB").whenHeld(m_runIntake);
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
-        m_GPad.getButton("A").whenHeld(m_runIntake);
-        m_GPad.getButton("B").whenHeld(m_revINtake);
     }
 
     /**
@@ -92,6 +91,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         //Returns the "auto" command, which we want to run in autonomous.
-        return new DrivePath(m_drive);
+        return new DriveToPoint(m_drive, 1, 0, false, 0.001);
     }
 }

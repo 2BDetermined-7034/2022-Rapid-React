@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.*;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -62,8 +61,8 @@ public class Drive extends SubsystemBase {
 
         m_leftPID = m_left.getPIDController();
         m_rightPID = m_right.getPIDController();
-        m_leftPID.setP(0.1);
-        m_rightPID.setP(0.1);
+        m_leftPID.setP(0.05);
+        m_rightPID.setP(0.05);
 
         m_gyro = new AHRS(SPI.Port.kMXP);
         m_shifter = new Solenoid(Constants.driveBase.shifterID);
@@ -105,7 +104,7 @@ public class Drive extends SubsystemBase {
         double ang = m_gyro.getYaw();
         if (ang > 180) ang -= 360;
         //flip yaw
-        ang *= -1;
+        //ang *= -1;
 
         return ang;
     }
@@ -128,6 +127,10 @@ public class Drive extends SubsystemBase {
     public void shift(boolean gear){
         m_shifter.set(gear);
         setEncoderRatio(gear);
+    }
+
+    public void stop(){
+        m_differentialDrive.arcadeDrive(0, 0);
     }
 
     /**
@@ -164,7 +167,7 @@ public class Drive extends SubsystemBase {
      * @return distance (meters?)
      */
     public double getLeftEncoderPosition(){
-        return -m_leftEnc.getPosition();
+        return m_leftEnc.getPosition();
     }
 
 

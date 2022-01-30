@@ -2,6 +2,7 @@ package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
@@ -56,8 +57,9 @@ public class DriveToPoint extends CommandBase {
             while (true) {
                 Pose2d robotPos = m_drive.getRobotPos();
 
-                double xDistance = Math.abs(robotPos.getX() - m_targetX);
-                double yDistance = Math.abs(robotPos.getY() - m_targetY);
+                double xDistance = robotPos.getX() - m_targetX;
+                double yDistance = robotPos.getY() - m_targetY;
+
 
                 double heading = Math.toDegrees(Math.atan2(xDistance, yDistance));
                 if (heading > 180) heading -= 360;
@@ -82,11 +84,15 @@ public class DriveToPoint extends CommandBase {
 
         double netDistance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
         double heading = Math.toDegrees(Math.atan2(xDistance, yDistance));
+        SmartDashboard.putNumber("Heading", heading);
         if (heading > 180) heading -= 360;
 
-        double distanceControl = MathUtil.clamp(m_headingController.calculate(netDistance, 0), -1, 1);
+        double distanceControl = MathUtil.clamp(m_headingController.calculate(0, netDistance), -1, 1);
         double headingControl = MathUtil.clamp(m_headingController.calculate(m_drive.getCurrentAngle() / 360, heading / 360), -1, 1);
         if (Math.abs(distanceControl) < m_confidence && Math.abs(headingControl) < m_confidence) atPoint = true;
+
+        SmartDashboard.putNumber("DC", distanceControl);
+        m_drive.debug();
 
         m_drive.arcadeDrive(distanceControl, headingControl);
 

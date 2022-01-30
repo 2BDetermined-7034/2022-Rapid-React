@@ -70,16 +70,35 @@ public final class Constants {
     }
 
     public static final class motion {
+        //Ramsete gains
+        public static double b = 2.1;
+        public static double zeta = 0.8;
         //Max values
         public static double maxAcceleration = 1;
         public static double maxVelocity = 1;
         // Distance PID
-        public static double distancekP = 0.5;
-        public static double distancekI = 0.0;
+        public static double distancekP = 3;
+        public static double distancekI = 0.5;
         public static double distancekD = 0.0;
         //Heading PID
-        public static double headingkP = 0.5;
-        public static double headingkI = 0.0;
+        public static double headingkP = 2;
+        public static double headingkI = 0.5;
         public static double headingkD = 0.0;
+    }
+
+    public static final class vision {
+
+        public static final double VisX_kP = 1;
+        public static final double VisX_MAX = .3;
+        public static final double VisTimeLimit = 5;
+        public static final double VisX_Offset = 0;
+        public static final double VisX_Tol = 0;
+        public static final double VisY_Tol = 5;
+        public static final double VisY_distanceConstant = 254.3;
+        public static final double VisY_Offset = 8;
+        public static final double VisY_VTol = 100;
+        public static final double VisX_VTol = 100;
+        public static final int Vis_TimerConfidence = 5;
+        public static double Vis_LLAngle = 20.5;
     }
 }
