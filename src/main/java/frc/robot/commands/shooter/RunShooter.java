@@ -37,7 +37,7 @@ public class RunShooter extends CommandBase {
   public void execute() {
     //double speed = shooterSpeed.getAsDouble();
 
-    double speed = SmartDashboard.getNumber("ShooterSpeed", 0); // Temporary
+    double speed = SmartDashboard.getNumber("Shooter Speed", 0); // Temporary
       if(speed != 0) {
         m_Shooter.goBrr(speed);
       }

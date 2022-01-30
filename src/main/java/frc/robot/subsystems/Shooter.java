@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,19 +19,16 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter subsystem */
 
-    public WPI_TalonSRX Motor;
-    public WPI_TalonSRX Motor2;
-    public WPI_TalonSRX Motor3;
+    public CANSparkMax Motor;
+    public CANSparkMax Motor2;
 
     public SpeedControllerGroup Motors;
 
     public Shooter() {
         // TODO Might need to have these run separate depending on how the motors/wheels are positioned
-        Motor = new WPI_TalonSRX(Constants.shooter.shooterTalonID1);
-        Motor2 = new WPI_TalonSRX(Constants.shooter.shooterTalonID2);
-        Motor3 = new WPI_TalonSRX(Constants.shooter.shooterTalonID3);
+        Motor = new CANSparkMax(Constants.shooter.shooterTalonID1, CANSparkMaxLowLevel.MotorType.kBrushless);
+        Motor2 = new CANSparkMax(Constants.shooter.shooterTalonID2, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-        Motors = new SpeedControllerGroup(Motor, Motor2, Motor3);
     }
 
   @Override
@@ -46,6 +45,8 @@ public class Shooter extends SubsystemBase {
    * @param speed to be taken from Vision
    */
   public void goBrr(double speed) {
-      Motors.set(speed * Constants.shooter.shooterMultiplier);
+      SmartDashboard.putNumber("Shooter speed", 0.7);
+      Motor.set(speed);
+      Motor2.set(-speed);
   }
 }

@@ -27,7 +27,6 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private final Shooter m_Shooter = new Shooter();
-  private final RunShooter m_RunShooter = new RunShooter(m_Shooter, null);
 
   private final LimeLight m_limeLight = new LimeLight();
 
@@ -46,6 +45,19 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+      SmartDashboard.putData(m_runIntake);
+      SmartDashboard.putData("Put Intake Down", m_solDown);
+      SmartDashboard.putData("Put Intake Up", m_solUp);
+      SmartDashboard.putData("Run Shooter", new InstantCommand(() -> new RunShooter(m_Shooter, () -> 0)));
+      SmartDashboard.putData(
+              "Run Indexer", new
+                      InstantCommand(() ->
+                      new
+                              RunIndexer(
+                              m_indexer, () -> 0.5
+                      )
+              )
+      );
     SmartDashboard.putNumber("ShooterSpeed", 0);
     // Configure the button bindings
     SmartDashboard.putNumber("ty: (data)", m_limeLight.getYAngle());
@@ -76,17 +88,13 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        // Add Button
-
-        SmartDashboard.putData(m_runIntake);
-        SmartDashboard.putData("Put Intake Down", m_solDown);
-        SmartDashboard.putData("Put Intake Up", m_solUp);
 
         // Controller button configuration
         m_GPad.getButton("RB").whenHeld(m_runIntake);
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
-        m_GPad.getButton("A").whenHeld(new InstantCommand(() -> new RunIndexer(m_indexer, () -> 0.5)));
+        m_GPad.getButton("B").whenHeld(new InstantCommand(() -> new RunShooter(m_Shooter, () -> 0)));
+        m_GPad.getButton("A").whenPressed(new InstantCommand(() -> new RunIndexer(m_indexer, () -> 0.5)));
     }
 
     /**
