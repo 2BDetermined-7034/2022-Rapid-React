@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.controllers.GPad;
 import frc.robot.subsystems.CargoIntake;
+import frc.robot.subsystems.Indexer;
 
 import java.util.function.DoubleSupplier;
 
@@ -31,11 +32,9 @@ public class RunIntakeMotors extends CommandBase {
 
     @Override
     public void execute() {
-        double dashSpeed = SmartDashboard.getNumber("Intake Speed", 0.4);
-        //double speed = -Constants.intake.speed;
-
-m_intake.mmmRunMotor(dashSpeed);
         double speed = fowS.getAsDouble();
+
+        m_intake.mmmRunMotor(speed);
 
         /*
         if(dashSpeed > 0.1) {

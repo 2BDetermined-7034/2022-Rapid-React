@@ -7,7 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.indexer.RunIndexer;
 import frc.robot.controllers.*;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.*;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.pneumatics.*;
@@ -39,6 +41,8 @@ public class RobotContainer {
 
   private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.solenoid_TRUE);
   private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.solenoid_FALSE);
+
+  private final Indexer m_indexer = new Indexer();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -82,6 +86,7 @@ public class RobotContainer {
         m_GPad.getButton("RB").whenHeld(m_runIntake);
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
+        m_GPad.getButton("A").whenHeld(new InstantCommand(() -> new RunIndexer(m_indexer, () -> 0.5)));
     }
 
     /**

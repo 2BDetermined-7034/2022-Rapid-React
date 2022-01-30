@@ -69,6 +69,11 @@ public final class Constants {
         public static boolean solenoid_FALSE = false;
     }
 
+    public final static class indexer {
+        public static final int indexerNEO1 = 1;
+        public static final int indexerNEO2 = 2;
+    }
+
     public static final class motion {
         //Ramsete gains
         public static double b = 2.1;
