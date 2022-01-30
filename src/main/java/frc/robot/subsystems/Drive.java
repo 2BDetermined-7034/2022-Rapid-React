@@ -74,50 +74,46 @@ public class Drive extends SubsystemBase {
     }
 
     /**
-     * Stolen then modified from WPILib
-     * @param xSpeed forward/backwards speed in range -1 to 1
-     * @param zRotation sideways rotation in speed -1 to 1
+     * Method to get robot position
+     * @return the position of the robot in a pose2d
      */
-    public void arcadeDrive(double xSpeed, double zRotation){
-        xSpeed *= Constants.driveBase.xSpeed;
-        zRotation *= Constants.driveBase.xRot;
-        m_differentialDrive.arcadeDrive(xSpeed, zRotation);
+    public Pose2d getRobotPos(){
+        return m_encoderOdometry.getPoseMeters();
     }
 
-    public void kinoDrive(ChassisSpeeds chassisSpeeds){
-        DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
-        double leftVelocity = wheelSpeeds.leftMetersPerSecond;
-        double rightVelocity = wheelSpeeds.rightMetersPerSecond;
-        m_differentialDrive.tankDrive(leftVelocity, rightVelocity);
+    /**
+     * Method to get right encoder position
+     * @return distance (meters?)
+     */
+    public double getRightEncoderPosition(){
+        return m_rightEnc.getPosition();
     }
 
-    public void setPosition(double position){
-        m_rightPID.setReference(position, ControlType.kPosition);
-        m_leftPID.setReference(-position, ControlType.kPosition);
+    /**
+     * Method to get right encoder position
+     * @return distance (meters?)
+     */
+    public double getLeftEncoderPosition(){
+        return m_leftEnc.getPosition();
     }
 
     /**
      * A simple function that returns the NavX value scoped
-     * @return NavX in range -180 to 180
+     * @return NavX in range 0-360 (degrees)
      */
     public double getCurrentAngle(){
         double ang = m_gyro.getYaw();
-        if (ang > 180) ang -= 360;
-        //flip yaw
-        //ang *= -1;
 
         return ang;
     }
 
     /**
-     * Simple function to print drive values
+     * Set disired encoder position and use a PID loop to get there
+     * @param position (meters?)
      */
-    public void debug(){
-        SmartDashboard.putNumber("NavX", getCurrentAngle());
-        SmartDashboard.putNumber("Right Encoder", getRightEncoderPosition());
-        SmartDashboard.putNumber("Left Encoder", getLeftEncoderPosition());
-        SmartDashboard.putNumber("Odometry X", m_encoderOdometry.getPoseMeters().getX());
-        SmartDashboard.putNumber("Odometry Y", m_encoderOdometry.getPoseMeters().getY());
+    public void setPosition(double position){
+        m_rightPID.setReference(position, ControlType.kPosition);
+        m_leftPID.setReference(-position, ControlType.kPosition);
     }
 
     /**
@@ -127,10 +123,6 @@ public class Drive extends SubsystemBase {
     public void shift(boolean gear){
         m_shifter.set(gear);
         setEncoderRatio(gear);
-    }
-
-    public void stop(){
-        m_differentialDrive.arcadeDrive(0, 0);
     }
 
     /**
@@ -147,31 +139,46 @@ public class Drive extends SubsystemBase {
         }
     }
 
+
     /**
-     * Method to get robot position
-     * @return the position of the robot in a pose2d
+     * Stolen then modified from WPILib
+     * @param xSpeed forward/backwards speed in range -1 to 1
+     * @param zRotation sideways rotation in speed -1 to 1
      */
-    public Pose2d getRobotPos(){
-        return m_encoderOdometry.getPoseMeters();
+    public void arcadeDrive(double xSpeed, double zRotation){
+        xSpeed *= Constants.driveBase.xSpeed;
+        zRotation *= Constants.driveBase.xRot;
+        m_differentialDrive.arcadeDrive(xSpeed, zRotation);
     }
 
     /**
-     * Method to get right encoder position
-     * @return distance (meters?)
+     * This used to control the drivebase using WPI's chassis speeds 
+     * @param chassisSpeeds
      */
-    public double getRightEncoderPosition(){
-        return m_rightEnc.getPosition();
+    public void kinoDrive(ChassisSpeeds chassisSpeeds){
+        DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
+        double leftVelocity = wheelSpeeds.leftMetersPerSecond;
+        double rightVelocity = wheelSpeeds.rightMetersPerSecond;
+        m_differentialDrive.tankDrive(leftVelocity, rightVelocity);
     }
+
     /**
-     * Method to get right encoder position
-     * @return distance (meters?)
+     * Simple function to print drive values
      */
-    public double getLeftEncoderPosition(){
-        return m_leftEnc.getPosition();
+    public void debug(){
+        SmartDashboard.putNumber("NavX", getCurrentAngle());
+        SmartDashboard.putNumber("Right Encoder", getRightEncoderPosition());
+        SmartDashboard.putNumber("Left Encoder", getLeftEncoderPosition());
+        SmartDashboard.putNumber("Odometry X", m_encoderOdometry.getPoseMeters().getX());
+        SmartDashboard.putNumber("Odometry Y", m_encoderOdometry.getPoseMeters().getY());
     }
 
-
-
+    /**
+     * Halt drive
+     */
+    public void stop(){
+        m_differentialDrive.arcadeDrive(0, 0);
+    }
 
     @Override
     public void periodic() {

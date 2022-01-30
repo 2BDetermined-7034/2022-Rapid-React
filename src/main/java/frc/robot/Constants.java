@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -30,8 +28,8 @@ public final class Constants {
         // Odometry
         public static double startX = 0;
         public static double startY = 0;
-        public static double length = 0;
-        public static double width = 0;
+        public static double length = 0; // Distance from 
+        public static double width = 0; //Length from left wheel to right 
         public static double highRatio = 0;
         public static double lowRatio = 1/15.32;
         public static final boolean HIGH_GEAR = true;
@@ -51,6 +49,21 @@ public final class Constants {
         public static final double xRot = 0.5;
 
     }
+    public static final class motion {
+        //Ramsete gains
+        public static double b = 2.1;
+        public static double zeta = 0.8;
+        //Drive gains
+        public static double staticGain = 1;
+        public static double velocityGain = 1;
+        public static double accelerationGain =1;
+
+        //Max values
+        public static double maxVoltage = 1;
+        public static double maxVelocity = 1;
+        public static double maxAcceleration = 1;
+        public static double maxCentripetalAcceleration = 1;
+    }
 
     public final static class shooter {
 
@@ -67,27 +80,11 @@ public final class Constants {
         public static final double speed = 0.5;
         public static boolean solenoid_TRUE = true;
         public static boolean solenoid_FALSE = false;
+        public static int IDcompressor = 0;
     }
 
     public final static class indexer {
         public static final int indexerTalon = 1;
-    }
-
-    public static final class motion {
-        //Ramsete gains
-        public static double b = 2.1;
-        public static double zeta = 0.8;
-        //Max values
-        public static double maxAcceleration = 1;
-        public static double maxVelocity = 1;
-        // Distance PID
-        public static double distancekP = 3;
-        public static double distancekI = 0.5;
-        public static double distancekD = 0.0;
-        //Heading PID
-        public static double headingkP = 2;
-        public static double headingkI = 0.5;
-        public static double headingkD = 0.0;
     }
 
     public static final class vision {

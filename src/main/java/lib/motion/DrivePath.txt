@@ -1,4 +1,4 @@
-package frc.robot.commands.drive;
+package lib.motion;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj.Timer;
@@ -7,17 +7,25 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drive;
 
-public class DriveMeters extends CommandBase {
+public class DrivePath extends CommandBase {
     private final Drive m_drive;
-    private final double m_distance;
+    private PathPlannerTrajectory path;
+    private final double k_maxVelocity;
+    private final double k_maxAcceleration;
+    private final Timer timer;
+    private final RamseteController controller = new RamseteController(Constants.motion.b, Constants.motion.zeta);
+
     /**
      *
      * @param drive THe drivebase motors.
      */
 
-    public DriveMeters(Drive drive, double meters) {
+    public DrivePath(Drive drive) {
         m_drive = drive;
-        m_distance = meters;
+        k_maxAcceleration = Constants.motion.maxAcceleration;
+        k_maxVelocity = Constants.motion.maxVelocity;
+        timer = new Timer();
+
         addRequirements(m_drive);
     }
 
@@ -35,7 +43,9 @@ public class DriveMeters extends CommandBase {
      */
     @Override
     public void execute() {
-        m_drive.setPosition(m_distance);
+        //Trajectory.State goal = path.sample(timer.get());
+        //ChassisSpeeds adjustedSpeeds = controller.calculate(m_drive.getRobotPos(), goal);
+        //m_drive.kinoDrive(adjustedSpeeds);
     }
 
     /**

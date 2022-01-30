@@ -30,36 +30,30 @@ public class MotionProfileCommand extends CommandBase {
     private final RamseteController controller = new RamseteController(ramseteB, ramseteZeta);
     private final Timer timer = new Timer();
 
-    /** Creates a new MotionProfileCommand with no extra constraints. */
     public MotionProfileCommand(Drive drive, double startVelocityMetersPerSec, List<Pose2d> waypoints, double endVelocityMetersPerSec, boolean reversed)
     {
         this(drive, startVelocityMetersPerSec, waypoints, endVelocityMetersPerSec, reversed, List.of());
     }
 
-    /** Creates a new MotionProfileCommand with extra constraints. */
+
     public MotionProfileCommand(Drive drive, double startVelocityMetersPerSec, List<Pose2d> waypoints, double endVelocityMetersPerSec, boolean reversed,  List<TrajectoryConstraint> constraints) {
         addRequirements(drive);
         this.drive = drive;
 
         // Select max velocity & acceleration
-        double maxVoltage, maxVelocityMetersPerSec, maxAccelerationMetersPerSec2, maxCentripetalAccelerationMetersPerSec2;
+        double maxVoltage, maxVelocity, maxAcceleration, maxCentripetalAcceleration;
 
-        maxVoltage = 10.0;
-        maxVelocityMetersPerSec = 0.0;
-        maxAccelerationMetersPerSec2 = 0.0;
-        maxCentripetalAccelerationMetersPerSec2 = 0.0;
-
-
+        maxVoltage = Constants.motion.maxVoltage;
+        maxVelocity = Constants.motion.maxVelocity;
+        maxAcceleration = Constants.motion.maxAcceleration;
+        maxCentripetalAcceleration = Constants.motion.maxCentripetalAcceleration;
 
         // Set up trajectory configuration
-        kinematics = new DifferentialDriveKinematics(drive.getTrackWidthMeters());
-        DifferentialDriveVoltageConstraint voltageConstraint =
-                new DifferentialDriveVoltageConstraint(new SimpleMotorFeedforward(drive.getKs(), drive.getKv(), drive.getKa()), kinematics, maxVoltage);
-        CentripetalAccelerationConstraint centripetalAccelerationConstraint =
-                new CentripetalAccelerationConstraint(
-                        maxCentripetalAccelerationMetersPerSec2);
-        TrajectoryConfig config = new TrajectoryConfig(maxVelocityMetersPerSec,
-                maxAccelerationMetersPerSec2).setKinematics(kinematics)
+        kinematics = new DifferentialDriveKinematics(Constants.driveBase.width);
+        
+        DifferentialDriveVoltageConstraint voltageConstraint = new DifferentialDriveVoltageConstraint(new SimpleMotorFeedforward(Constants.motion.staticGain, Constants.motion.staticGain, Constants.motion.staticGain), kinematics, maxVoltage);
+        CentripetalAccelerationConstraint centripetalAccelerationConstraint = new CentripetalAccelerationConstraint(maxCentripetalAcceleration);
+        TrajectoryConfig config = new TrajectoryConfig(maxVelocity, maxAcceleration).setKinematics(kinematics)
                 .addConstraint(voltageConstraint)
                 .addConstraint(centripetalAccelerationConstraint)
                 .addConstraints(constraints)

@@ -104,6 +104,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         //Returns the "auto" command, which we want to run in autonomous.
-        return new DriveToPoint(m_drive, 1, 0, false, 0.001);
+        return null;
     }
 }
