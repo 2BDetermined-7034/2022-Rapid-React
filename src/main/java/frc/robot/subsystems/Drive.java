@@ -104,7 +104,6 @@ public class Drive extends SubsystemBase {
      * @return NavX in range 0-360 (degrees)
      */
     public double getCurrentAngle(){
-
         return m_gyro.getYaw();
     }
 
