@@ -12,6 +12,7 @@ public class RunIntakeMotors extends CommandBase {
     private final CargoIntake m_intake;
     private final DoubleSupplier fowS;
     private final GPad m_gpad;
+    private final DoubleSupplier m_revSpeed;
 
     /**
      *
@@ -19,10 +20,11 @@ public class RunIntakeMotors extends CommandBase {
      * @param speed The speed you want the intake to move at.
      * @param gamepad The game controller
      */
-    public RunIntakeMotors(CargoIntake intakeMotor, DoubleSupplier speed, GPad gamepad) {
+    public RunIntakeMotors(CargoIntake intakeMotor, DoubleSupplier speed, DoubleSupplier reverseSpeed, GPad gamepad) {
         this.fowS = speed;
         this.m_intake = intakeMotor;
         this.m_gpad = gamepad;
+        this.m_revSpeed = reverseSpeed;
         addRequirements(intakeMotor);
     }
 
@@ -33,8 +35,16 @@ public class RunIntakeMotors extends CommandBase {
     @Override
     public void execute() {
         double speed = fowS.getAsDouble();
+        double reverseSpeed = m_revSpeed.getAsDouble();
 
-        m_intake.mmmRunMotor(speed);
+        if (reverseSpeed > 0) {
+            SmartDashboard.putNumber("Intake Speed", reverseSpeed + 0.3);
+            m_intake.mmmRunMotor(reverseSpeed + 0.3);
+
+        } else {
+            SmartDashboard.putNumber("Intake speed", -speed + -0.2);
+            m_intake.mmmRunMotor(-speed + -0.2);
+        }
 
         /*
         if(dashSpeed > 0.1) {

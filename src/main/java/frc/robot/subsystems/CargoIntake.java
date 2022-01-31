@@ -33,7 +33,7 @@ public class CargoIntake extends SubsystemBase {
      * @param thing Boolean - either true (out) or false (in).
      */
     public void setSolenoid(boolean thing) {
-        SmartDashboard.putBoolean("Intake Solenoid", thing);
+        SmartDashboard.putBoolean("Intake Down", thing);
         if (thing) {
             m_solenoid.set(Value.kForward);
         } else {

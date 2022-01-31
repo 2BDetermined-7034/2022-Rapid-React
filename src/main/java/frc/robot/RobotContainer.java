@@ -35,13 +35,14 @@ public class RobotContainer {
   public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
 
   private final CargoIntake m_cargoIntake = new CargoIntake();
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> Constants.intake.speed, m_GPad);
-  private final RunIntakeMotors m_revINtake = new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_GPad);
+  private final Indexer m_indexer = new Indexer();
+
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> m_GPad.getAxis("RTrigger"), () -> m_GPad.getAxis("LTrigger"), m_GPad);
 
   private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.solenoid_TRUE);
   private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.solenoid_FALSE);
 
-  private final Indexer m_indexer = new Indexer();
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -88,12 +89,14 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-
-        // Controller button configuration
+        // Intake
         m_GPad.getButton("RB").whenHeld(m_runIntake);
+        // Intake solenoid
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
+        // Shooter
         m_GPad.getButton("B").whenHeld(new InstantCommand(() -> new RunShooter(m_Shooter, () -> 0)));
+        // Indexer
         m_GPad.getButton("A").whenPressed(new InstantCommand(() -> new RunIndexer(m_indexer, () -> 0.5)));
     }
 
