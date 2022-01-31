@@ -9,10 +9,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpiutil.WPIUtilJNI;
+import edu.wpi.first.util.WPIUtilJNI;
 import frc.robot.Constants;
 
 
@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
     public CANSparkMax Motor;
     public CANSparkMax Motor2;
 
-    public SpeedControllerGroup Motors;
+    public MotorControllerGroup Motors;
 
     public Shooter() {
         // TODO Might need to have these run separate depending on how the motors/wheels are positioned

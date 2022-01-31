@@ -3,15 +3,17 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.*;
+
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -19,8 +21,8 @@ import frc.robot.Constants;
 public class Drive extends SubsystemBase {
 
     private final CANSparkMax m_left, m_left2, m_left3, m_right, m_right2,  m_right3;
-    private final CANEncoder m_leftEnc, m_rightEnc;
-    private final CANPIDController m_leftPID, m_rightPID;
+    private final RelativeEncoder m_leftEnc, m_rightEnc;
+    private final SparkMaxPIDController m_leftPID, m_rightPID;
 
     private final Solenoid m_shifter;
 
@@ -65,7 +67,7 @@ public class Drive extends SubsystemBase {
         m_rightPID.setP(0.05);
 
         m_gyro = new AHRS(SPI.Port.kMXP);
-        m_shifter = new Solenoid(Constants.driveBase.shifterID);
+        m_shifter = new Solenoid(Constants.pneumatics.shifter, Constants.driveBase.shifterID);
 
         shift(Constants.driveBase.LOW_GEAR);
 
@@ -102,9 +104,8 @@ public class Drive extends SubsystemBase {
      * @return NavX in range 0-360 (degrees)
      */
     public double getCurrentAngle(){
-        double ang = m_gyro.getYaw();
 
-        return ang;
+        return m_gyro.getYaw();
     }
 
     /**
@@ -112,8 +113,8 @@ public class Drive extends SubsystemBase {
      * @param position (meters?)
      */
     public void setPosition(double position){
-        m_rightPID.setReference(position, ControlType.kPosition);
-        m_leftPID.setReference(-position, ControlType.kPosition);
+        m_rightPID.setReference(position, CANSparkMax.ControlType.kPosition);
+        m_leftPID.setReference(-position, CANSparkMax.ControlType.kPosition);
     }
 
     /**
@@ -153,7 +154,7 @@ public class Drive extends SubsystemBase {
 
     /**
      * This used to control the drivebase using WPI's chassis speeds 
-     * @param chassisSpeeds
+     * @param chassisSpeeds the speed of drive
      */
     public void kinoDrive(ChassisSpeeds chassisSpeeds){
         DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);

@@ -73,8 +73,8 @@ public class RobotContainer {
     m_drive.setDefaultCommand(new DriveCommand(
                     m_drive,
                     m_GPad,
-                    () -> m_GPad.getY(GenericHID.Hand.kLeft),
-                    () -> m_GPad.getX(GenericHID.Hand.kRight)
+                    () -> m_GPad.getAxis("LX"),
+                    () -> m_GPad.getAxis("RX")
             )
     );
 

@@ -8,8 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpiutil.math.MathUtil;
-import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.util.sendable.Sendable;
 /**
  * Add your docs here.
  */

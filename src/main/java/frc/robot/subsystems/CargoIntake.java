@@ -18,7 +18,7 @@ public class CargoIntake extends SubsystemBase {
 
     public CargoIntake() {
         SmartDashboard.putNumber("Intake Speed", 0.5);
-        this.m_solenoid = new DoubleSolenoid(Constants.intake.solenoidForward, Constants.intake.solenoidReverse);
+        this.m_solenoid = new DoubleSolenoid(Constants.pneumatics.intake, Constants.intake.solenoidForward, Constants.intake.solenoidReverse);
         this.cargoMotor = new WPI_TalonSRX(Constants.intake.intakeTalon);
     }
 

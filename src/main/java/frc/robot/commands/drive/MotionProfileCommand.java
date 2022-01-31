@@ -2,20 +2,22 @@ package frc.robot.commands.drive;
 
 import java.util.List;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryParameterizer;
-import edu.wpi.first.wpilibj.trajectory.constraint.CentripetalAccelerationConstraint;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj.trajectory.constraint.TrajectoryConstraint;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.TrajectoryParameterizer;
+import edu.wpi.first.math.trajectory.constraint.CentripetalAccelerationConstraint;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drive;
@@ -26,17 +28,12 @@ public class MotionProfileCommand extends CommandBase {
 
     private final Drive drive;
     private final DifferentialDriveKinematics kinematics;
-    private final Trajectory trajectory;
+    private Trajectory trajectory;
     private final RamseteController controller = new RamseteController(ramseteB, ramseteZeta);
     private final Timer timer = new Timer();
 
-    public MotionProfileCommand(Drive drive, double startVelocityMetersPerSec, List<Pose2d> waypoints, double endVelocityMetersPerSec, boolean reversed)
-    {
-        this(drive, startVelocityMetersPerSec, waypoints, endVelocityMetersPerSec, reversed, List.of());
-    }
 
-
-    public MotionProfileCommand(Drive drive, double startVelocityMetersPerSec, List<Pose2d> waypoints, double endVelocityMetersPerSec, boolean reversed,  List<TrajectoryConstraint> constraints) {
+    public MotionProfileCommand(Drive drive, String pathName, boolean reversed) {
         addRequirements(drive);
         this.drive = drive;
 
@@ -50,25 +47,13 @@ public class MotionProfileCommand extends CommandBase {
 
         // Set up trajectory configuration
         kinematics = new DifferentialDriveKinematics(Constants.driveBase.width);
-        
-        DifferentialDriveVoltageConstraint voltageConstraint = new DifferentialDriveVoltageConstraint(new SimpleMotorFeedforward(Constants.motion.staticGain, Constants.motion.staticGain, Constants.motion.staticGain), kinematics, maxVoltage);
-        CentripetalAccelerationConstraint centripetalAccelerationConstraint = new CentripetalAccelerationConstraint(maxCentripetalAcceleration);
-        TrajectoryConfig config = new TrajectoryConfig(maxVelocity, maxAcceleration).setKinematics(kinematics)
-                .addConstraint(voltageConstraint)
-                .addConstraint(centripetalAccelerationConstraint)
-                .addConstraints(constraints)
-                .setStartVelocity(startVelocityMetersPerSec)
-                .setEndVelocity(endVelocityMetersPerSec).setReversed(reversed);
 
-        // Generate trajectory
-        Trajectory generatedTrajectory;
         try {
-            generatedTrajectory = TrajectoryGenerator.generateTrajectory(waypoints, config);
+            trajectory = PathPlanner.loadPath(pathName, maxVelocity, maxAcceleration, reversed);
         } catch (TrajectoryParameterizer.TrajectoryGenerationException exception) {
-            generatedTrajectory = new Trajectory();
-            DriverStation.reportError("Failed to generate trajectory, check constants", false);
+            trajectory = new Trajectory();
+            DriverStation.reportError("Failed to load trajectory", false);
         }
-        trajectory = generatedTrajectory;
     }
 
     // Called when the command is initially scheduled.

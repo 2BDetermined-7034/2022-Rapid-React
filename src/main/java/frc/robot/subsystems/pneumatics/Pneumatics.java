@@ -8,6 +8,7 @@
 package frc.robot.subsystems.pneumatics;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -16,12 +17,12 @@ public class Pneumatics extends SubsystemBase {
     public Compressor comp;
 
     public Pneumatics() {
-        comp = new Compressor(Constants.intake.IDcompressor);
+        comp = new Compressor(Constants.intake.IDcompressor, PneumaticsModuleType.CTREPCM);
     }
 
     public boolean setCompressor(boolean on) {
-        if (on) { comp.start(); }
-        else { comp.stop(); }
+        if (on) { comp.enabled(); }
+        else { comp.disable(); }
         return comp.enabled();
     }
 
