@@ -38,8 +38,8 @@ public class RobotContainer {
 
   private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> 0.5, m_GPad);
 
-  private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.solenoid_TRUE);
-  private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.solenoid_FALSE);
+  private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeUp);
+  private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeDown);
 
 
 

@@ -27,18 +27,18 @@ public final class Constants {
     }
 
     public static final class pneumatics {
-        public static PneumaticsModuleType compressor = PneumaticsModuleType.CTREPCM;
-        public static PneumaticsModuleType shifter = PneumaticsModuleType.CTREPCM;
-        public static PneumaticsModuleType intake = PneumaticsModuleType.CTREPCM;
+        public static final PneumaticsModuleType compressor = PneumaticsModuleType.CTREPCM;
+        public static final PneumaticsModuleType shifter = PneumaticsModuleType.CTREPCM;
+        public static final PneumaticsModuleType intake = PneumaticsModuleType.CTREPCM;
     }
 
     public static final class driveBase {
         // Odometry
-        public static double length = 0.762; // Distance from
-        public static double width = 0.7112; //Length from left wheel to right
-        public static double highRatio = 0;
-        public static double lowRatio = 1/15.32;
-        public static double meterRatio = 0.31918581;
+        public static final double length = 0.762; // Distance from
+        public static final double width = 0.7112; //Length from left wheel to right
+        public static final double highRatio = 0;
+        public static final double lowRatio = 1/15.32;
+        public static final double WheelMeterRatio = 0.31918581;
         public static final boolean HIGH_GEAR = true;
         public static final boolean LOW_GEAR = false;
         //PID
@@ -52,15 +52,15 @@ public final class Constants {
         public static final double rightI = 0;
         public static final double rightD = 0;
         // Left
-        public static int driveL1ID = 4;
-        public static int driveL2ID = 9;
-        public static int driveL3ID = 42;
+        public static final int driveL1ID = 4;
+        public static final int driveL2ID = 9;
+        public static final int driveL3ID = 42;
         // Right
-        public static int driveR1ID = 3;
-        public static int driveR2ID = 1;
-        public static int driveR3ID = 7;
+        public static final int driveR1ID = 3;
+        public static final int driveR2ID = 1;
+        public static final int driveR3ID = 7;
         //Shifter
-        public static int shifterID = 0;
+        public static final int shifterID = 0;
         // Speed
         public static final double xSpeed = 0.6;
         public static final double xRot = 0.5;
@@ -68,11 +68,11 @@ public final class Constants {
     }
     public static final class motion {
         //Ramsete gains
-        public static double b = 2.1;
-        public static double zeta = 0.8;
+        public static final double b = 2.1;
+        public static final double zeta = 0.8;
         //Max values
-        public static double maxVelocity = 1;
-        public static double maxAcceleration = 1;
+        public static final double maxVelocity = 1;
+        public static final double maxAcceleration = 1;
     }
 
     public final static class shooter {
@@ -86,9 +86,9 @@ public final class Constants {
         public static final int solenoidForward = 1;
         public static final int solenoidReverse = 2;
         public static final double speed = 0.5;
-        public static boolean solenoid_TRUE = true;
-        public static boolean solenoid_FALSE = false;
-        public static int IDcompressor = 0;
+        public static final boolean intakeUp = true;
+        public static final boolean intakeDown = false;
+        public static final int IDcompressor = 0;
     }
 
     public final static class indexer {
