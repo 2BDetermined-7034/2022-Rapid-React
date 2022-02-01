@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryParameterizer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -17,7 +16,6 @@ public class MotionProfileCommand extends CommandBase {
     private static final double ramseteZeta = Constants.motion.zeta;
 
     private final Drive m_drive;
-    private final DifferentialDriveKinematics m_kinematics;
     private Trajectory m_trajectory;
     private final RamseteController controller = new RamseteController(ramseteB, ramseteZeta);
     private final Timer timer = new Timer();
@@ -31,9 +29,6 @@ public class MotionProfileCommand extends CommandBase {
 
         maxVelocity = Constants.motion.maxVelocity;
         maxAcceleration = Constants.motion.maxAcceleration;
-
-        // Set up trajectory configuration
-        m_kinematics = new DifferentialDriveKinematics(Constants.driveBase.width);
 
         try {
             m_trajectory = PathPlanner.loadPath(pathName, maxVelocity, maxAcceleration, reversed);

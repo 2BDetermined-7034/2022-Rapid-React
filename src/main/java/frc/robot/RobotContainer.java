@@ -4,21 +4,18 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.indexer.RunIndexer;
-import frc.robot.controllers.*;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.*;
 import frc.robot.commands.drive.*;
+import frc.robot.commands.indexer.*;
+import frc.robot.controllers.*;
+import frc.robot.subsystems.*;
 import frc.robot.commands.pneumatics.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import lib.motion.DriveMeters;
-
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
