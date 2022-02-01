@@ -52,36 +52,22 @@ public class RobotContainer {
       SmartDashboard.putData("Put Intake Down", m_solDown);
       SmartDashboard.putData("Put Intake Up", m_solUp);
       SmartDashboard.putData("Run Shooter", new InstantCommand(() -> new RunShooter(m_Shooter, () -> 0)));
-      SmartDashboard.putData(
-              "Run Indexer", new
-                      InstantCommand(() ->
-                      new
-                              RunIndexer(
-                              m_indexer, () -> 0.5
-                      )
-              )
-      );
-    SmartDashboard.putNumber("ShooterSpeed", 0);
-    // Configure the button bindings
-    SmartDashboard.putNumber("ty: (data)", m_limeLight.getYAngle());
-    SmartDashboard.putNumber("dist?: (data)", m_limeLight.getEstimatedDistance());
+      SmartDashboard.putData("Run Indexer", new InstantCommand(() -> new RunIndexer(m_indexer, () -> 0.5)));
+      SmartDashboard.putNumber("ShooterSpeed", 0);
+      // Configure the button bindings
+      SmartDashboard.putNumber("ty: (data)", m_limeLight.getYAngle());
+      SmartDashboard.putNumber("dist?: (data)", m_limeLight.getEstimatedDistance());
 
-    // Register
-    m_drive.register();
-    m_cargoIntake.register();
+      // Register
+      m_drive.register();
+      m_cargoIntake.register();
 
-    // Default commands
-    m_cargoIntake.setDefaultCommand(m_solDown);
+      // Default commands
+      m_cargoIntake.setDefaultCommand(m_solDown);
 
-    m_drive.setDefaultCommand(new DriveCommand(
-                    m_drive,
-                    m_GPad,
-                    () -> m_GPad.getAxis("LX"),
-                    () -> m_GPad.getAxis("RX")
-            )
-    );
+      m_drive.setDefaultCommand(new DriveCommand(m_drive, m_GPad, () -> m_GPad.getAxis("LX"), () -> m_GPad.getAxis("RX")));
 
-    configureButtonBindings();
+      configureButtonBindings();
   }
 
     /**
