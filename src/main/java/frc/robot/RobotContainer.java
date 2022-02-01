@@ -76,7 +76,7 @@ public class RobotContainer {
                     m_drive,
                     m_GPad,
                     () -> m_GPad.getAxis("LX"),
-                    () -> m_GPad.getAxis("RX")
+                    () -> m_GPad.getAxis("LY")
             )
     );
 
@@ -96,7 +96,7 @@ public class RobotContainer {
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
         // Shooter
-        m_GPad.getButton("B").whenHeld(new InstantCommand(() -> new RunShooter(m_Shooter, () -> 0)));
+        m_GPad.getButton("B").whenHeld(new RunShooter(m_Shooter, () -> 0.5));
         // Indexer
         m_GPad.getButton("A").whenPressed(new InstantCommand(() -> new RunIndexer(m_indexer, () -> 0.5)));
 

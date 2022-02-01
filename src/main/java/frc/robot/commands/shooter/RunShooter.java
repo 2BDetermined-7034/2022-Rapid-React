@@ -35,12 +35,10 @@ public class RunShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Shooter.debug();
-    //double speed = shooterSpeed.getAsDouble();
 
-    double speed = SmartDashboard.getNumber("Shooter Speed", 0); // Temporary
+    double speed = shooterSpeed.getAsDouble();
       if(speed != 0) {
-        m_Shooter.goBrr(speed);
+        m_Shooter.goBrr(0.5);
       }
   }
 

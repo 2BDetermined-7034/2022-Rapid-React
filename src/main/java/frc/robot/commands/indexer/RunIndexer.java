@@ -31,7 +31,7 @@ private final DoubleSupplier m_speed;
      */
     @Override
     public void execute() {
-        m_indexer.runIndexerMotor(m_speed.getAsDouble());
+        m_indexer.runIndexerMotor(-0.3);
     }
 
     /**

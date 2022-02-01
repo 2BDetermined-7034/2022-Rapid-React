@@ -46,9 +46,4 @@ public class Shooter extends SubsystemBase {
       Motor.set(speed);
       Motor2.set(-speed);
   }
-
-
-  public void debug() {
-      SmartDashboard.putNumber("Shooter Speed", m_speed);
-  }
 }

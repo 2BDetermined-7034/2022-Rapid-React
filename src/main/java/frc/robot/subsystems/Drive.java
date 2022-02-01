@@ -24,7 +24,7 @@ public class Drive extends SubsystemBase {
     private final RelativeEncoder m_leftEnc, m_rightEnc;
     private final SparkMaxPIDController m_leftPID, m_rightPID;
 
-    private final Solenoid m_shifter;
+    //private final Solenoid m_shifter;
 
     private final AHRS m_gyro;
 
@@ -67,9 +67,9 @@ public class Drive extends SubsystemBase {
         m_rightPID.setP(0.05);
 
         m_gyro = new AHRS(SPI.Port.kMXP);
-        m_shifter = new Solenoid(Constants.pneumatics.shifter, Constants.driveBase.shifterID);
+        //m_shifter = new Solenoid(Constants.pneumatics.shifter, Constants.driveBase.shifterID);
 
-        shift(Constants.driveBase.LOW_GEAR);
+        //shift(Constants.driveBase.LOW_GEAR);
 
         m_encoderOdometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-m_gyro.getYaw()), new Pose2d(startX, startY, new Rotation2d()));
 
@@ -121,7 +121,7 @@ public class Drive extends SubsystemBase {
      * @param gear high is false, low is true
      */
     public void shift(boolean gear){
-        m_shifter.set(gear);
+        //m_shifter.set(gear);
         setEncoderRatio(gear);
     }
 

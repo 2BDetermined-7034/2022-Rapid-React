@@ -13,13 +13,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class CargoIntake extends SubsystemBase {
     private final WPI_TalonSRX cargoMotor;
-    private final DoubleSolenoid m_solenoid;
+    //private final DoubleSolenoid m_solenoid;
     private Double m_speed;
 
 
     public CargoIntake() {
 
-        this.m_solenoid = new DoubleSolenoid(Constants.pneumatics.intake, Constants.intake.solenoidForward, Constants.intake.solenoidReverse);
+        //this.m_solenoid = new DoubleSolenoid(Constants.pneumatics.intake, Constants.intake.solenoidForward, Constants.intake.solenoidReverse);
         this.cargoMotor = new WPI_TalonSRX(Constants.intake.intakeTalon);
     }
 
@@ -41,9 +41,9 @@ public class CargoIntake extends SubsystemBase {
     public void setSolenoid(boolean thing) {
         SmartDashboard.putBoolean("Intake Down", thing);
         if (thing) {
-            m_solenoid.set(Value.kForward);
+            //m_solenoid.set(Value.kForward);
         } else {
-            m_solenoid.set(Value.kReverse);
+            //m_solenoid.set(Value.kReverse);
         }
     }
 }
