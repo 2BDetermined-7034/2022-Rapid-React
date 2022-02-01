@@ -34,8 +34,6 @@ public final class Constants {
 
     public static final class driveBase {
         // Odometry
-        public static double startX = 0;
-        public static double startY = 0;
         public static double length = 0; // Distance from 
         public static double width = 0; //Length from left wheel to right 
         public static double highRatio = 0;
@@ -62,23 +60,15 @@ public final class Constants {
         //Ramsete gains
         public static double b = 2.1;
         public static double zeta = 0.8;
-        //Drive gains
-        public static double staticGain = 1;
-        public static double velocityGain = 1;
-        public static double accelerationGain =1;
-
         //Max values
-        public static double maxVoltage = 1;
         public static double maxVelocity = 1;
         public static double maxAcceleration = 1;
-        public static double maxCentripetalAcceleration = 1;
     }
 
     public final static class shooter {
 
         public static final int leftShooterNEO = 2;
         public static final int rightShooterNEO = 10;
-
         public static final int shooterMultiplier = 1;
     }
 

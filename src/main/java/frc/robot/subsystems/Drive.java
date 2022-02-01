@@ -100,7 +100,7 @@ public class Drive extends SubsystemBase {
      * @return distance (meters?)
      */
     public double getRightEncoderPosition(){
-        return m_rightEnc.getPosition() * Constants.driveBase.meterRatio;
+        return m_rightEnc.getPosition();
     }
 
     /**
@@ -108,7 +108,7 @@ public class Drive extends SubsystemBase {
      * @return distance (meters?)
      */
     public double getLeftEncoderPosition(){
-        return -m_leftEnc.getPosition() * Constants.driveBase.meterRatio;
+        return -m_leftEnc.getPosition();
     }
 
     /**
@@ -124,7 +124,7 @@ public class Drive extends SubsystemBase {
     }
 
     /**
-     * Set disired encoder position and use a PID loop to get there
+     * Set desired encoder position and use a PID loop to get there
      * @param position (meters?)
      */
     public void setPosition(double position){
@@ -147,11 +147,11 @@ public class Drive extends SubsystemBase {
      */
     public void setEncoderRatio(boolean gear){
         if (gear == Constants.driveBase.HIGH_GEAR){
-            m_leftEnc.setPositionConversionFactor(Constants.driveBase.highRatio);
-            m_rightEnc.setPositionConversionFactor(Constants.driveBase.highRatio);
+            m_leftEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.meterRatio);
+            m_rightEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.meterRatio);
         } else {
-            m_leftEnc.setPositionConversionFactor(Constants.driveBase.lowRatio);
-            m_rightEnc.setPositionConversionFactor(Constants.driveBase.lowRatio);
+            m_leftEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.meterRatio);
+            m_rightEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.meterRatio);
         }
     }
 
