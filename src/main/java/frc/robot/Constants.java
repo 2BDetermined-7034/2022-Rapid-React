@@ -34,13 +34,23 @@ public final class Constants {
 
     public static final class driveBase {
         // Odometry
-        public static double length = 0; // Distance from 
-        public static double width = 0; //Length from left wheel to right 
+        public static double length = 0.762; // Distance from
+        public static double width = 0.7112; //Length from left wheel to right
         public static double highRatio = 0;
         public static double lowRatio = 1/15.32;
         public static double meterRatio = 0.31918581;
         public static final boolean HIGH_GEAR = true;
         public static final boolean LOW_GEAR = false;
+        //PID
+        public static final double leftFF = 1;
+        public static final double leftP = 0;
+        public static final double leftI = 0;
+        public static final double leftD = 0;
+
+        public static final double rightFF = 1;
+        public static final double rightP = 0;
+        public static final double rightI = 0;
+        public static final double rightD = 0;
         // Left
         public static int driveL1ID = 4;
         public static int driveL2ID = 9;

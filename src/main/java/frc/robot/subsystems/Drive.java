@@ -64,9 +64,16 @@ public class Drive extends SubsystemBase {
 
         m_leftPID = m_left.getPIDController();
         m_rightPID = m_right.getPIDController();
-        //TODO: move to constants
-        m_leftPID.setP(0.05);
-        m_rightPID.setP(0.05);
+
+        m_leftPID.setFF(Constants.driveBase.leftFF);
+        m_leftPID.setP(Constants.driveBase.leftP);
+        m_leftPID.setI(Constants.driveBase.leftI);
+        m_leftPID.setD(Constants.driveBase.leftD);
+
+        m_rightPID.setFF(Constants.driveBase.rightFF);
+        m_rightPID.setP(Constants.driveBase.rightP);
+        m_rightPID.setI(Constants.driveBase.rightI);
+        m_rightPID.setD(Constants.driveBase.rightD);
 
         m_gyro = new AHRS(SPI.Port.kMXP);
         m_shifter = new Solenoid(Constants.pneumatics.shifter, Constants.driveBase.shifterID);
@@ -128,8 +135,8 @@ public class Drive extends SubsystemBase {
      * @param position (meters?)
      */
     public void setPosition(double position){
-        m_rightPID.setReference(position, CANSparkMax.ControlType.kPosition);
-        m_leftPID.setReference(-position, CANSparkMax.ControlType.kPosition);
+        m_rightPID.setReference(position, CANSparkMax.ControlType.kSmartMotion);
+        m_leftPID.setReference(-position, CANSparkMax.ControlType.kSmartMotion);
     }
 
     /**
@@ -175,7 +182,9 @@ public class Drive extends SubsystemBase {
         DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
         double leftVelocity = wheelSpeeds.leftMetersPerSecond;
         double rightVelocity = wheelSpeeds.rightMetersPerSecond;
-        m_differentialDrive.tankDrive(leftVelocity, rightVelocity);
+
+        m_leftPID.setReference(leftVelocity, CANSparkMax.ControlType.kSmartVelocity);
+        m_rightPID.setReference(rightVelocity, CANSparkMax.ControlType.kSmartVelocity);
     }
 
     /**
