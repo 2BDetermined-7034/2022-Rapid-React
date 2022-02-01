@@ -76,9 +76,9 @@ public final class Constants {
 
     public final static class shooter {
 
-        public static final int shooterNEO1 = 2;
-        public static final int shooterNEO2 = 62;
-        public static final int shooterTalonID3 = 4;
+        public static final int leftShooterNEO = 2;
+        public static final int rightShooterNEO = 10;
+
         public static final int shooterMultiplier = 1;
     }
 

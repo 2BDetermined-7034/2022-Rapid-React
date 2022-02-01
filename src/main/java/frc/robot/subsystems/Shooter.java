@@ -23,8 +23,8 @@ public class Shooter extends SubsystemBase {
 
     public Shooter() {
         // TODO Might need to have these run separate depending on how the motors/wheels are positioned
-        Motor = new CANSparkMax(Constants.shooter.shooterNEO1, CANSparkMaxLowLevel.MotorType.kBrushless);
-        Motor2 = new CANSparkMax(Constants.shooter.shooterNEO2, CANSparkMaxLowLevel.MotorType.kBrushless);
+        Motor = new CANSparkMax(Constants.shooter.leftShooterNEO, CANSparkMaxLowLevel.MotorType.kBrushless);
+        Motor2 = new CANSparkMax(Constants.shooter.rightShooterNEO, CANSparkMaxLowLevel.MotorType.kBrushless);
 
     }
 
