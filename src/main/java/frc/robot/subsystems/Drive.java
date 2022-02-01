@@ -4,7 +4,9 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.*;
 
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.math.MatBuilder;
+import edu.wpi.first.math.Nat;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -12,7 +14,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -30,10 +31,10 @@ public class Drive extends SubsystemBase {
 
     private final DifferentialDrive m_differentialDrive;
 
-    private final DifferentialDriveOdometry m_encoderOdometry;
+    private DifferentialDrivePoseEstimator m_locationManager;
     DifferentialDriveKinematics m_kinematics;
 
-    public Drive(double startX, double startY) {
+    public Drive() {
         m_left = new CANSparkMax(Constants.driveBase.driveL1ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left2 = new CANSparkMax(Constants.driveBase.driveL2ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left3 = new CANSparkMax(Constants.driveBase.driveL3ID, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -70,17 +71,28 @@ public class Drive extends SubsystemBase {
         m_shifter = new Solenoid(Constants.pneumatics.shifter, Constants.driveBase.shifterID);
 
         shift(Constants.driveBase.LOW_GEAR);
-
-        m_encoderOdometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-m_gyro.getYaw()), new Pose2d(startX, startY, new Rotation2d()));
+        m_locationManager = new DifferentialDrivePoseEstimator(Rotation2d.fromDegrees(-m_gyro.getYaw()), new Pose2d(),
+                new MatBuilder<>(Nat.N5(), Nat.N1()).fill(0.02, 0.02, 0.01, 0.02, 0.02), // State measurement standard deviations. X, Y, theta.
+                new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01), // Local measurement standard deviations. Left encoder, right encoder, gyro.
+                new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, 0.01) // Global measurement standard deviations. X, Y, and theta.
+        );
 
     }
 
     /**
-     * Method to get robot position
+     * Method to get robot position using odometry
      * @return the position of the robot in a pose2d
      */
     public Pose2d getRobotPos(){
-        return m_encoderOdometry.getPoseMeters();
+        return m_locationManager.getEstimatedPosition();
+    }
+
+    /**
+     *
+     * @return wheel speed object
+     */
+    public DifferentialDriveWheelSpeeds getWheelVelocity(){
+        return new DifferentialDriveWheelSpeeds(m_leftEnc.getVelocity(), m_rightEnc.getVelocity());
     }
 
     /**
@@ -88,7 +100,7 @@ public class Drive extends SubsystemBase {
      * @return distance (meters?)
      */
     public double getRightEncoderPosition(){
-        return m_rightEnc.getPosition();
+        return m_rightEnc.getPosition() * Constants.driveBase.meterRatio;
     }
 
     /**
@@ -96,7 +108,7 @@ public class Drive extends SubsystemBase {
      * @return distance (meters?)
      */
     public double getLeftEncoderPosition(){
-        return m_leftEnc.getPosition();
+        return -m_leftEnc.getPosition() * Constants.driveBase.meterRatio;
     }
 
     /**
@@ -105,6 +117,10 @@ public class Drive extends SubsystemBase {
      */
     public double getCurrentAngle(){
         return m_gyro.getYaw();
+    }
+
+    public void setStartingPose(Pose2d startingPose){
+        m_locationManager.resetPosition(startingPose, Rotation2d.fromDegrees(-m_gyro.getYaw()));
     }
 
     /**
@@ -155,7 +171,7 @@ public class Drive extends SubsystemBase {
      * This used to control the drivebase using WPI's chassis speeds 
      * @param chassisSpeeds the speed of drive
      */
-    public void kinoDrive(ChassisSpeeds chassisSpeeds){
+    public void kumDrive(ChassisSpeeds chassisSpeeds){
         DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
         double leftVelocity = wheelSpeeds.leftMetersPerSecond;
         double rightVelocity = wheelSpeeds.rightMetersPerSecond;
@@ -169,8 +185,8 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("NavX", getCurrentAngle());
         SmartDashboard.putNumber("Right Encoder", getRightEncoderPosition());
         SmartDashboard.putNumber("Left Encoder", getLeftEncoderPosition());
-        SmartDashboard.putNumber("Odometry X", m_encoderOdometry.getPoseMeters().getX());
-        SmartDashboard.putNumber("Odometry Y", m_encoderOdometry.getPoseMeters().getY());
+        SmartDashboard.putNumber("Odometry X", m_locationManager.getEstimatedPosition().getX());
+        SmartDashboard.putNumber("Odometry Y", m_locationManager.getEstimatedPosition().getY());
     }
 
     /**
@@ -182,7 +198,7 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_encoderOdometry.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), m_leftEnc.getPosition(), m_rightEnc.getPosition());
+        m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
         debug();
     }
 }

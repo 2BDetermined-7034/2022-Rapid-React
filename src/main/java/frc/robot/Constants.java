@@ -40,6 +40,7 @@ public final class Constants {
         public static double width = 0; //Length from left wheel to right 
         public static double highRatio = 0;
         public static double lowRatio = 1/15.32;
+        public static double meterRatio = 0.31918581;
         public static final boolean HIGH_GEAR = true;
         public static final boolean LOW_GEAR = false;
         // Left

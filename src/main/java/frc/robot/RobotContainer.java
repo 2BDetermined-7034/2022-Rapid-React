@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -16,6 +17,7 @@ import frc.robot.commands.pneumatics.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import lib.motion.DriveMeters;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -31,7 +33,7 @@ public class RobotContainer {
   private final LimeLight m_limeLight = new LimeLight();
 
   // Drive
-  private final Drive m_drive = new Drive(Constants.driveBase.startX, Constants.driveBase.startY);
+  private final Drive m_drive = new Drive();
   public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
 
   private final CargoIntake m_cargoIntake = new CargoIntake();
@@ -107,6 +109,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         //Returns the "auto" command, which we want to run in autonomous.
-        return null;
+        return new DriveMeters(m_drive, 1);
     }
 }
