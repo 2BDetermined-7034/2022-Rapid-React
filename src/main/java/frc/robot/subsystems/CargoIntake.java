@@ -14,10 +14,11 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class CargoIntake extends SubsystemBase {
     private final WPI_TalonSRX cargoMotor;
     private final DoubleSolenoid m_solenoid;
+    private Double m_speed;
 
 
     public CargoIntake() {
-        SmartDashboard.putNumber("Intake Speed", 0.5);
+
         this.m_solenoid = new DoubleSolenoid(Constants.pneumatics.intake, Constants.intake.solenoidForward, Constants.intake.solenoidReverse);
         this.cargoMotor = new WPI_TalonSRX(Constants.intake.intakeTalon);
     }
@@ -26,7 +27,12 @@ public class CargoIntake extends SubsystemBase {
      * @param speed The speed you want to move the motor at.
      */
     public void mmmRunMotor(double speed) {
+        this.m_speed = speed;
         cargoMotor.set(speed);
+    }
+
+    public void debug() {
+        SmartDashboard.putNumber("Intake Speed", m_speed);
     }
 
     /**

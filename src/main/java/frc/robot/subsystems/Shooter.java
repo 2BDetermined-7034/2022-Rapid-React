@@ -17,6 +17,7 @@ public class Shooter extends SubsystemBase {
 
     public CANSparkMax Motor;
     public CANSparkMax Motor2;
+    public Double m_speed;
 
     public MotorControllerGroup Motors;
 
@@ -41,8 +42,13 @@ public class Shooter extends SubsystemBase {
    * @param speed to be taken from Vision
    */
   public void goBrr(double speed) {
-      SmartDashboard.putNumber("Shooter speed", 0.7);
+      this.m_speed = speed;
       Motor.set(speed);
       Motor2.set(-speed);
+  }
+
+
+  public void debug() {
+      SmartDashboard.putNumber("Shooter Speed", m_speed);
   }
 }

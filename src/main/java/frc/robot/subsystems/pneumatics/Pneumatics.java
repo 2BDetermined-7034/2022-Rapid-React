@@ -9,11 +9,12 @@ package frc.robot.subsystems.pneumatics;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Pneumatics extends SubsystemBase {
-
+    public boolean isON;
     public Compressor comp;
 
     public Pneumatics() {
@@ -21,6 +22,7 @@ public class Pneumatics extends SubsystemBase {
     }
 
     public boolean setCompressor(boolean on) {
+        this.isON = on;
         if (on) { comp.enabled(); }
         else { comp.disable(); }
         return comp.enabled();
@@ -29,6 +31,10 @@ public class Pneumatics extends SubsystemBase {
     public boolean toggleCompressor() {
 
         return setCompressor(!comp.enabled());
+    }
+
+    public void debug() {
+        SmartDashboard.putBoolean("Is Compressor On?", isON);
     }
 
     @Override
