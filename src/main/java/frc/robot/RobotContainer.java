@@ -15,6 +15,7 @@ import frc.robot.commands.drive.*;
 import frc.robot.commands.pneumatics.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
+import frc.robot.commands.vision.*;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -98,6 +99,9 @@ public class RobotContainer {
         m_GPad.getButton("B").whenHeld(new InstantCommand(() -> new RunShooter(m_Shooter, () -> 0)));
         // Indexer
         m_GPad.getButton("A").whenPressed(new InstantCommand(() -> new RunIndexer(m_indexer, () -> 0.5)));
+
+        m_GPad.getButton("BACK").whenHeld(new VisAlign(m_drive, m_limeLight, 
+      () -> true, () -> (Math.abs(m_GPad.getAxis("X")) > .4), () -> m_GPad.getAxis("Y")));
     }
 
     /**
