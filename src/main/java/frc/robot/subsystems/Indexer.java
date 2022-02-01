@@ -19,7 +19,7 @@ public class Indexer extends SubsystemBase {
     }
 
     public void runIndexerMotor(double speed) {
-        m_indexer1.set(speed);
+        m_indexer1.set(-speed);
     }
 }
 
