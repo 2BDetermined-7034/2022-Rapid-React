@@ -64,6 +64,7 @@ public class Drive extends SubsystemBase {
 
         m_leftPID = m_left.getPIDController();
         m_rightPID = m_right.getPIDController();
+        //TODO: move to constants
         m_leftPID.setP(0.05);
         m_rightPID.setP(0.05);
 
@@ -76,7 +77,6 @@ public class Drive extends SubsystemBase {
                 new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01), // Local measurement standard deviations. Left encoder, right encoder, gyro.
                 new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, 0.01) // Global measurement standard deviations. X, Y, and theta.
         );
-
     }
 
     /**

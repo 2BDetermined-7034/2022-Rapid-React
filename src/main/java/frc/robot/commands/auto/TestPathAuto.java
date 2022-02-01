@@ -3,6 +3,7 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.drive.MotionProfileCommand;
+import frc.robot.commands.intake.RunIntakeMotors;
 import frc.robot.subsystems.Drive;
 
 
