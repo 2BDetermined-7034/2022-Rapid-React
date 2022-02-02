@@ -61,6 +61,7 @@ public class RobotContainer {
       // Register
       m_drive.register();
       m_cargoIntake.register();
+      m_shooter.register();
 
       // Default commands
       m_cargoIntake.setDefaultCommand(m_solDown);
