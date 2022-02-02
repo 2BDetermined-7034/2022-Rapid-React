@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.drive.*;
@@ -15,7 +14,7 @@ import frc.robot.commands.pneumatics.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -36,7 +35,7 @@ public class RobotContainer {
 
   private final CargoIntake m_cargoIntake = new CargoIntake();
   private final Indexer m_indexer = new Indexer();
-  private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> m_GPad.getAxis("RB"));
+  private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> m_GPad.getAxis("RTrigger"));
 
   private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_GPad);
 
@@ -47,26 +46,13 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-      
-      SmartDashboard.putData(m_runIntake);
-      SmartDashboard.putData("Put Intake Down", m_solDown);
-      SmartDashboard.putData("Put Intake Up", m_solUp);
-      SmartDashboard.putData("Run Shooter", new InstantCommand(() -> new RunShooter(m_shooter, () -> 0.5)));
-      SmartDashboard.putData("Run Indexer", new InstantCommand(() -> new RunIndexer(m_indexer, () -> 0.5)));
-      SmartDashboard.putNumber("ShooterSpeed", 0);
-      // Configure the button bindings
-      SmartDashboard.putNumber("ty: (data)", m_limeLight.getYAngle());
-      SmartDashboard.putNumber("dist?: (data)", m_limeLight.getEstimatedDistance());
-      
-
       // Register
       m_drive.register();
       m_cargoIntake.register();
       m_shooter.register();
 
       // Default commands
-      m_cargoIntake.setDefaultCommand(m_solDown);
-      m_drive.setDefaultCommand(new DriveCommand(m_drive, m_GPad, () -> m_GPad.getAxis("LX"), () -> m_GPad.getAxis("RX")));
+      m_drive.setDefaultCommand(new DriveCommand(m_drive, m_GPad, () -> m_GPad.getAxis("LX"), () -> m_GPad.getAxis("LY")));
       m_indexer.setDefaultCommand(m_runIndexer);
 
       configureButtonBindings();
@@ -81,11 +67,13 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Intake
         m_GPad.getButton("START").toggleWhenPressed(m_runIntake);
+        m_GPad.getButton("RB").toggleWhenPressed(m_runShooter);
 
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
         // Indexer
         m_GPad.getButton("A").whenPressed(m_runShooter);
+
     }
 
     /**

@@ -18,7 +18,6 @@ public class CargoIntake extends SubsystemBase {
 
 
     public CargoIntake() {
-
         this.m_solenoid = new DoubleSolenoid(Constants.pneumatics.intake, Constants.intake.solenoidForward, Constants.intake.solenoidReverse);
         this.cargoMotor = new WPI_TalonSRX(Constants.intake.intakeTalon);
     }
@@ -39,7 +38,6 @@ public class CargoIntake extends SubsystemBase {
      * @param thing Boolean - either true (out) or false (in).
      */
     public void setSolenoid(boolean thing) {
-        SmartDashboard.putBoolean("Intake Down", thing);
         if (thing) {
             m_solenoid.set(Value.kForward);
         } else {

@@ -12,8 +12,6 @@ private final DoubleSupplier m_speed;
     public RunIndexer(Indexer indexer, DoubleSupplier speed) {
         this.m_indexer = indexer;
         this.m_speed = speed;
-        // each subsystem used by the command must be passed into the
-        // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements();
     }
 
@@ -50,20 +48,11 @@ private final DoubleSupplier m_speed;
      */
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
         return false;
     }
 
-    /**
-     * The action to take when the command ends. Called when either the command
-     * finishes normally -- that is it is called when {@link #isFinished()} returns
-     * true -- or when  it is interrupted/canceled. This is where you may want to
-     * wrap up loose ends, like shutting off a motor that was being used in the command.
-     *
-     * @param interrupted whether the command was interrupted/canceled
-     */
     @Override
     public void end(boolean interrupted) {
-
+        m_indexer.runIndexerMotor(0);
     }
 }

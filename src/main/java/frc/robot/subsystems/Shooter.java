@@ -36,11 +36,6 @@ public class Shooter extends SubsystemBase {
     m_motor2.set(m_speeds);
   }
 
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-  }
-
   /**
    * Method for command
    * @param speed to be taken from Vision
