@@ -25,7 +25,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
-  private final Shooter m_Shooter = new Shooter();
+  private final Shooter m_shooter = new Shooter();
+  private final RunShooter m_runShooter = new RunShooter(m_shooter, () -> 0.5);
 
   private final LimeLight m_limeLight = new LimeLight();
 
@@ -45,15 +46,17 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+      
       SmartDashboard.putData(m_runIntake);
       SmartDashboard.putData("Put Intake Down", m_solDown);
       SmartDashboard.putData("Put Intake Up", m_solUp);
-      SmartDashboard.putData("Run Shooter", new InstantCommand(() -> new RunShooter(m_Shooter, () -> 0)));
+      SmartDashboard.putData("Run Shooter", new InstantCommand(() -> new RunShooter(m_shooter, () -> 0.5)));
       SmartDashboard.putData("Run Indexer", new InstantCommand(() -> new RunIndexer(m_indexer, () -> 0.5)));
       SmartDashboard.putNumber("ShooterSpeed", 0);
       // Configure the button bindings
       SmartDashboard.putNumber("ty: (data)", m_limeLight.getYAngle());
       SmartDashboard.putNumber("dist?: (data)", m_limeLight.getEstimatedDistance());
+      
 
       // Register
       m_drive.register();
@@ -63,6 +66,7 @@ public class RobotContainer {
       m_cargoIntake.setDefaultCommand(m_solDown);
 
       m_drive.setDefaultCommand(new DriveCommand(m_drive, m_GPad, () -> m_GPad.getAxis("LX"), () -> m_GPad.getAxis("RX")));
+      m_shooter.setDefaultCommand(new RunShooter(m_shooter, () -> m_GPad.getAxis("RTrigger")));
 
       configureButtonBindings();
   }
@@ -79,8 +83,6 @@ public class RobotContainer {
 
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
-        // Shooter
-        m_GPad.getButton("B").whenHeld(new InstantCommand(() -> new RunShooter(m_Shooter, () -> 0)));
         // Indexer
         m_GPad.getButton("A").whenPressed(new InstantCommand(() -> new RunIndexer(m_indexer, () -> 0.5)));
     }
