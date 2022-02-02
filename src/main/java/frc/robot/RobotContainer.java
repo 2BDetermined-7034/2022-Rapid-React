@@ -36,8 +36,9 @@ public class RobotContainer {
 
   private final CargoIntake m_cargoIntake = new CargoIntake();
   private final Indexer m_indexer = new Indexer();
+  private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> m_GPad.getAxis("RB"));
 
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,() -> 0.5, m_GPad);
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_GPad);
 
   private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeUp);
   private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeDown);
@@ -65,9 +66,8 @@ public class RobotContainer {
 
       // Default commands
       m_cargoIntake.setDefaultCommand(m_solDown);
-
       m_drive.setDefaultCommand(new DriveCommand(m_drive, m_GPad, () -> m_GPad.getAxis("LX"), () -> m_GPad.getAxis("RX")));
-      m_shooter.setDefaultCommand(new RunShooter(m_shooter, () -> m_GPad.getAxis("RTrigger")));
+      m_indexer.setDefaultCommand(m_runIndexer);
 
       configureButtonBindings();
   }
@@ -85,7 +85,7 @@ public class RobotContainer {
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
         // Indexer
-        m_GPad.getButton("A").whenPressed(new InstantCommand(() -> new RunIndexer(m_indexer, () -> 0.5)));
+        m_GPad.getButton("A").whenPressed(m_runShooter);
     }
 
     /**
