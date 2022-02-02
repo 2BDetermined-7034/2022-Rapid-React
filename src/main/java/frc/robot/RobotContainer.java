@@ -67,12 +67,10 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Intake
         m_GPad.getButton("START").toggleWhenPressed(m_runIntake);
-
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
         // Indexer
         m_GPad.getButton("A").whenPressed(m_runShooter);
-
     }
 
     /**
