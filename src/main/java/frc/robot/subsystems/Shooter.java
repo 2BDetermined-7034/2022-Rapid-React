@@ -27,7 +27,7 @@ public class Shooter extends SubsystemBase {
         m_motor.setIdleMode(IdleMode.kCoast);
         m_motor2.setIdleMode(IdleMode.kCoast);
 
-        m_speeds = 0.0;
+        m_speeds = 0;
     }
 
   @Override

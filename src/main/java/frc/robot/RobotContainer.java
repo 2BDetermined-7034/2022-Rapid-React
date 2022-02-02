@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
 import frc.robot.controllers.*;
@@ -25,7 +26,8 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private final Shooter m_shooter = new Shooter();
-  private final RunShooter m_runShooter = new RunShooter(m_shooter, () -> 0.5);
+
+  private final RunShooter m_runShooter = new RunShooter(m_shooter, () -> 0.4);
 
   private final LimeLight m_limeLight = new LimeLight();
 
@@ -35,9 +37,9 @@ public class RobotContainer {
 
   private final CargoIntake m_cargoIntake = new CargoIntake();
   private final Indexer m_indexer = new Indexer();
-  private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> m_GPad.getAxis("RTrigger"));
+  private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.5);
 
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> 0.5);
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.5);
 
   private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeUp);
   private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeDown);
@@ -49,11 +51,9 @@ public class RobotContainer {
       // Register
       m_drive.register();
       m_cargoIntake.register();
-      m_shooter.register();
 
       // Default commands
-      m_drive.setDefaultCommand(new DriveCommand(m_drive, m_GPad, () -> m_GPad.getAxis("LX"), () -> m_GPad.getAxis("LY")));
-      m_indexer.setDefaultCommand(m_runIndexer);
+      m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LX"), () -> m_GPad.getAxis("LY")));
 
       configureButtonBindings();
   }
@@ -66,12 +66,12 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Intake
-        m_GPad.getButton("START").toggleWhenPressed(m_runIntake);
+        m_GPad.getButton("RB").whileHeld(m_runIntake);
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
 
         // Shooter
-        m_GPad.getButton("A").whenPressed(m_runShooter);
+        m_GPad.getButton("A").whileHeld(m_runShooter);
     }
 
     /**

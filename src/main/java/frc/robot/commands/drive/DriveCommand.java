@@ -11,19 +11,16 @@ import java.util.function.DoubleSupplier;
 
 public class DriveCommand extends CommandBase {
     private final Drive m_drive;
-    private final GPad m_gPad;
     private final DoubleSupplier m_driveY;
     private final DoubleSupplier m_driveX;
 
     /**
      *
      * @param drive The drivebase motors
-     * @param gamepad The gamepad
      * @param joystickY The joystick Y axis
      * @param joystickX The joystick X axis.
      */
-    public DriveCommand(Drive drive, GPad gamepad, DoubleSupplier joystickY, DoubleSupplier joystickX) {
-        m_gPad = gamepad;
+    public DriveCommand(Drive drive, DoubleSupplier joystickY, DoubleSupplier joystickX) {
         m_drive = drive;
         m_driveY = joystickY;
         m_driveX = joystickX;
@@ -45,9 +42,7 @@ public class DriveCommand extends CommandBase {
      */
     @Override
     public void execute() {
-        m_drive.arcadeDrive(m_driveY.getAsDouble(), -m_driveX.getAsDouble());
-        m_gPad.setRumble(RumbleType.kLeftRumble, m_driveY.getAsDouble());
-        m_gPad.setRumble(RumbleType.kRightRumble, m_driveX.getAsDouble());
+        m_drive.arcadeDrive(-m_driveY.getAsDouble(), -m_driveX.getAsDouble());
         //m_drive.debugNavX();
     }
 
