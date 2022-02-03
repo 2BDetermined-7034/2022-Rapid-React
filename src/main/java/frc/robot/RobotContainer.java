@@ -53,7 +53,7 @@ public class RobotContainer {
       m_cargoIntake.register();
 
       // Default commands
-      m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LX"), () -> m_GPad.getAxis("LY")));
+      m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
 
       configureButtonBindings();
   }
@@ -81,6 +81,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         //Returns the "auto" command, which we want to run in autonomous.
-        return new DriveMeters(m_drive, 1);
+        return new DriveMeters(m_drive, 10);
     }
 }

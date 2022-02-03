@@ -31,6 +31,7 @@ public class RunShooter extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,7 +40,7 @@ public class RunShooter extends CommandBase {
     double speed = shooterSpeed.getAsDouble();
 
 
-    m_shooter.setSpeed(SmartDashboard.getNumber("Speed", 0.4));
+    m_shooter.setSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.

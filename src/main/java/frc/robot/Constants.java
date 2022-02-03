@@ -42,14 +42,14 @@ public final class Constants {
         public static final boolean HIGH_GEAR = true;
         public static final boolean LOW_GEAR = false;
         //PID
-        public static final double leftFF = 1;
-        public static final double leftP = 1;
-        public static final double leftI = 0;
+        public static final double leftFF = 0;
+        public static final double leftP = 0;
+        public static final double leftI = 0.2;
         public static final double leftD = 0;
 
-        public static final double rightFF = 1;
-        public static final double rightP = 1;
-        public static final double rightI = 0;
+        public static final double rightFF = 0;
+        public static final double rightP = 0;
+        public static final double rightI = 0.2;
         public static final double rightD = 0;
         // Left
         public static final int driveL1ID = 4;
@@ -76,7 +76,7 @@ public final class Constants {
     }
 
     public final static class shooter {
-        public static final int leftShooterNEO = 37;
+        public static final int leftShooterNEO = 43;
         public static final int rightShooterNEO = 8;
         public static final int shooterMultiplier = 1;
     }

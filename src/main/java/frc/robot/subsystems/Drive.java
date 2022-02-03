@@ -37,6 +37,11 @@ public class Drive extends SubsystemBase {
         m_left = new CANSparkMax(Constants.driveBase.driveL1ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left2 = new CANSparkMax(Constants.driveBase.driveL2ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left3 = new CANSparkMax(Constants.driveBase.driveL3ID, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+        m_left.setInverted(true);
+        m_left2.setInverted(true);
+        m_left3.setInverted(true);
+
         m_right = new CANSparkMax(Constants.driveBase.driveR1ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_right2 = new CANSparkMax(Constants.driveBase.driveR2ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_right3 = new CANSparkMax(Constants.driveBase.driveR3ID, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -59,6 +64,7 @@ public class Drive extends SubsystemBase {
         m_left3.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         m_leftEnc = m_left.getEncoder();
+
         m_rightEnc = m_right.getEncoder();
 
         m_leftPID = m_left.getPIDController();
@@ -115,7 +121,7 @@ public class Drive extends SubsystemBase {
      * @return distance (meters?)
      */
     public double getLeftEncoderPosition(){
-        return -m_leftEnc.getPosition();
+        return m_leftEnc.getPosition();
     }
 
     /**
@@ -139,8 +145,8 @@ public class Drive extends SubsystemBase {
      * @param position (meters?)
      */
     public void setPosition(double position){
-        m_rightPID.setReference(position, CANSparkMax.ControlType.kSmartMotion);
-        m_leftPID.setReference(-position, CANSparkMax.ControlType.kSmartMotion);
+        m_rightPID.setReference(position, CANSparkMax.ControlType.kPosition);
+        m_leftPID.setReference(position, CANSparkMax.ControlType.kPosition);
     }
 
     /**
@@ -160,9 +166,15 @@ public class Drive extends SubsystemBase {
         if (gear == Constants.driveBase.HIGH_GEAR){
             m_leftEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.WheelMeterRatio);
             m_rightEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.WheelMeterRatio);
+            m_leftEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.WheelMeterRatio);
+            m_rightEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.WheelMeterRatio);
+
         } else {
             m_leftEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.WheelMeterRatio);
             m_rightEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.WheelMeterRatio);
+
+            m_leftEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.WheelMeterRatio);
+            m_rightEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.WheelMeterRatio);
         }
     }
 
@@ -199,6 +211,8 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("Left Encoder", getLeftEncoderPosition());
         SmartDashboard.putNumber("Odometry X", m_locationManager.getEstimatedPosition().getX());
         SmartDashboard.putNumber("Odometry Y", m_locationManager.getEstimatedPosition().getY());
+        SmartDashboard.putNumber("Right Velocity", getWheelVelocity().rightMetersPerSecond);
+        SmartDashboard.putNumber("Left Velocity", getWheelVelocity().leftMetersPerSecond);
     }
 
     /**
@@ -211,6 +225,6 @@ public class Drive extends SubsystemBase {
     @Override
     public void periodic() {
         m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
-        //debug();
+        debug();
     }
 }
