@@ -14,6 +14,7 @@ import frc.robot.subsystems.*;
 import frc.robot.commands.pneumatics.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
+import frc.robot.commands.vision.*;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -27,7 +28,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Shooter m_shooter = new Shooter();
 
-  private final RunShooter m_runShooter = new RunShooter(m_shooter, () -> 0.4);
+  private final RunShooter m_runShooter = new RunShooter(m_shooter, () -> 0.35);
 
   private final LimeLight m_limeLight = new LimeLight();
 
@@ -72,6 +73,8 @@ public class RobotContainer {
 
         // Shooter
         m_GPad.getButton("A").whileHeld(m_runShooter);
+        m_GPad.getButton("BACK").whenHeld(new VisAlign(m_drive, m_limeLight, 
+      () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
     }
 
     /**
