@@ -27,9 +27,9 @@ public class HookExtendo extends CommandBase {
     @Override
     public void execute() {
         if(m_direction){
-            m_climber.setWinchPos(SmartDashboard.getNumber("ExtendedValue", 0));
+            m_climber.setWinchPosition(SmartDashboard.getNumber("ExtendedValue", 0));
         }else{
-            m_climber.setWinchPos(0);
+            m_climber.setWinchPosition(0);
         }
     }
 

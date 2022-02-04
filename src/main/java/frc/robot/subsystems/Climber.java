@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -27,6 +28,7 @@ public class Climber extends SubsystemBase {
         m_winchTalon = new WPI_TalonFX(Constants.climb.winchMotorID);
 
         m_solenoid = new DoubleSolenoid(Constants.climb.solenoidForwardID, Constants.climb.solenoidBackID);
+        m_winchTalon.getSelectedSensorPosition();
 
         //TEMP SMARTDASHBOARD PUTNUMBER
         SmartDashboard.putNumber("ExtendedValue", Constants.climb.extendedValue);
@@ -42,31 +44,29 @@ public class Climber extends SubsystemBase {
         m_solenoid.toggle();
     }
 
-    //public CANError setWinchPos(double angle){
-    //    return(m_pid.setReference(angle, ControlType.kPosition));
-    //}
+    public void setWinchPosition(double angle){
+        m_winchTalon.set(ControlMode.Position, angle);
+    }
 
-    //public void resetEncoder(){
-    //    m_encoder.setPosition(0);
-    //}
+    public void resetEncoder(){
+        setEncoder(0);
+    }
 
-    //public void setEncoder(double pos) {
-    //    m_encoder.setPosition(pos);
-    //}
+    public void setEncoder(double pos) {
+        m_winchTalon.setSelectedSensorPosition(pos);
+    }
 
     @Override
     public void periodic() {
-        String test = "";
+        String test;
         if(m_solenoid.get() == DoubleSolenoid.Value.kForward){
             test = "Forward";
         }else{
             test = "Backward";
         }
-
-        // This method will be called once per scheduler run
-        // For testing purposes, put the encoder's value to SmartDashboard
-        //SmartDashboard.putNumber("Encoder Value", m_encoder.getPosition());
         SmartDashboard.putString("Solenoid State", test);
+
+        SmartDashboard.putNumber("Encoder Position", m_winchTalon.getSelectedSensorPosition());
     }
 
     @Override

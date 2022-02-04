@@ -40,6 +40,7 @@ public class RobotContainer {
   private final RunWinch m_runWinchNeg = new RunWinch(m_climber, -Constants.climb.winchSpeed);
   private final HookExtendo m_extendHook = new HookExtendo(m_climber, true, () -> m_controller.getRawButtonPressed(5));
   private final HookExtendo m_retractHook = new HookExtendo(m_climber, false, () -> m_controller.getRawButtonPressed(5));
+  private final ToggleSolenoid m_toggleSolenoid = new ToggleSolenoid(m_climber);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -50,7 +51,7 @@ public class RobotContainer {
     SmartDashboard.putData("Toggle Compressor:", new InstantCommand(m_compressor::toggleCompressor));
     
     //m_climber.setDefaultCommand(m_runSolenoidForward);
-    //m_compressor.setDefaultCommand(m_runCompressor);
+    m_compressor.setDefaultCommand(m_runCompressor);
 
     configureButtonBindings();
   }
@@ -64,13 +65,16 @@ public class RobotContainer {
   private void configureButtonBindings() {
     m_controller.getButton("A").whileHeld(m_runWinchPos);
     m_controller.getButton("B").whileHeld(m_runWinchNeg);
-    m_controller.getButton("X").whileHeld(m_extendHook);
+    //m_controller.getButton("X").whileHeld(m_extendHook);
     //m_controller.getButton("Y").whenPressed(m_retractHook);
+
+    m_controller.getButton("X").whenPressed(m_toggleSolenoid);
 
     m_controller.getButton("LB").whenPressed(m_runSolenoidForward);
     m_controller.getButton("RB").whenPressed(m_runSolenoidBackward);
 
-    m_controller.getButton("BACK").whenHeld(m_runCompressor);
+    m_controller.getButton("BACK").cancelWhenPressed(m_extendHook);
+    m_controller.getButton("BACK").cancelWhenPressed(m_retractHook);
 
     m_controller.getButton("START").whenPressed(new ResetClimbEncoder(m_climber));
   }
