@@ -24,6 +24,9 @@ public final class Constants {
         public static final int gamePadPort = 0;
         public static final int joystickPort = 1;
         public static final int buttonPadPort = 2;
+
+        public static final double yGate = 0.1;
+        public static final double xGate = 0.1;
     }
 
     public static final class pneumatics {
@@ -38,17 +41,17 @@ public final class Constants {
         public static final double width = 0.7112; //Length from left wheel to right
         public static final double highRatio = 0;
         public static final double lowRatio = 1/15.32;
-        public static final double WheelMeterRatio = 0.31918581;
+        public static final double wheelMeterRatio = (0.31918581/61);
         public static final boolean HIGH_GEAR = true;
         public static final boolean LOW_GEAR = false;
         //PID
         public static final double leftFF = 0;
-        public static final double leftP = 0;
+        public static final double leftP = 1;
         public static final double leftI = 0.2;
         public static final double leftD = 0;
 
         public static final double rightFF = 0;
-        public static final double rightP = 0;
+        public static final double rightP = 1;
         public static final double rightI = 0.2;
         public static final double rightD = 0;
         // Left
@@ -69,10 +72,10 @@ public final class Constants {
     public static final class motion {
         //Ramsete gains
         public static final double b = 2.1;
-        public static final double zeta = 0.8;
+        public static final double zeta = 0.4;
         //Max values
-        public static final double maxVelocity = 1;
-        public static final double maxAcceleration = 1;
+        public static final double maxVelocity = 0.5;
+        public static final double maxAcceleration = 0.3;
     }
 
     public final static class shooter {
@@ -92,7 +95,7 @@ public final class Constants {
     }
 
     public final static class indexer {
-        public static final int indexerTalon = 1;
+        public static final int indexerTalon = 4;
     }
 
     public static final class vision {

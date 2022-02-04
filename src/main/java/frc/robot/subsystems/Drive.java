@@ -64,7 +64,6 @@ public class Drive extends SubsystemBase {
         m_left3.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         m_leftEnc = m_left.getEncoder();
-
         m_rightEnc = m_right.getEncoder();
 
         m_leftPID = m_left.getPIDController();
@@ -164,17 +163,17 @@ public class Drive extends SubsystemBase {
      */
     public void setEncoderRatio(boolean gear){
         if (gear == Constants.driveBase.HIGH_GEAR){
-            m_leftEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.WheelMeterRatio);
-            m_rightEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.WheelMeterRatio);
-            m_leftEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.WheelMeterRatio);
-            m_rightEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.WheelMeterRatio);
+            m_leftEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelMeterRatio);
+            m_rightEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelMeterRatio);
+            m_leftEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelMeterRatio);
+            m_rightEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelMeterRatio);
 
         } else {
-            m_leftEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.WheelMeterRatio);
-            m_rightEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.WheelMeterRatio);
+            m_leftEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
+            m_rightEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
 
-            m_leftEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.WheelMeterRatio);
-            m_rightEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.WheelMeterRatio);
+            m_leftEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
+            m_rightEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
         }
     }
 
@@ -198,8 +197,13 @@ public class Drive extends SubsystemBase {
         double leftVelocity = wheelSpeeds.leftMetersPerSecond;
         double rightVelocity = wheelSpeeds.rightMetersPerSecond;
 
-        m_leftPID.setReference(leftVelocity, CANSparkMax.ControlType.kSmartVelocity);
-        m_rightPID.setReference(rightVelocity, CANSparkMax.ControlType.kSmartVelocity);
+        SmartDashboard.putNumber("KUM left", leftVelocity);
+        SmartDashboard.putNumber("KUM right", rightVelocity);
+
+        //m_leftPID.setReference(leftVelocity, CANSparkMax.ControlType.kSmartVelocity);
+        //m_rightPID.setReference(rightVelocity, CANSparkMax.ControlType.kSmartVelocity);
+        m_right.set(rightVelocity);
+        m_left.set(leftVelocity);
     }
 
     /**

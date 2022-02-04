@@ -21,7 +21,7 @@ public class Indexer extends SubsystemBase {
     }
 
     public void runIndexerMotor(double speed) {
-        this.m_speed = speed;
+        m_speed = speed;
         m_indexer1.set(-speed);
     }
 

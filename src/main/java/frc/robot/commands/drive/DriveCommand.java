@@ -3,6 +3,7 @@ package frc.robot.commands.drive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.controllers.GPad;
 import frc.robot.subsystems.Drive;
 
@@ -42,7 +43,12 @@ public class DriveCommand extends CommandBase {
      */
     @Override
     public void execute() {
-        m_drive.arcadeDrive(-m_driveY.getAsDouble(), -m_driveX.getAsDouble());
+        double xSpeed = m_driveY.getAsDouble();
+        double zRotation = m_driveX.getAsDouble();
+        if (Math.abs(xSpeed) < Constants.controller.yGate) xSpeed = 0;
+        if (Math.abs(zRotation) < Constants.controller.xGate) zRotation = 0;
+
+        m_drive.arcadeDrive(-m_driveY.getAsDouble(), m_driveX.getAsDouble());
         //m_drive.debugNavX();
     }
 

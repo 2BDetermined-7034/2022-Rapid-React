@@ -7,6 +7,7 @@ import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryParameterizer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drive;
@@ -35,6 +36,7 @@ public class MotionProfileCommand extends CommandBase {
         } catch (TrajectoryParameterizer.TrajectoryGenerationException exception) {
             m_trajectory = new Trajectory();
             DriverStation.reportError("Failed to load trajectory", false);
+            SmartDashboard.putString("Nightmare nightmare nightmare", "true");
         }
     }
 
@@ -51,6 +53,10 @@ public class MotionProfileCommand extends CommandBase {
     public void execute() {
         Trajectory.State setpoint = m_trajectory.sample(timer.get());
         ChassisSpeeds chassisSpeeds = controller.calculate(m_drive.getRobotPos(), setpoint);
+        SmartDashboard.putNumber("Chassis speeds x", chassisSpeeds.vxMetersPerSecond);
+        SmartDashboard.putNumber("Chassis speeds y", chassisSpeeds.vyMetersPerSecond);
+        SmartDashboard.putNumber("Chassis speeds radians", chassisSpeeds.omegaRadiansPerSecond);
+
         m_drive.kumDrive(chassisSpeeds);
     }
 

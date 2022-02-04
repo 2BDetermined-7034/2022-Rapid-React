@@ -26,12 +26,7 @@ public class CargoIntake extends SubsystemBase {
      * @param speed The speed you want to move the motor at.
      */
     public void mmmRunMotor(double speed) {
-        this.m_speed = speed;
         cargoMotor.set(speed);
-    }
-
-    public void debug() {
-        SmartDashboard.putNumber("Intake Speed", m_speed);
     }
 
     /**

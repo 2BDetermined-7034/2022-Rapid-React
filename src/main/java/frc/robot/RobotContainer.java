@@ -38,9 +38,9 @@ public class RobotContainer {
 
   private final CargoIntake m_cargoIntake = new CargoIntake();
   private final Indexer m_indexer = new Indexer();
-  private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.5);
+  private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.3);
 
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.5);
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.1);
 
   private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeUp);
   private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeDown);
@@ -67,9 +67,12 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Intake
-        m_GPad.getButton("RB").whileHeld(m_runIntake);
+        m_GPad.getButton("LB").toggleWhenPressed(m_runIntake);
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
+
+        // Indexer
+        m_GPad.getButton("RB").toggleWhenPressed(m_runIndexer);
 
         // Shooter
         m_GPad.getButton("A").whileHeld(m_runShooter);
@@ -84,6 +87,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         //Returns the "auto" command, which we want to run in autonomous.
-        return new DriveMeters(m_drive, 10);
+        return new MotionProfileCommand(m_drive, "5ball", false);
     }
 }
