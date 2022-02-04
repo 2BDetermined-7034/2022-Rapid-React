@@ -6,9 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
+//import frc.robot.commands.sensor.ReadSensor;
 import frc.robot.controllers.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.pneumatics.*;
@@ -40,10 +40,13 @@ public class RobotContainer {
   private final Indexer m_indexer = new Indexer();
   private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.3);
 
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.1);
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.4);
 
   private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeUp);
   private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeDown);
+
+  //private final AnalogSensor m_analogSenseor = new AnalogSensor();
+  //private final ReadSensor m_readSensor = new ReadSensor(m_analogSenseor);
 
 
 
@@ -55,8 +58,10 @@ public class RobotContainer {
 
       // Default commands
       m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
+      //m_analogSenseor.setDefaultCommand(m_readSensor);
 
       configureButtonBindings();
+
   }
 
     /**
@@ -68,11 +73,13 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Intake
         m_GPad.getButton("LB").toggleWhenPressed(m_runIntake);
-        m_GPad.getButton("X").whenPressed(m_solDown);
+        //m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
+        m_GPad.getButton("X").toggleWhenPressed(new RunIntakeMotors(m_cargoIntake, () -> 0.5));
 
         // Indexer
         m_GPad.getButton("RB").toggleWhenPressed(m_runIndexer);
+        m_GPad.getButton("B").toggleWhenPressed(new RunIndexer(m_indexer, () -> -0.5));
 
         // Shooter
         m_GPad.getButton("A").whileHeld(m_runShooter);
