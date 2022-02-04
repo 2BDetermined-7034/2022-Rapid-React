@@ -76,7 +76,7 @@ public class RobotContainer {
         //m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
         m_GPad.getButton("X").toggleWhenPressed(new RunIntakeMotors(m_cargoIntake, () -> 0.5));
-
+        if(m_GPad.getRawButtonPressed(4)) new IntakeSolenoid(m_cargoIntake, () -> m_GPad.getRawButton(4));
         // Indexer
         m_GPad.getButton("RB").toggleWhenPressed(m_runIndexer);
         m_GPad.getButton("B").toggleWhenPressed(new RunIndexer(m_indexer, () -> -0.5));
