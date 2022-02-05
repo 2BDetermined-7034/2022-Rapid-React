@@ -12,7 +12,7 @@ private final DoubleSupplier m_speed;
     public RunIndexer(Indexer indexer, DoubleSupplier speed) {
         this.m_indexer = indexer;
         this.m_speed = speed;
-        addRequirements();
+        addRequirements(m_indexer);
     }
 
     /**
