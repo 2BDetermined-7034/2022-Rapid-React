@@ -12,13 +12,6 @@ public class AnalogSensor extends SubsystemBase {
         m_sensor = new AnalogInput(0);
     }
 
-    /**
-     *
-     * @return Sensor average value
-     */
-    public double readValue() {
-        return m_sensor.getAverageValue();
-    }
 
     /**
      *

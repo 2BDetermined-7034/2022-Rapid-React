@@ -25,15 +25,15 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-
+    private final AnalogSensor m_analogSenseor = new AnalogSensor();
+    private final ReadSensor m_readSensor = new ReadSensor(m_analogSenseor);
   // The robot's subsystems and commands are defined here...
   private final Shooter m_shooter = new Shooter();
 
   private final RunShooter m_runShooter = new RunShooter(m_shooter, () -> 0.35);
 
   private final LimeLight m_limeLight = new LimeLight();
-    private final AnalogSensor m_analogSenseor = new AnalogSensor();
-    private final ReadSensor m_readSensor = new ReadSensor(m_analogSenseor);
+
   // Drive
   private final Drive m_drive = new Drive();
   public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
