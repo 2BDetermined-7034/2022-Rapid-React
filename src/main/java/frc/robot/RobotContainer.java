@@ -32,7 +32,8 @@ public class RobotContainer {
   private final RunShooter m_runShooter = new RunShooter(m_shooter, () -> 0.35);
 
   private final LimeLight m_limeLight = new LimeLight();
-
+    private final AnalogSensor m_analogSenseor = new AnalogSensor();
+    private final ReadSensor m_readSensor = new ReadSensor(m_analogSenseor);
   // Drive
   private final Drive m_drive = new Drive();
   public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
@@ -41,13 +42,12 @@ public class RobotContainer {
   private final Indexer m_indexer = new Indexer();
   private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.3);
 
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.4);
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.4, m_analogSenseor);
 
   private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, true);
   private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, false);
 
-  private final AnalogSensor m_analogSenseor = new AnalogSensor();
-  private final ReadSensor m_readSensor = new ReadSensor(m_analogSenseor);
+
 
 
 
@@ -77,7 +77,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Intake
         m_GPad.getButton("LB").toggleWhenPressed(m_runIntake);
-        m_GPad.getButton("X").toggleWhenPressed(new RunIntakeMotors(m_cargoIntake, () -> 0.5));
+        m_GPad.getButton("X").toggleWhenPressed(new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_analogSenseor));
 
         /*
         m_GPad.getButton("X").whenPressed(m_solDown);
