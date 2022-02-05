@@ -188,6 +188,12 @@ public class Drive extends SubsystemBase {
         m_differentialDrive.arcadeDrive(xSpeed, zRotation);
     }
 
+    public void setVelocity(double velocity){
+        SmartDashboard.putNumber("Vel", velocity);
+        m_rightPID.setReference(velocity, CANSparkMax.ControlType.kVelocity);
+        m_leftPID.setReference(velocity, CANSparkMax.ControlType.kVelocity);
+    }
+
     /**
      * Kinematic utility motion drive method
      * @param chassisSpeeds the chassis speed of drive
@@ -197,13 +203,8 @@ public class Drive extends SubsystemBase {
         double leftVelocity = wheelSpeeds.leftMetersPerSecond;
         double rightVelocity = wheelSpeeds.rightMetersPerSecond;
 
-        SmartDashboard.putNumber("KUM left", leftVelocity);
-        SmartDashboard.putNumber("KUM right", rightVelocity);
-
-        //m_leftPID.setReference(leftVelocity, CANSparkMax.ControlType.kSmartVelocity);
-        //m_rightPID.setReference(rightVelocity, CANSparkMax.ControlType.kSmartVelocity);
-        m_right.set(rightVelocity);
         m_left.set(leftVelocity);
+        m_right.set(rightVelocity);
     }
 
     /**

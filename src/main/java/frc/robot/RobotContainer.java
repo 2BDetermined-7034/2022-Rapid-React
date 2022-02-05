@@ -6,9 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
-//import frc.robot.commands.sensor.ReadSensor;
+import frc.robot.commands.sensor.ReadSensor;
 import frc.robot.controllers.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.pneumatics.*;
@@ -42,11 +43,11 @@ public class RobotContainer {
 
   private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.4);
 
-  private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeUp);
-  private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeDown);
+  private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, true);
+  private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, false);
 
-  //private final AnalogSensor m_analogSenseor = new AnalogSensor();
-  //private final ReadSensor m_readSensor = new ReadSensor(m_analogSenseor);
+  private final AnalogSensor m_analogSenseor = new AnalogSensor();
+  private final ReadSensor m_readSensor = new ReadSensor(m_analogSenseor);
 
 
 
@@ -56,10 +57,13 @@ public class RobotContainer {
       m_drive.register();
       m_cargoIntake.register();
 
-      // Default commands
-      m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
-      //m_analogSenseor.setDefaultCommand(m_readSensor);
+      m_analogSenseor.setDefaultCommand(m_readSensor);
 
+      SmartDashboard.putData("Intake Down", m_solDown);
+      SmartDashboard.putData("Intake Up", m_solUp);
+      // Default commands
+      //m_drive.setDefaultCommand(new TuneVelocity(m_drive, () -> m_GPad.getAxis("LTrigger")));
+      m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
       configureButtonBindings();
 
   }
@@ -73,10 +77,13 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Intake
         m_GPad.getButton("LB").toggleWhenPressed(m_runIntake);
-        //m_GPad.getButton("X").whenPressed(m_solDown);
-        m_GPad.getButton("Y").whenPressed(m_solUp);
         m_GPad.getButton("X").toggleWhenPressed(new RunIntakeMotors(m_cargoIntake, () -> 0.5));
-        if(m_GPad.getRawButtonPressed(4)) new IntakeSolenoid(m_cargoIntake, () -> m_GPad.getRawButton(4));
+
+        /*
+        m_GPad.getButton("X").whenPressed(m_solDown);
+        m_GPad.getButton("Y").whenPressed(m_solUp);
+         */
+
         // Indexer
         m_GPad.getButton("RB").toggleWhenPressed(m_runIndexer);
         m_GPad.getButton("B").toggleWhenPressed(new RunIndexer(m_indexer, () -> -0.5));
@@ -85,6 +92,9 @@ public class RobotContainer {
         m_GPad.getButton("A").whileHeld(m_runShooter);
         m_GPad.getButton("BACK").whenHeld(new VisAlign(m_drive, m_limeLight, 
       () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+
+
+
     }
 
     /**
@@ -94,6 +104,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         //Returns the "auto" command, which we want to run in autonomous.
-        return new MotionProfileCommand(m_drive, "5ball", false);
+        return new MotionProfileCommand(m_drive, "5ball", true);
     }
 }

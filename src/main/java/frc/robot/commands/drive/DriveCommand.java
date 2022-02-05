@@ -1,12 +1,17 @@
 package frc.robot.commands.drive;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.controllers.GPad;
 import frc.robot.subsystems.Drive;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.function.DoubleSupplier;
 
 
@@ -49,7 +54,6 @@ public class DriveCommand extends CommandBase {
         if (Math.abs(zRotation) < Constants.controller.xGate) zRotation = 0;
 
         m_drive.arcadeDrive(-m_driveY.getAsDouble(), m_driveX.getAsDouble());
-        //m_drive.debugNavX();
     }
 
     /**

@@ -1,4 +1,3 @@
-/*
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -11,8 +10,17 @@ public class AnalogSensor extends SubsystemBase {
         m_sensor = new AnalogInput(0);
     }
 
-    public double readSensor(){
+    /**
+     *
+     * @return Sensor average value
+     */
+    public double readValue() {
         return m_sensor.getAverageValue();
+    }
+
+    public boolean readSensor(){
+        if(m_sensor.getAverageValue() < 10) return true;
+        return false;
     }
 
     @Override
@@ -20,4 +28,3 @@ public class AnalogSensor extends SubsystemBase {
 
     }
 }
-*/

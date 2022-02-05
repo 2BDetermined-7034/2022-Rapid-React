@@ -39,4 +39,7 @@ public class CargoIntake extends SubsystemBase {
             m_solenoid.set(Value.kReverse);
         }
     }
+    public void toggleSolenoid(){
+        m_solenoid.toggle();
+    }
 }

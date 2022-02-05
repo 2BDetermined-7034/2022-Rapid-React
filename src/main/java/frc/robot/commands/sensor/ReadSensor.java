@@ -1,4 +1,3 @@
-/*
 package frc.robot.commands.sensor;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,10 +9,9 @@ public class ReadSensor extends CommandBase {
 
     public ReadSensor(AnalogSensor analogSensor) {
        m_sensor = analogSensor;
+
+       addRequirements(m_sensor);
     }
-
-
- */
 
     /**
      * The initial subroutine of a command.  Called once when the command is initially scheduled.
@@ -29,7 +27,8 @@ public class ReadSensor extends CommandBase {
      */
     @Override
     public void execute() {
-        SmartDashboard.putNumber("Sensor Value", m_sensor.readSensor());
+        SmartDashboard.putNumber("Sensor", m_sensor.readValue());
+        SmartDashboard.putBoolean("Sensor Value", m_sensor.readSensor());
     }
 
     /**

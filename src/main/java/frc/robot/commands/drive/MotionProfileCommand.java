@@ -53,10 +53,7 @@ public class MotionProfileCommand extends CommandBase {
     public void execute() {
         Trajectory.State setpoint = m_trajectory.sample(timer.get());
         ChassisSpeeds chassisSpeeds = controller.calculate(m_drive.getRobotPos(), setpoint);
-        SmartDashboard.putNumber("Chassis speeds x", chassisSpeeds.vxMetersPerSecond);
-        SmartDashboard.putNumber("Chassis speeds y", chassisSpeeds.vyMetersPerSecond);
-        SmartDashboard.putNumber("Chassis speeds radians", chassisSpeeds.omegaRadiansPerSecond);
-
+        m_drive.debug();
         m_drive.kumDrive(chassisSpeeds);
     }
 
