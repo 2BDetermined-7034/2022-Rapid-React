@@ -28,7 +28,7 @@ public class ReadSensor extends CommandBase {
     @Override
     public void execute() {
         SmartDashboard.putNumber("Sensor", m_sensor.readValue());
-        SmartDashboard.putBoolean("Sensor Value", m_sensor.readSensor());
+        SmartDashboard.putBoolean("Sensor Value", m_sensor.sensorBoolean());
     }
 
     /**
