@@ -18,6 +18,15 @@ import frc.robot.commands.shooter.*;
 import frc.robot.commands.vision.*;
 import edu.wpi.first.wpilibj2.command.Command;
 
+/*
+Rawr X3 *nuzzles* How are you? *pounces on you* you're so warm o3o *notices you have a bulge* someone's happy!
+*nuzzles your necky wecky* ~murr~ hehe ;) *rubbies your bulgy wolgy* you're so big! *rubbies more on your bulgy wolgy*
+it doesn't stop growing .///. *kisses you and licks your neck* daddy likes ;)
+*nuzzle wuzzle* I hope daddy likes *wiggles butt and squirms* I wanna see your big daddy meat! *wiggles butt*
+I have a little itch o3o *wags tails* can you please get my itch? *put paws on your chest* nyea~ it's a seven inch itch
+*rubs your chest* can you pwease? *squirms* pwetty pwease? :(
+ */
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -44,8 +53,8 @@ public class RobotContainer {
 
   private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.4, m_analogSenseor);
 
-  private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, true);
-  private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, false);
+  private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, false);
+  private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, true);
 
 
 
@@ -57,6 +66,7 @@ public class RobotContainer {
       m_drive.register();
       m_cargoIntake.register();
 
+      m_cargoIntake.setDefaultCommand(m_solUp);
       m_analogSenseor.setDefaultCommand(m_readSensor);
 
       SmartDashboard.putData("Intake Down", m_solDown);
@@ -78,7 +88,6 @@ public class RobotContainer {
         // Intake
         m_GPad.getButton("LB").toggleWhenPressed(m_runIntake);
         m_GPad.getButton("X").toggleWhenPressed(new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_analogSenseor));
-
         /*
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);

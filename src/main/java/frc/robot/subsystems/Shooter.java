@@ -12,6 +12,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/*
+            ,.  ,.
+            ||  ||
+           ,''--''.
+          : (.)(.) :
+         ,'        `.
+         :          :
+         :          :
+   -ctr- `._m____m_,'
+ */
 
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter subsystem */

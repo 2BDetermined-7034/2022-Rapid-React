@@ -1,11 +1,10 @@
 package frc.robot.commands.intake;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.controllers.GPad;
 import frc.robot.subsystems.AnalogSensor;
 import frc.robot.subsystems.CargoIntake;
-import frc.robot.subsystems.Indexer;
 
 import java.util.function.DoubleSupplier;
 
@@ -34,21 +33,25 @@ public class RunIntakeMotors extends CommandBase {
         double speed = fowS.getAsDouble();
 
         m_intake.mmmRunMotor(speed);
-/*
-        if(m_analog.sensorBoolean()) {
+
+        /*
+        if(m_analog.sensorBoolean0()) {
             m_intake.mmmRunMotor(0);
         }
 
- */
-
-
-
-
+        if(m_analog.sensorBoolean1_2()) {
+            m_intake.mmmRunMotor(0);
+        }
+        */
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        // Sets the intake solenoid up
+        if(m_analog.sensorBoolean0()) {
+            m_intake.setSolenoid(false);
+        }
+        return m_analog.sensorBoolean0();
     }
 
     @Override
