@@ -12,10 +12,8 @@ import frc.robot.commands.indexer.*;
 import frc.robot.commands.sensor.ReadSensor;
 import frc.robot.controllers.*;
 import frc.robot.subsystems.*;
-import frc.robot.commands.pneumatics.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
-import frc.robot.commands.vision.*;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /*
