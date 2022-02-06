@@ -71,8 +71,8 @@ public final class Constants {
         public static final double highRatio = 0;
         public static final double lowRatio = 1/15.32;
         public static final double wheelMeterRatio = (0.31918581/61);
-        public static final boolean HIGH_GEAR = true;
-        public static final boolean LOW_GEAR = false;
+        public static final boolean HIGH_GEAR = false;
+        public static final boolean LOW_GEAR = true;
         //PID
         public static final double leftFF = 0;
         public static final double leftP = 0.029;

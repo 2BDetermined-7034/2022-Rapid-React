@@ -31,8 +31,10 @@ public class RunIntakeMotors extends CommandBase {
     @Override
     public void execute() {
         double speed = fowS.getAsDouble();
-
+        m_intake.setSolenoid(false);
         m_intake.mmmRunMotor(speed);
+
+
 
         /*
         if(m_analog.sensorBoolean0()) {
@@ -48,10 +50,10 @@ public class RunIntakeMotors extends CommandBase {
     @Override
     public boolean isFinished() {
         // Sets the intake solenoid up
-        if(m_analog.sensorBoolean0()) {
-            m_intake.setSolenoid(false);
+        if(!m_analog.sensorBoolean0()) {
+            m_intake.setSolenoid(true);
         }
-        return m_analog.sensorBoolean0();
+        return !m_analog.sensorBoolean0();
     }
 
     @Override
