@@ -36,7 +36,6 @@ public class MotionProfileCommand extends CommandBase {
         } catch (TrajectoryParameterizer.TrajectoryGenerationException exception) {
             m_trajectory = new Trajectory();
             DriverStation.reportError("Failed to load trajectory", false);
-            SmartDashboard.putString("Nightmare nightmare nightmare", "true");
         }
     }
 

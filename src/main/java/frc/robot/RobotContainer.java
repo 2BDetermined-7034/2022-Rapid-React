@@ -38,7 +38,7 @@ public class RobotContainer {
 
   private final CargoIntake m_cargoIntake = new CargoIntake();
   private final Indexer m_indexer = new Indexer();
-  private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.3);
+  private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.3, m_analogSenseor);
 
   private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.4, m_analogSenseor);
 
@@ -81,13 +81,11 @@ public class RobotContainer {
         m_GPad.getButton("START").whenPressed(m_solUp);
         // Indexer
         m_GPad.getButton("RB").toggleWhenPressed(m_runIndexer);
-        m_GPad.getButton("B").toggleWhenPressed(new RunIndexer(m_indexer, () -> -0.5));
+        m_GPad.getButton("B").toggleWhenPressed(new RunIndexer(m_indexer, () -> -0.5, m_analogSenseor));
 
         // Shooter
         m_GPad.getButton("A").whileHeld(m_runShooter);
         //m_GPad.getButton("BACK").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
-
-
 
     }
 

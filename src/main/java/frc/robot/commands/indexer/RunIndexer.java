@@ -1,6 +1,7 @@
 package frc.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.AnalogSensor;
 import frc.robot.subsystems.Indexer;
 
 import java.util.function.DoubleSupplier;
@@ -8,9 +9,11 @@ import java.util.function.DoubleSupplier;
 public class RunIndexer extends CommandBase {
 private final Indexer m_indexer;
 private final DoubleSupplier m_speed;
-    public RunIndexer(Indexer indexer, DoubleSupplier speed) {
+private final AnalogSensor m_sensor;
+    public RunIndexer(Indexer indexer, DoubleSupplier speed, AnalogSensor colorSensor) {
         this.m_indexer = indexer;
         this.m_speed = speed;
+        this.m_sensor = colorSensor;
         addRequirements(m_indexer);
     }
 
