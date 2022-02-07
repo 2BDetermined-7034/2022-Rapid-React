@@ -22,7 +22,6 @@ public class Drive extends SubsystemBase {
 
     private final CANSparkMax m_left, m_left2, m_left3, m_right, m_right2,  m_right3;
     private final RelativeEncoder m_leftEnc, m_rightEnc;
-    private final SparkMaxPIDController m_leftPID, m_rightPID;
 
     private final Solenoid m_shifter;
 
@@ -65,19 +64,6 @@ public class Drive extends SubsystemBase {
 
         m_leftEnc = m_left.getEncoder();
         m_rightEnc = m_right.getEncoder();
-
-        m_leftPID = m_left.getPIDController();
-        m_rightPID = m_right.getPIDController();
-
-        m_leftPID.setFF(Constants.driveBase.leftFF);
-        m_leftPID.setP(Constants.driveBase.leftP);
-        m_leftPID.setI(Constants.driveBase.leftI);
-        m_leftPID.setD(Constants.driveBase.leftD);
-
-        m_rightPID.setFF(Constants.driveBase.rightFF);
-        m_rightPID.setP(Constants.driveBase.rightP);
-        m_rightPID.setI(Constants.driveBase.rightI);
-        m_rightPID.setD(Constants.driveBase.rightD);
 
         m_gyro = new AHRS(SPI.Port.kMXP);
         m_shifter = new Solenoid(Constants.pneumatics.shifter, Constants.driveBase.shifterID);
@@ -140,15 +126,6 @@ public class Drive extends SubsystemBase {
     }
 
     /**
-     * Set desired encoder position and use a PID loop to get there
-     * @param position (meters?)
-     */
-    public void setPosition(double position){
-        m_rightPID.setReference(position, CANSparkMax.ControlType.kPosition);
-        m_leftPID.setReference(position, CANSparkMax.ControlType.kPosition);
-    }
-
-    /**
      * Method to set gear on the shifter
      * @param gear high is false, low is true
      */
@@ -186,12 +163,6 @@ public class Drive extends SubsystemBase {
         xSpeed *= Constants.driveBase.xSpeed;
         zRotation *= Constants.driveBase.xRot;
         m_differentialDrive.arcadeDrive(xSpeed, zRotation);
-    }
-
-    public void setVelocity(double velocity){
-        SmartDashboard.putNumber("Vel", velocity);
-        m_rightPID.setReference(velocity, CANSparkMax.ControlType.kVelocity);
-        m_leftPID.setReference(velocity, CANSparkMax.ControlType.kVelocity);
     }
 
     /**

@@ -16,15 +16,6 @@ import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import edu.wpi.first.wpilibj2.command.Command;
 
-/*
-Rawr X3 *nuzzles* How are you? *pounces on you* you're so warm o3o *notices you have a bulge* someone's happy!
-*nuzzles your necky wecky* ~murr~ hehe ;) *rubbies your bulgy wolgy* you're so big! *rubbies more on your bulgy wolgy*
-it doesn't stop growing .///. *kisses you and licks your neck* daddy likes ;)
-*nuzzle wuzzle* I hope daddy likes *wiggles butt and squirms* I wanna see your big daddy meat! *wiggles butt*
-I have a little itch o3o *wags tails* can you please get my itch? *put paws on your chest* nyea~ it's a seven inch itch
-*rubs your chest* can you pwease? *squirms* pwetty pwease? :(
- */
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
