@@ -28,7 +28,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Shooter m_shooter = new Shooter();
 
-  private final RunShooter m_runShooter = new RunShooter(m_shooter, () -> 0.35);
+  private final RunShooter m_runShooter = new RunShooter(m_shooter, () -> SmartDashboard.getNumber("Shooter Speed", 0));
 
   private final LimeLight m_limeLight = new LimeLight();
 
@@ -59,6 +59,7 @@ public class RobotContainer {
 
       SmartDashboard.putData("Intake Down", m_solDown);
       SmartDashboard.putData("Intake Up", m_solUp);
+      SmartDashboard.putNumber("Shooter Speed", 0.2);
       // Default commands
       //m_drive.setDefaultCommand(new TuneVelocity(m_drive, () -> m_GPad.getAxis("LTrigger")));
       m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
@@ -74,17 +75,17 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Intake
-        m_GPad.getButton("LB").toggleWhenPressed(m_runIntake);
-        m_GPad.getButton("X").toggleWhenPressed(new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_analogSenseor));
+        m_GPad.getButton("B").whileHeld(m_runIntake);
+        m_GPad.getButton("RB").whileHeld(new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_analogSenseor));
 
         m_GPad.getButton("BACK").whenPressed(m_solDown);
         m_GPad.getButton("START").whenPressed(m_solUp);
         // Indexer
-        m_GPad.getButton("RB").toggleWhenPressed(m_runIndexer);
-        m_GPad.getButton("B").toggleWhenPressed(new RunIndexer(m_indexer, () -> -0.5, m_analogSenseor));
+        m_GPad.getButton("Y").whileHeld(m_runIndexer);
+        m_GPad.getButton("LB").whileHeld(new RunIndexer(m_indexer, () -> -0.5, m_analogSenseor));
 
         // Shooter
-        m_GPad.getButton("A").whileHeld(m_runShooter);
+        m_GPad.getButton("A").toggleWhenPressed(m_runShooter);
         //m_GPad.getButton("BACK").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
 
     }

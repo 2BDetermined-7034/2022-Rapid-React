@@ -66,8 +66,8 @@ public final class Constants {
         //Shifter
         public static final int shifterID = 0;
         // Speed
-        public static final double xSpeed = 1;
-        public static final double xRot = 0.7;
+        public static final double xSpeed = .7;
+        public static final double xRot = 0.6;
     }
     public static final class motion {
         //Ramsete gains
