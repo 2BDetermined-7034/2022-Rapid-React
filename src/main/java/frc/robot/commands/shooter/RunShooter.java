@@ -6,6 +6,9 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.DoubleSupplier;
+
+import frc.robot.Constants;
+import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
 
@@ -13,6 +16,7 @@ public class RunShooter extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     private final Shooter m_shooter;
+    private final Indexer m_index;
     private final DoubleSupplier shooterSpeed;
 
     /**
@@ -21,7 +25,8 @@ public class RunShooter extends CommandBase {
      * @param subsystem The subsystem used by this command.
      * @param speed DoubleSupplier for the motor.
      */
-    public RunShooter(Shooter subsystem, DoubleSupplier speed) {
+    public RunShooter(Shooter subsystem, Indexer indexer, DoubleSupplier speed) {
+        this.m_index = indexer;
         m_shooter = subsystem;
         shooterSpeed = speed;
 
@@ -39,7 +44,7 @@ public class RunShooter extends CommandBase {
     @Override
     public void execute() {
         double speed = shooterSpeed.getAsDouble();
-
+        m_index.setSpeed(speed -Constants.shooter.indexerSpeed);
         m_shooter.setSpeed(speed);
     }
 

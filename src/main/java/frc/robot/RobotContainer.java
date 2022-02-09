@@ -23,21 +23,28 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+    private final CargoIntake m_cargoIntake = new CargoIntake();
+    private final Indexer m_indexer = new Indexer();
+
     private final AnalogSensor m_analogSenseor = new AnalogSensor();
+
+    private final LimeLight m_limeLight = new LimeLight();
+
+    private final Drive m_drive = new Drive();
+
+    private final Shooter m_shooter = new Shooter();
+
+
+
     private final ReadSensor m_readSensor = new ReadSensor(m_analogSenseor);
   // The robot's subsystems and commands are defined here...
-  private final Shooter m_shooter = new Shooter();
 
-  private final RunShooter m_runShooter = new RunShooter(m_shooter, () -> SmartDashboard.getNumber("Shooter Speed", 0));
-
-  private final LimeLight m_limeLight = new LimeLight();
+  private final RunShooter m_runShooter = new RunShooter(m_shooter, m_indexer, () -> SmartDashboard.getNumber("Shooter Speed", 0));
 
   // Drive
-  private final Drive m_drive = new Drive();
   public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
 
-  private final CargoIntake m_cargoIntake = new CargoIntake();
-  private final Indexer m_indexer = new Indexer();
   private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.3, m_analogSenseor);
 
   private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.4, m_analogSenseor);
@@ -98,6 +105,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         //Returns the "auto" command, which we want to run in autonomous.
-        return new MotionProfileCommand(m_drive, "9ball", true);
+        return new MotionProfileCommand(m_drive, "5ball", true);
     }
 }

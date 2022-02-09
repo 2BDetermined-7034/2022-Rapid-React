@@ -40,9 +40,9 @@ public final class Constants {
         // Odometry
         public static final double length = 0.762; // Distance from
         public static final double width = 0.7112; //Length from left wheel to right
-        public static final double highRatio = 0;
+        public static final double highRatio = 1/4.17;
         public static final double lowRatio = 1/15.32;
-        public static final double wheelMeterRatio = (0.31918581/61);
+        public static final double wheelMeterRatio = (0.31918581/61) * (1.15);
         public static final boolean HIGH_GEAR = true;
         public static final boolean LOW_GEAR = false;
         //PID
@@ -67,21 +67,22 @@ public final class Constants {
         public static final int leftShifterID = 0;
         public static final int rightShifterID = 7;
         // Speed
-        public static final double xSpeed = .5;
-        public static final double xRot = 0.4;
+        public static final double xSpeed = 1;
+        public static final double xRot = .7;
     }
     public static final class motion {
         //Ramsete gains
         public static final double b = 2.1;
         public static final double zeta = 0.6;
         //Max values
-        public static final double maxVelocity = 0.3;
+        public static final double maxVelocity = 0.7;
         public static final double maxAcceleration = 0.2;
     }
 
     public final static class shooter {
         public static final int leftShooterNEO = 43;
         public static final int rightShooterNEO = 8;
+        public static final double indexerSpeed = .1;
         public static final int shooterMultiplier = 1;
     }
 
