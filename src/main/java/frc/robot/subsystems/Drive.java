@@ -6,6 +6,7 @@ import com.revrobotics.*;
 import edu.wpi.first.math.MatBuilder;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -23,8 +24,7 @@ public class Drive extends SubsystemBase {
     private final CANSparkMax m_left, m_left2, m_left3, m_right, m_right2,  m_right3;
     private final RelativeEncoder m_leftEnc, m_rightEnc;
 
-    private final Solenoid m_shifter;
-
+    private final DoubleSolenoid m_shifter;
     private final AHRS m_gyro;
 
     private final DifferentialDrive m_differentialDrive;
@@ -66,7 +66,7 @@ public class Drive extends SubsystemBase {
         m_rightEnc = m_right.getEncoder();
 
         m_gyro = new AHRS(SPI.Port.kMXP);
-        m_shifter = new Solenoid(Constants.pneumatics.shifter, Constants.driveBase.shifterID);
+        m_shifter = new DoubleSolenoid(Constants.pneumatics.shifter, Constants.driveBase.rightShifterID, Constants.driveBase.leftShifterID);
 
         shift(Constants.driveBase.LOW_GEAR);
 
@@ -130,7 +130,12 @@ public class Drive extends SubsystemBase {
      * @param gear high is false, low is true
      */
     public void shift(boolean gear){
-        m_shifter.set(gear);
+        SmartDashboard.putBoolean("state", gear);
+        if (gear) {
+            m_shifter.set(DoubleSolenoid.Value.kForward);
+        } else {
+            m_shifter.set(DoubleSolenoid.Value.kReverse);
+        }
         setEncoderRatio(gear);
     }
 

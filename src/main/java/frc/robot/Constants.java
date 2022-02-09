@@ -43,8 +43,8 @@ public final class Constants {
         public static final double highRatio = 0;
         public static final double lowRatio = 1/15.32;
         public static final double wheelMeterRatio = (0.31918581/61);
-        public static final boolean HIGH_GEAR = false;
-        public static final boolean LOW_GEAR = true;
+        public static final boolean HIGH_GEAR = true;
+        public static final boolean LOW_GEAR = false;
         //PID
         public static final double leftFF = 0;
         public static final double leftP = 0.029;
@@ -64,18 +64,19 @@ public final class Constants {
         public static final int driveR2ID = 1;
         public static final int driveR3ID = 7;
         //Shifter
-        public static final int shifterID = 0;
+        public static final int leftShifterID = 0;
+        public static final int rightShifterID = 7;
         // Speed
-        public static final double xSpeed = .7;
-        public static final double xRot = 0.6;
+        public static final double xSpeed = .5;
+        public static final double xRot = 0.4;
     }
     public static final class motion {
         //Ramsete gains
         public static final double b = 2.1;
-        public static final double zeta = 0.4;
+        public static final double zeta = 0.6;
         //Max values
-        public static final double maxVelocity = 1.25;
-        public static final double maxAcceleration = 0.4;
+        public static final double maxVelocity = 0.3;
+        public static final double maxAcceleration = 0.2;
     }
 
     public final static class shooter {

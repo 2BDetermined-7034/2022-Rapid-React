@@ -76,6 +76,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Intake
         m_GPad.getButton("B").whileHeld(m_runIntake);
+        m_GPad.getButton("X").toggleWhenPressed(new Shift(m_drive, true));
         m_GPad.getButton("RB").whileHeld(new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_analogSenseor));
 
         m_GPad.getButton("BACK").whenPressed(m_solDown);
@@ -97,6 +98,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         //Returns the "auto" command, which we want to run in autonomous.
-        return new MotionProfileCommand(m_drive, "5ball", true);
+        return new MotionProfileCommand(m_drive, "9ball", true);
     }
 }
