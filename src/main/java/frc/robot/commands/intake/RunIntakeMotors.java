@@ -1,7 +1,5 @@
 package frc.robot.commands.intake;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.AnalogSensor;
 import frc.robot.subsystems.CargoIntake;
@@ -51,10 +49,10 @@ public class RunIntakeMotors extends CommandBase {
     @Override
     public boolean isFinished() {
         // Sets the intake solenoid up
-        if(!m_analog.sensorBoolean0()) {
+        if(m_analog.sensorBoolean0()) {
             m_intake.setSolenoid(true);
         }
-        return !m_analog.sensorBoolean0();
+        return m_analog.sensorBoolean0();
     }
 
     @Override

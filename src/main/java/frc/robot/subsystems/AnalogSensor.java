@@ -19,7 +19,7 @@ public class AnalogSensor extends SubsystemBase {
      * @return Boolean - If something trips the sensor (True = yes, something tripped the sensor | false = no, nothing tripped the sensor
      */
     public boolean sensorBoolean0(){
-        return m_sensor.getAverageValue() > 7;
+        return m_sensor.getAverageValue() <= 7;
     }
 
     /**

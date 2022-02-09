@@ -31,7 +31,7 @@ public class ReadSensor extends CommandBase {
         SmartDashboard.putNumber("Sensor 0 Value", m_sensor.getSensor0AvValue());
         SmartDashboard.putNumber("Sensor 1 Value", m_sensor.getSensor1AvValue());
         // If both sensor 0 and 1 is true, it'll show that the indexer is full.
-        SmartDashboard.putBoolean("Is Indexer Full?", !m_sensor.sensorBoolean0());
+        SmartDashboard.putBoolean("Is Indexer Full?", m_sensor.sensorBoolean0());
     }
 
     /**
