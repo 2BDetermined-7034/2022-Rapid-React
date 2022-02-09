@@ -1,12 +1,11 @@
 package frc.robot.commands.intake;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CargoIntake;
 
 
 /** An example command that uses an example subsystem. */
-public class IntakeSolenoid extends CommandBase {
+public class Solenoid extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final CargoIntake m_intake;
     private final boolean m_hasBoner;
@@ -15,7 +14,7 @@ public class IntakeSolenoid extends CommandBase {
      *
      * @param intake The robot's intake
      */
-    public IntakeSolenoid(CargoIntake intake, Boolean boner) {
+    public Solenoid(CargoIntake intake, Boolean boner) {
         this.m_intake = intake;
         this.m_hasBoner = boner;
         // Use addRequirements() here to declare subsystem dependencies.

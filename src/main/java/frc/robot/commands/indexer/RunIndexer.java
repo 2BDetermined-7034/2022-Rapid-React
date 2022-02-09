@@ -7,7 +7,8 @@ import frc.robot.subsystems.Indexer;
 import java.util.function.DoubleSupplier;
 
 public class RunIndexer extends CommandBase {
-private final Indexer m_indexer;
+
+private final Indexer m_indexer; // NeoIndexer
 private final DoubleSupplier m_speed;
 private final AnalogSensor m_sensor;
     public RunIndexer(Indexer indexer, DoubleSupplier speed, AnalogSensor colorSensor) {
@@ -31,7 +32,7 @@ private final AnalogSensor m_sensor;
      */
     @Override
     public void execute() {
-        m_indexer.runIndexerMotor(m_speed.getAsDouble());
+        m_indexer.setSpeed(m_speed.getAsDouble());
     }
 
     /**
@@ -55,6 +56,6 @@ private final AnalogSensor m_sensor;
 
     @Override
     public void end(boolean interrupted) {
-        m_indexer.runIndexerMotor(0);
+        m_indexer.setSpeed(0);
     }
 }

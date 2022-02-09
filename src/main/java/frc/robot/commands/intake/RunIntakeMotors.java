@@ -31,7 +31,7 @@ public class RunIntakeMotors extends CommandBase {
     public void execute() {
         double speed = fowS.getAsDouble();
         m_intake.setSolenoid(false);
-        m_intake.mmmRunMotor(speed);
+        m_intake.setSpeed(speed);
 
 
 
@@ -57,6 +57,6 @@ public class RunIntakeMotors extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        m_intake.mmmRunMotor(0);
+        m_intake.setSpeed(0);
     }
 }

@@ -42,8 +42,8 @@ public class RobotContainer {
 
   private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.4, m_analogSenseor);
 
-  private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, true);
-  private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, false);
+  private final Solenoid m_solUp = new Solenoid(m_cargoIntake, true);
+  private final Solenoid m_solDown = new Solenoid(m_cargoIntake, false);
 
 
 

@@ -4,22 +4,25 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Indexer extends SubsystemBase {
-    private final WPI_TalonSRX m_indexer1;
+public class NeoIndexer extends SubsystemBase {
     private double m_speed;
+    private final CANSparkMax m_indexMotor;
 
-    public Indexer() {
-        m_indexer1 = new WPI_TalonSRX(Constants.indexer.indexerTalon);
+    public NeoIndexer() {
+
+        m_indexMotor = new CANSparkMax(Constants.indexer.indexerTalon, CANSparkMaxLowLevel.MotorType.kBrushless);
+
     }
 
     public void setSpeed(double speed) {
         m_speed = speed;
-        m_indexer1.set(-speed);
+        m_indexMotor.set(speed);
     }
 
     public void debug() {

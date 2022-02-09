@@ -21,7 +21,7 @@ public class CargoIntake extends SubsystemBase {
     /**
      * @param speed The speed you want to move the motor at.
      */
-    public void mmmRunMotor(double speed) {
+    public void setSpeed(double speed) {
         cargoMotor.set(speed);
     }
 
