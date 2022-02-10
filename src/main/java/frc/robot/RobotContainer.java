@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-
+    private final X3D joystick = new X3D(1);
     private final CargoIntake m_cargoIntake = new CargoIntake();
     private final Indexer m_indexer = new Indexer();
 
@@ -34,8 +34,6 @@ public class RobotContainer {
     private final Drive m_drive = new Drive();
 
     private final Shooter m_shooter = new Shooter();
-
-
 
     private final ReadSensor m_readSensor = new ReadSensor(m_analogSenseor);
   // The robot's subsystems and commands are defined here...
@@ -69,9 +67,13 @@ public class RobotContainer {
       SmartDashboard.putNumber("Shooter Speed", 0.2);
       // Default commands
       //m_drive.setDefaultCommand(new TuneVelocity(m_drive, () -> m_GPad.getAxis("LTrigger")));
-      m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
-      configureButtonBindings();
 
+      // Easy controller switching because I kept forgetting how to get the axis
+      if(Constants.controller.useJoystick) m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX));
+      else m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
+
+
+      configureButtonBindings();
   }
 
     /**
@@ -81,6 +83,12 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+
+        joystick.getButton(2).toggleWhenPressed(new Shift(m_drive, true));
+        joystick.getButton(5).whenPressed(m_solUp);
+        joystick.getButton(3).whenPressed(m_solDown);
+        joystick.getButton(1).whenHeld(m_runIntake);
+
         // Intake
         m_GPad.getButton("B").whileHeld(m_runIntake);
         m_GPad.getButton("X").toggleWhenPressed(new Shift(m_drive, true));

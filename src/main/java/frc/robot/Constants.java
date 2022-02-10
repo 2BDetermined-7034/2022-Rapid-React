@@ -25,6 +25,7 @@ public final class Constants {
         public static final int gamePadPort = 0;
         public static final int joystickPort = 1;
         public static final int buttonPadPort = 2;
+        public static final boolean useJoystick = false;
 
         public static final double yGate = 0.1;
         public static final double xGate = 0.1;

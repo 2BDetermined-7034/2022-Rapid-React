@@ -170,6 +170,11 @@ public class Drive extends SubsystemBase {
         m_differentialDrive.arcadeDrive(xSpeed, zRotation);
     }
 
+    public void splitArcadeDrive(Double left, double right) {
+        m_left.set(left);
+        m_right.set(right);
+    }
+
     /**
      * Kinematic utility motion drive method
      * @param chassisSpeeds the chassis speed of drive
