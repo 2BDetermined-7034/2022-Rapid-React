@@ -45,7 +45,7 @@ public class RobotContainer {
 
   private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.3, m_analogSenseor);
 
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> -0.4, m_analogSenseor);
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,  () -> -0.4, m_analogSenseor);
 
   private final Solenoid m_solUp = new Solenoid(m_cargoIntake, true);
   private final Solenoid m_solDown = new Solenoid(m_cargoIntake, false);
@@ -69,7 +69,8 @@ public class RobotContainer {
       //m_drive.setDefaultCommand(new TuneVelocity(m_drive, () -> m_GPad.getAxis("LTrigger")));
 
       // Easy controller switching because I kept forgetting how to get the axis
-      if(Constants.controller.useJoystick) m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX));
+      if(Constants.controller.useJoystick)
+          m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX));
       else m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
 
 
@@ -83,11 +84,23 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-
+        /* joystick */
         joystick.getButton(2).toggleWhenPressed(new Shift(m_drive, true));
+        // Intake
         joystick.getButton(5).whenPressed(m_solUp);
         joystick.getButton(3).whenPressed(m_solDown);
         joystick.getButton(1).whenHeld(m_runIntake);
+        joystick.getButton(11).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_analogSenseor));
+
+        // Shooter
+        joystick.getButton(6).whenHeld(m_runShooter);
+
+        // Indexer
+        joystick.getButton(4).whenHeld(m_runIndexer);
+        joystick.getButton(12).whenHeld(new RunIndexer(m_indexer, () -> -0.5, m_analogSenseor));
+
+
+        /* Gamepad */
 
         // Intake
         m_GPad.getButton("B").whileHeld(m_runIntake);
