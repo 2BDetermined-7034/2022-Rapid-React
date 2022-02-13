@@ -14,6 +14,7 @@ import frc.robot.controllers.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
+import frc.robot.commands.vision.*;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
     private final X3D joystick = new X3D(1);
+    private final X3D joystick2 = new X3D(2);
     private final CargoIntake m_cargoIntake = new CargoIntake();
     private final Indexer m_indexer = new Indexer();
 
@@ -47,8 +49,8 @@ public class RobotContainer {
 
   private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,  () -> -0.4, m_analogSenseor);
 
-  private final Solenoid m_solUp = new Solenoid(m_cargoIntake, true);
-  private final Solenoid m_solDown = new Solenoid(m_cargoIntake, false);
+  private final Solenoid m_solUp = new Solenoid(m_cargoIntake, false);
+  private final Solenoid m_solDown = new Solenoid(m_cargoIntake, true);
 
 
 
@@ -65,13 +67,14 @@ public class RobotContainer {
       SmartDashboard.putData("Intake Down", m_solDown);
       SmartDashboard.putData("Intake Up", m_solUp);
       SmartDashboard.putNumber("Shooter Speed", 0.2);
+      //SmartDashboard.putBoolean("switched", joystick.getRawButtonPressed(3));
       // Default commands
       //m_drive.setDefaultCommand(new TuneVelocity(m_drive, () -> m_GPad.getAxis("LTrigger")));
 
       // Easy controller switching because I kept forgetting how to get the axis
       if(Constants.controller.useJoystick)
           m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX));
-      else m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
+      else m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("RX")));
 
 
       configureButtonBindings();
@@ -87,16 +90,17 @@ public class RobotContainer {
         /* joystick */
         joystick.getButton(2).toggleWhenPressed(new Shift(m_drive, true));
         // Intake
-        joystick.getButton(5).whenPressed(m_solUp);
-        joystick.getButton(3).whenPressed(m_solDown);
+        joystick.getButton(6).whenPressed(m_solUp);
+        joystick.getButton(4).whenPressed(m_solDown);
+
         joystick.getButton(1).whenHeld(m_runIntake);
         joystick.getButton(11).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_analogSenseor));
 
-        // Shooter
-        joystick.getButton(6).whenHeld(m_runShooter);
+        // Shooter (taken out since indexer brokey
+        //joystick.getButton(6).whenHeld(m_runShooter);
 
         // Indexer
-        joystick.getButton(4).whenHeld(m_runIndexer);
+        joystick.getButton(5).whenHeld(m_runIndexer);
         joystick.getButton(12).whenHeld(new RunIndexer(m_indexer, () -> -0.5, m_analogSenseor));
 
 
@@ -111,11 +115,11 @@ public class RobotContainer {
         m_GPad.getButton("START").whenPressed(m_solUp);
         // Indexer
         m_GPad.getButton("Y").whileHeld(m_runIndexer);
-        m_GPad.getButton("LB").whileHeld(new RunIndexer(m_indexer, () -> -0.5, m_analogSenseor));
+        m_GPad.getButton("RB").whileHeld(new RunIndexer(m_indexer, () -> -0.5, m_analogSenseor));
 
         // Shooter
         m_GPad.getButton("A").toggleWhenPressed(m_runShooter);
-        //m_GPad.getButton("BACK").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+        m_GPad.getButton("LSB").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
 
     }
 

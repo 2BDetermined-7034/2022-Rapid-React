@@ -25,7 +25,7 @@ public final class Constants {
         public static final int gamePadPort = 0;
         public static final int joystickPort = 1;
         public static final int buttonPadPort = 2;
-        public static final boolean useJoystick = false;
+        public static final boolean useJoystick = true;
 
         public static final double yGate = 0.1;
         public static final double xGate = 0.1;
@@ -83,12 +83,12 @@ public final class Constants {
     public final static class shooter {
         public static final int leftShooterNEO = 43;
         public static final int rightShooterNEO = 8;
-        public static final double indexerSpeed = .1;
+        public static final double indexerSpeed = .25;
         public static final int shooterMultiplier = 1;
     }
 
     public final static class intake {
-        public static final int intakeTalon = 1;
+        public static final int intakeTalon = 5;
         public static final int solenoidForward = 1;
         public static final int solenoidReverse = 3;
         public static final double speed = 0.5;

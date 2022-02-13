@@ -96,7 +96,7 @@ public class VisAlign extends CommandBase {
 
         if(liteMode) {
             //m_dt.setGear(Constants.HIGH_GEAR);
-            m_dt.arcadeDrive(drive, errorX/10);
+            m_dt.arcadeDrive(drive, errorX/20);
             //targetX_L = m_dt.getPositionL();
             //targetX_R = m_dt.getPositionR();
         }
