@@ -8,7 +8,6 @@ import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -32,7 +31,11 @@ public class Drive extends SubsystemBase {
     private DifferentialDrivePoseEstimator m_locationManager;
     DifferentialDriveKinematics m_kinematics;
 
+    private boolean inverted;
+
     public Drive() {
+        inverted = false;
+
         m_left = new CANSparkMax(Constants.driveBase.driveL1ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left2 = new CANSparkMax(Constants.driveBase.driveL2ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left3 = new CANSparkMax(Constants.driveBase.driveL3ID, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -57,6 +60,7 @@ public class Drive extends SubsystemBase {
         m_right.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_right2.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_right3.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
 
         m_left.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_left2.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -160,11 +164,23 @@ public class Drive extends SubsystemBase {
     }
 
     /**
+     * Set the invert
+     * @param setting true inverted false not inverted
+     */
+    public void setInverted(boolean setting){
+        inverted = setting;
+    }
+
+    /**
      * Stolen then modified from WPILib
      * @param xSpeed forward/backwards speed in range -1 to 1
      * @param zRotation sideways rotation in speed -1 to 1
      */
     public void arcadeDrive(double xSpeed, double zRotation){
+        if (inverted) {
+            xSpeed *= -1;
+            zRotation *= -1;
+        }
         xSpeed *= Constants.driveBase.xSpeed;
         zRotation *= Constants.driveBase.xRot;
         m_differentialDrive.arcadeDrive(xSpeed, zRotation);
@@ -179,13 +195,13 @@ public class Drive extends SubsystemBase {
      * Kinematic utility motion drive method
      * @param chassisSpeeds the chassis speed of drive
      */
-    public void kumDrive(ChassisSpeeds chassisSpeeds){
+    public void voltageDrive(ChassisSpeeds chassisSpeeds){
         DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
         double leftVelocity = wheelSpeeds.leftMetersPerSecond;
         double rightVelocity = wheelSpeeds.rightMetersPerSecond;
 
-        m_left.set(leftVelocity);
-        m_right.set(rightVelocity);
+        m_left.setVoltage(leftVelocity / Constants.motion.maxVelocity * 12);
+        m_right.setVoltage(rightVelocity / Constants.motion.maxVelocity * 12);
     }
 
     /**

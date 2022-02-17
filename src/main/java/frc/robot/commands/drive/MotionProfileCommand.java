@@ -7,12 +7,12 @@ import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryParameterizer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drive;
 
 public class MotionProfileCommand extends CommandBase {
+
     private static final double ramseteB = Constants.motion.b;
     private static final double ramseteZeta = Constants.motion.zeta;
 
@@ -54,7 +54,7 @@ public class MotionProfileCommand extends CommandBase {
         Trajectory.State setpoint = m_trajectory.sample(timer.get());
         ChassisSpeeds chassisSpeeds = controller.calculate(m_drive.getRobotPos(), setpoint);
         m_drive.debug();
-        m_drive.kumDrive(chassisSpeeds);
+        m_drive.voltageDrive(chassisSpeeds);
     }
 
     // Called once the command ends or is interrupted.

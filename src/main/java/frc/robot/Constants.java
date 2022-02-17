@@ -25,7 +25,7 @@ public final class Constants {
         public static final int gamePadPort = 0;
         public static final int joystickPort = 1;
         public static final int buttonPadPort = 2;
-        public static final boolean useJoystick = true;
+        public static final boolean useJoystick = false;
 
         public static final double yGate = 0.1;
         public static final double xGate = 0.1;
@@ -68,15 +68,15 @@ public final class Constants {
         public static final int leftShifterID = 0;
         public static final int rightShifterID = 7;
         // Speed
-        public static final double xSpeed = 1;
-        public static final double xRot = .7;
+        public static final double xSpeed = 0.75;
+        public static final double xRot = .5;
     }
     public static final class motion {
         //Ramsete gains
-        public static final double b = 2.1;
-        public static final double zeta = 0.6;
+        public static final double b = 1.7;
+        public static final double zeta = 1;
         //Max values
-        public static final double maxVelocity = 0.7;
+        public static final double maxVelocity = 1;
         public static final double maxAcceleration = 0.2;
     }
 

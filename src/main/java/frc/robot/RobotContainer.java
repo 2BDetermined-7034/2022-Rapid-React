@@ -54,8 +54,6 @@ public class RobotContainer {
 
 
 
-
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
       // Register
@@ -74,7 +72,7 @@ public class RobotContainer {
       // Easy controller switching because I kept forgetting how to get the axis
       if(Constants.controller.useJoystick)
           m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX));
-      else m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("RX")));
+      else m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
 
 
       configureButtonBindings();
