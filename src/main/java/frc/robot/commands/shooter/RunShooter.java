@@ -44,7 +44,7 @@ public class RunShooter extends CommandBase {
     @Override
     public void execute() {
         double speed = shooterSpeed.getAsDouble();
-        m_index.setSpeed(speed -Constants.shooter.indexerSpeed);
+        m_index.setSpeed(speed -Constants.indexer.speed);
         m_shooter.setSpeed(speed);
     }
 

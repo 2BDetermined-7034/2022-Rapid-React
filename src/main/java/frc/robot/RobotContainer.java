@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
-import frc.robot.commands.sensor.ReadSensor;
+import frc.robot.commands.sensor.SensorOverride;
 import frc.robot.controllers.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.intake.*;
@@ -37,10 +37,10 @@ public class RobotContainer {
 
     private final Shooter m_shooter = new Shooter();
 
-    private final ReadSensor m_readSensor = new ReadSensor(m_analogSenseor);
+    private final SensorOverride m_override = new SensorOverride(m_analogSenseor);
   // The robot's subsystems and commands are defined here...
 
-  private final RunShooter m_runShooter = new RunShooter(m_shooter, m_indexer, () -> SmartDashboard.getNumber("Shooter Speed", 0));
+  private final RunShooter m_runShooter = new RunShooter(m_shooter, m_indexer, () -> Constants.shooter.speed);
 
   // Drive
   public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
@@ -60,11 +60,11 @@ public class RobotContainer {
       m_drive.register();
       m_cargoIntake.register();
 
-      m_analogSenseor.setDefaultCommand(m_readSensor);
-
       SmartDashboard.putData("Intake Down", m_solDown);
       SmartDashboard.putData("Intake Up", m_solUp);
       SmartDashboard.putNumber("Shooter Speed", 0.2);
+
+      SmartDashboard.putData("indexer override", m_override);
       //SmartDashboard.putBoolean("switched", joystick.getRawButtonPressed(3));
       // Default commands
       //m_drive.setDefaultCommand(new TuneVelocity(m_drive, () -> m_GPad.getAxis("LTrigger")));
