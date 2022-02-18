@@ -1,21 +1,16 @@
-package frc.robot.commands.indexer;
+package frc.robot.commands.sensor;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.AnalogSensor;
-import frc.robot.subsystems.Indexer;
 
-import java.util.function.DoubleSupplier;
+public class SensorOverride extends CommandBase {
+    private final AnalogSensor m_sensor;
 
-public class RunIndexer extends CommandBase {
+    public SensorOverride(AnalogSensor analogSensor) {
+        m_sensor = analogSensor;
 
-private final Indexer m_indexer; // NeoIndexer
-private final DoubleSupplier m_speed;
-private final AnalogSensor m_sensor;
-    public RunIndexer(Indexer indexer, DoubleSupplier speed, AnalogSensor colorSensor) {
-        this.m_indexer = indexer;
-        this.m_speed = speed;
-        this.m_sensor = colorSensor;
-        addRequirements(m_indexer);
+        addRequirements(m_sensor);
     }
 
     /**
@@ -32,7 +27,8 @@ private final AnalogSensor m_sensor;
      */
     @Override
     public void execute() {
-        m_indexer.setSpeed(m_speed.getAsDouble());
+
+        m_sensor.override = true;
     }
 
     /**
@@ -51,20 +47,21 @@ private final AnalogSensor m_sensor;
      */
     @Override
     public boolean isFinished() {
-        // if upper sensor
-        // then run stop upper indexer
-        if(m_sensor.sensorBoolean0()) {
-            m_indexer.setIndexer1(0);
-        }
-
-        if(m_sensor.sensorBoolean1() && m_sensor.sensorBoolean0()) {
-            m_indexer.setIndexer2(0);
-        }
+        // TODO: Make this return true when this Command no longer needs to run execute()
         return false;
     }
 
+    /**
+     * The action to take when the command ends. Called when either the command
+     * finishes normally -- that is it is called when {@link #isFinished()} returns
+     * true -- or when  it is interrupted/canceled. This is where you may want to
+     * wrap up loose ends, like shutting off a motor that was being used in the command.
+     *
+     * @param interrupted whether the command was interrupted/canceled
+     */
     @Override
     public void end(boolean interrupted) {
-        m_indexer.setSpeed(0);
+        m_sensor.override = false;
     }
+
 }

@@ -33,26 +33,21 @@ public class RunIntakeMotors extends CommandBase {
         m_intake.setSolenoid(false);
         m_intake.setSpeed(speed);
 
-
-
-        /*
-        if(m_analog.sensorBoolean0()) {
-            m_intake.mmmRunMotor(0);
-        }
-
-        if(m_analog.sensorBoolean1_2()) {
-            m_intake.mmmRunMotor(0);
-        }
-        */
     }
 
     @Override
     public boolean isFinished() {
+
+        /*
         // Sets the intake solenoid up
         if(m_analog.sensorBoolean0()) {
             m_intake.setSolenoid(true);
         }
         return m_analog.sensorBoolean0();
+
+         */
+        return false;
+
     }
 
     @Override
