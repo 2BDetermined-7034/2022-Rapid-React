@@ -16,7 +16,7 @@ public class NeoIndexer extends SubsystemBase {
 
     public NeoIndexer() {
 
-        m_indexMotor = new CANSparkMax(Constants.indexer.indexerTalon, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_indexMotor = new CANSparkMax(Constants.indexer.indexerMotor1, CANSparkMaxLowLevel.MotorType.kBrushless);
 
     }
 

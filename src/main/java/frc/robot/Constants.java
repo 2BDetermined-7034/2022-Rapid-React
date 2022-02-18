@@ -83,7 +83,7 @@ public final class Constants {
     public final static class shooter {
         public static final int leftShooterNEO = 43;
         public static final int rightShooterNEO = 8;
-        public static final double indexerSpeed = .25;
+        public static final double speed = .25;
         public static final int shooterMultiplier = 1;
     }
 
@@ -91,14 +91,16 @@ public final class Constants {
         public static final int intakeTalon = 5;
         public static final int solenoidForward = 1;
         public static final int solenoidReverse = 3;
-        public static final double speed = 0.5;
+        public static final double speedMinus = 0.3;
         public static final boolean intakeUp = true;
         public static final boolean intakeDown = false;
         public static final int IDcompressor = 0;
     }
 
     public final static class indexer {
-        public static final int indexerTalon = 4;
+        public static final double speed = .1;
+        public static final int indexerMotor1 = 97969;
+        public static final int indexerMotor2 = 69; // Haha funny number
     }
 
     public static final class vision {
