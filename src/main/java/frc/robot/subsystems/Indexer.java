@@ -28,11 +28,11 @@ public class Indexer extends SubsystemBase {
     }
 
     public void setIndexer1(double speed) {
-        m_indexer1.set(-speed);
+        m_indexer1.set(speed);
     }
 
     public void setIndexer2(double speed) {
-        m_indexer2.set(speed);
+        m_indexer2.set(-speed);
     }
 
     // Does absolutely nothing.
