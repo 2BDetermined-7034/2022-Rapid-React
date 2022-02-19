@@ -34,10 +34,10 @@ public final class Constants {
     }
 
     public static final class pneumatics {
-        public static final PneumaticsModuleType compressor = PneumaticsModuleType.CTREPCM;
-        public static final PneumaticsModuleType shifter = PneumaticsModuleType.CTREPCM;
-        public static final PneumaticsModuleType intake = PneumaticsModuleType.CTREPCM;
-        public static final PneumaticsModuleType climber = PneumaticsModuleType.CTREPCM;
+        public static final PneumaticsModuleType compressor = PneumaticsModuleType.REVPH;
+        public static final PneumaticsModuleType shifter = PneumaticsModuleType.REVPH;
+        public static final PneumaticsModuleType intake = PneumaticsModuleType.REVPH;
+        public static final PneumaticsModuleType climber = PneumaticsModuleType.REVPH;
     }
 
     public static final class driveBase {
@@ -84,8 +84,8 @@ public final class Constants {
     }
 
     public final static class shooter {
-        public static final int leftShooterNEO = 43;
-        public static final int rightShooterNEO = 8;
+        public static final int leftShooterNEO = 8;
+        public static final int rightShooterNEO = 11;
         public static final double speed = .25;
         public static final int shooterMultiplier = 1;
     }
@@ -104,7 +104,7 @@ public final class Constants {
         public static final double extendedValue = -150;
     }
     public final static class intake {
-        public static final int intakeTalon = 5;
+        public static final int intakeMotor = 8;
         public static final int solenoidForward = 1;
         public static final int solenoidReverse = 3;
         public static final double speedMinus = 0.3;
@@ -115,8 +115,8 @@ public final class Constants {
 
     public final static class indexer {
         public static final double speed = .1;
-        public static final int indexerMotor1 = 97969;
-        public static final int indexerMotor2 = 69; // Haha funny number
+        public static final int indexerMotor1 = 10;
+        public static final int indexerMotor2 = 7; // Haha funny number
     }
 
     public static final class vision {

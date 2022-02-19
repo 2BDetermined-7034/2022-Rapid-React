@@ -4,11 +4,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class CargoIntake extends SubsystemBase {
     private final CANSparkMax cargoMotor;
@@ -17,7 +14,7 @@ public class CargoIntake extends SubsystemBase {
 
     public CargoIntake() {
         this.m_solenoid = new DoubleSolenoid(Constants.pneumatics.intake, Constants.intake.solenoidForward, Constants.intake.solenoidReverse);
-        this.cargoMotor = new CANSparkMax(Constants.intake.intakeTalon, CANSparkMaxLowLevel.MotorType.kBrushless);
+        this.cargoMotor = new CANSparkMax(Constants.intake.intakeMotor, CANSparkMaxLowLevel.MotorType.kBrushless);
     }
 
     /**
