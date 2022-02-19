@@ -59,12 +59,12 @@ public final class Constants {
         public static final double rightD = 0.01;
         // Left
         public static final int driveL1ID = 4;
-        public static final int driveL2ID = 9;
-        public static final int driveL3ID = 42;
+        public static final int driveL2ID = 5;
+        public static final int driveL3ID = 6;
         // Right
-        public static final int driveR1ID = 3;
-        public static final int driveR2ID = 1;
-        public static final int driveR3ID = 7;
+        public static final int driveR1ID = 1;
+        public static final int driveR2ID = 2;
+        public static final int driveR3ID = 3;
         //Shifter
         public static final int leftShifterID = 0;
         public static final int rightShifterID = 7;
