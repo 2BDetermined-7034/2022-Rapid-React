@@ -15,6 +15,7 @@ import frc.robot.subsystems.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.vision.*;
+import frc.robot.commands.climb.*;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -26,6 +27,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
     private final X3D joystick = new X3D(1);
     private final X3D joystick2 = new X3D(2);
+    private final GPad m_climbPad = new GPad(Constants.controller.climbGamePadPort);
+
+
     private final CargoIntake m_cargoIntake = new CargoIntake();
     private final Indexer m_indexer = new Indexer();
 
@@ -38,19 +42,24 @@ public class RobotContainer {
     private final Shooter m_shooter = new Shooter();
 
     private final SensorOverride m_override = new SensorOverride(m_analogSenseor);
-  // The robot's subsystems and commands are defined here...
+    // The robot's subsystems and commands are defined here...
 
-  private final RunShooter m_runShooter = new RunShooter(m_shooter, m_indexer, () -> Constants.shooter.speed);
+    private final RunShooter m_runShooter = new RunShooter(m_shooter, m_indexer, () -> Constants.shooter.speed);
 
-  // Drive
-  public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
+    // Drive
+    public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
 
-  private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.3, m_analogSenseor);
+    private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.3, m_analogSenseor);
 
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,  () -> -0.4, m_analogSenseor);
+    private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,  () -> -0.4, m_analogSenseor);
 
-  private final Solenoid m_solUp = new Solenoid(m_cargoIntake, false);
-  private final Solenoid m_solDown = new Solenoid(m_cargoIntake, true);
+    private final Solenoid m_solUp = new Solenoid(m_cargoIntake, false);
+    private final Solenoid m_solDown = new Solenoid(m_cargoIntake, true);
+
+    // Climb
+    public final Climber m_climber = new Climber();
+    public final RunWinch m_runWinch = new RunWinch(m_climber, () -> m_climbPad.getAxis("LTrigger"), () -> m_climbPad.getAxis("RTrigger"));
+    public final RunSolenoidToggle m_toggleClimbSolenoid = new RunSolenoidToggle(m_climber);
 
 
 
@@ -59,6 +68,7 @@ public class RobotContainer {
       // Register
       m_drive.register();
       m_cargoIntake.register();
+      m_climber.register();
 
       SmartDashboard.putData("Intake Down", m_solDown);
       SmartDashboard.putData("Intake Up", m_solUp);
@@ -74,6 +84,7 @@ public class RobotContainer {
           m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX));
       else m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
 
+      m_climber.setDefaultCommand(m_runWinch);
 
       configureButtonBindings();
   }
@@ -118,6 +129,10 @@ public class RobotContainer {
         // Shooter
         m_GPad.getButton("A").toggleWhenPressed(m_runShooter);
         m_GPad.getButton("LSB").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+
+
+        // Climb
+        m_climbPad.getButton("A").whenPressed(m_toggleClimbSolenoid);
 
     }
 

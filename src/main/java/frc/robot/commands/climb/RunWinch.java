@@ -7,21 +7,25 @@ package frc.robot.commands.climb;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
+import java.util.function.DoubleSupplier;
+
 /** An example command that uses an example subsystem. */
 public class RunWinch extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Climber m_climber;
 
-    private final double m_speed;
+    private final DoubleSupplier m_fowSpeed;
+    private final DoubleSupplier m_backSpeed;
 
     /**
      * Raises the robot's climber (telescoping).
      *
      * @param climber The robot's climber (telescoping)
      */
-    public RunWinch(Climber climber, double speed) {
+    public RunWinch(Climber climber, DoubleSupplier fowSpeed, DoubleSupplier backSpeed) {
         m_climber = climber;
-        m_speed = speed;
+        m_fowSpeed = fowSpeed;
+        m_backSpeed = backSpeed;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_climber);
     }
@@ -35,7 +39,11 @@ public class RunWinch extends CommandBase {
     @Override
     public void execute() {
         //m_legoClimb.runWinch(SmartDashboard.getNumber("TeleClimberWinchSpeed", 0));
-        m_climber.runWinch(m_speed);
+        if(m_fowSpeed.getAsDouble() > 0){
+            m_climber.runWinch(m_fowSpeed.getAsDouble());
+        }else if(m_backSpeed.getAsDouble() > 0){
+            m_climber.runWinch(-m_backSpeed.getAsDouble());
+        }
     }
 
     // Called once the command ends or is interrupted.

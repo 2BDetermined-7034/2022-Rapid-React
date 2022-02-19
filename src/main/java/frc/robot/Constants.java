@@ -23,6 +23,8 @@ public final class Constants {
 */
     public final static class controller {
         public static final int gamePadPort = 0;
+        public static final int climbGamePadPort = 1;
+
         public static final int joystickPort = 1;
         public static final int buttonPadPort = 2;
         public static final boolean useJoystick = false;
