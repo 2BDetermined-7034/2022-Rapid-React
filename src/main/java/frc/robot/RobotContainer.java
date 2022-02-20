@@ -50,15 +50,17 @@ public class RobotContainer {
     public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
 
     private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> 0.3, m_analogSenseor);
-
     private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,  () -> -0.4, m_analogSenseor);
 
     private final Solenoid m_solUp = new Solenoid(m_cargoIntake, false);
     private final Solenoid m_solDown = new Solenoid(m_cargoIntake, true);
 
+    private final SolenoidToggle m_intakeSolToggle = new SolenoidToggle(m_cargoIntake);
+
     // Climb
     public final Climber m_climber = new Climber();
     public final RunWinch m_runWinch = new RunWinch(m_climber, () -> m_climbPad.getAxis("LTrigger"), () -> m_climbPad.getAxis("RTrigger"));
+
     public final RunSolenoidToggle m_toggleClimbSolenoid = new RunSolenoidToggle(m_climber);
 
 
@@ -99,14 +101,11 @@ public class RobotContainer {
         /* joystick */
         joystick.getButton(2).toggleWhenPressed(new Shift(m_drive, true));
         // Intake
-        joystick.getButton(6).whenPressed(m_solUp);
-        joystick.getButton(4).whenPressed(m_solDown);
+        joystick.getButton(6).whenPressed(m_intakeSolToggle);
 
         joystick.getButton(1).whenHeld(m_runIntake);
         joystick.getButton(11).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_analogSenseor));
-
-        // Shooter (taken out since indexer brokey
-        //joystick.getButton(6).whenHeld(m_runShooter);
+        joystick.getButton(6).whenHeld(m_runShooter);
 
         // Indexer
         joystick.getButton(5).whenHeld(m_runIndexer);
@@ -120,8 +119,7 @@ public class RobotContainer {
         m_GPad.getButton("X").toggleWhenPressed(new Shift(m_drive, true));
         m_GPad.getButton("RB").whileHeld(new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_analogSenseor));
 
-        m_GPad.getButton("BACK").whenPressed(m_solDown);
-        m_GPad.getButton("START").whenPressed(m_solUp);
+        m_GPad.getButton("BACK").whenPressed(m_intakeSolToggle);
         // Indexer
         m_GPad.getButton("Y").whileHeld(m_runIndexer);
         m_GPad.getButton("RB").whileHeld(new RunIndexer(m_indexer, () -> -0.5, m_analogSenseor));
