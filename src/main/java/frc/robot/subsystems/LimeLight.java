@@ -44,7 +44,7 @@ public class LimeLight extends SubsystemBase {
   }
 
   public double getEstimatedDistance() {
-    return 2.494*Math.pow(Math.tan(Math.toRadians(Constants.vision.Vis_LLAngle+getYAngle())), -1);
+    return 3.494*Math.pow(Math.tan(Math.toRadians(Constants.vision.Vis_LLAngle+getYAngle())), -1);
   }
 
   @Override
@@ -53,8 +53,8 @@ public class LimeLight extends SubsystemBase {
       setLights(true);
     }
     SmartDashboard.putNumber(getName() + " X Angle", getXAngle());
-    SmartDashboard.putNumber(getName() + " Y Angle---------------", getYAngle());
+    SmartDashboard.putNumber(getName() + " Y Angle", getYAngle());
     //SmartDashboard.putBoolean(getName() + " Detected", getDetected());
-    //SmartDashboard.putNumber(getName() + " Distance", getEstimatedDistance());
+    SmartDashboard.putNumber(getName() + " Distance", getEstimatedDistance());
   }
 }

@@ -29,7 +29,7 @@ public class VisAlign extends CommandBase {
     private double targetY;
     private double targetX_L;
     private double targetX_R;
-    //private double distance;
+    private double distance;
 
     public VisAlign(Drive dt, LimeLight ll, BooleanSupplier useVision, BooleanSupplier interrupt, DoubleSupplier drive) {
         m_dt = dt;
@@ -76,7 +76,7 @@ public class VisAlign extends CommandBase {
             double visY = m_ll.getYAngle();
             double visX = m_ll.getXAngle() + Constants.vision.VisX_Offset;
             double visA = m_ll.getArea();
-            double distance = m_ll.getEstimatedDistance();
+            distance = m_ll.getEstimatedDistance();
 
             //targetX_L = m_dt.getPositionL() + visX;
             //targetX_R = m_dt.getPositionR() + visX;
@@ -88,7 +88,7 @@ public class VisAlign extends CommandBase {
             //errorY = m_shoot.getPivotPosition() - targetY;
 
             double n = 3;
-            double distanceNow = 0.0254*Constants.vision.VisY_distanceConstant/visA;
+            //double distance = 0.0256*Constants.vision.VisY_distanceConstant/visA;
 
         } else {
 
@@ -109,7 +109,7 @@ public class VisAlign extends CommandBase {
 
         //m_shoot.setPivotTarget(targetY);
 
-        SmartDashboard.putNumber("BRUHBRUHBRUH", targetY);
+
     }
 
     // Make this return true when this Command no longer needs to run execute()

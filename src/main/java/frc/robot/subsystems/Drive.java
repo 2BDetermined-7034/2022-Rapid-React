@@ -32,6 +32,10 @@ public class Drive extends SubsystemBase {
     DifferentialDriveKinematics m_kinematics;
 
     private boolean inverted;
+    private boolean autoEnabled;
+
+    private double leftSpeed;
+    private double rightSpeed;
 
     public Drive() {
         inverted = false;
@@ -60,7 +64,6 @@ public class Drive extends SubsystemBase {
         m_right.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_right2.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_right3.setIdleMode(CANSparkMax.IdleMode.kBrake);
-
 
         m_left.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_left2.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -129,6 +132,10 @@ public class Drive extends SubsystemBase {
         m_locationManager.resetPosition(startingPose, Rotation2d.fromDegrees(-m_gyro.getYaw()));
     }
 
+    public void setAutoEnabled(boolean auto){
+        autoEnabled = auto;
+    }
+
     /**
      * Method to set gear on the shifter
      * @param gear high is false, low is true
@@ -186,22 +193,15 @@ public class Drive extends SubsystemBase {
         m_differentialDrive.arcadeDrive(xSpeed, zRotation);
     }
 
-    public void splitArcadeDrive(double left, double right) {
-        m_left.set(left);
-        m_right.set(right);
-    }
-
     /**
      * Kinematic utility motion drive method
      * @param chassisSpeeds the chassis speed of drive
      */
     public void voltageDrive(ChassisSpeeds chassisSpeeds){
         DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
-        double leftVelocity = wheelSpeeds.leftMetersPerSecond;
-        double rightVelocity = wheelSpeeds.rightMetersPerSecond;
+        leftSpeed = wheelSpeeds.leftMetersPerSecond;
+        rightSpeed = wheelSpeeds.rightMetersPerSecond;
 
-        m_left.setVoltage(leftVelocity / Constants.motion.maxVelocity * 12);
-        m_right.setVoltage(rightVelocity / Constants.motion.maxVelocity * 12);
     }
 
     /**
@@ -227,6 +227,10 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (autoEnabled) {
+            m_left.set(leftSpeed);
+            m_right.set(rightSpeed);
+        }
         m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
         debug();
     }

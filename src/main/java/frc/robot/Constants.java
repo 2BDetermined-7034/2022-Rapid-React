@@ -23,7 +23,7 @@ public final class Constants {
 */
     public final static class controller {
         public static final int gamePadPort = 0;
-        public static final int climbGamePadPort = 1;
+        public static final int climbGamePadPort = 3;
 
         public static final int joystickPort = 1;
         public static final int buttonPadPort = 2;
@@ -71,7 +71,7 @@ public final class Constants {
         public static final int leftShifterID = 2;
         public static final int rightShifterID = 3;
         // Speed
-        public static final double xSpeed = 0.75;
+        public static final double xSpeed = 1;
         public static final double xRot = .5;
     }
     public static final class motion {
@@ -79,8 +79,8 @@ public final class Constants {
         public static final double b = 1.7;
         public static final double zeta = 1;
         //Max values
-        public static final double maxVelocity = 1;
-        public static final double maxAcceleration = 0.2;
+        public static final double maxVelocity = 0.6;
+        public static final double maxAcceleration = 0.4;
     }
 
     public final static class shooter {
@@ -107,14 +107,14 @@ public final class Constants {
         public static final int intakeMotor = 9;
         public static final int solenoidForward = 0;
         public static final int solenoidReverse = 1;
-        public static final double speedMinus = 0.3;
+        public static final double speed = 0.4;
         public static final boolean intakeUp = true;
         public static final boolean intakeDown = false;
         public static final int IDcompressor = 0;
     }
 
     public final static class indexer {
-        public static final double speed = .1;
+        public static final double speed = .75;
         public static final int indexerMotor1 = 10;
         public static final int indexerMotor2 = 7; // Haha funny number
     }

@@ -44,13 +44,14 @@ public class RunShooter extends CommandBase {
     @Override
     public void execute() {
         double speed = shooterSpeed.getAsDouble();
-        m_index.setSpeed(speed -Constants.indexer.speed);
+        m_index.setSpeed(Constants.indexer.speed);
         m_shooter.setSpeed(speed);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        m_index.setSpeed(0);
         m_shooter.setSpeed(0);
     }
 

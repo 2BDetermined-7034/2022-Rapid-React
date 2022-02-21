@@ -42,6 +42,7 @@ public class MotionProfileCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        m_drive.setAutoEnabled(true);
         m_drive.shift(Constants.driveBase.LOW_GEAR);
         m_drive.setRobotPos(m_trajectory.getInitialPose());
         timer.reset();
@@ -61,6 +62,7 @@ public class MotionProfileCommand extends CommandBase {
     public void end(boolean interrupted) {
         timer.stop();
         m_drive.stop();
+        m_drive.setAutoEnabled(false);
     }
 
     // Returns true when the command should end.

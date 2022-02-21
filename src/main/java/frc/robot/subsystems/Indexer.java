@@ -24,7 +24,7 @@ public class Indexer extends SubsystemBase {
 
     public void setSpeed(double speed) {
         m_indexer1.set(-speed);
-        m_indexer2.set(speed);
+        m_indexer2.set(-speed);
     }
 
     public void setIndexer1(double speed) {

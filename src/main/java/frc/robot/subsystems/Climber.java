@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -28,7 +29,9 @@ public class Climber extends SubsystemBase {
         m_winchTalon = new WPI_TalonFX(Constants.climb.winchMotorID);
 
         m_solenoid = new DoubleSolenoid(Constants.pneumatics.climber,Constants.climb.solenoidForwardID, Constants.climb.solenoidBackID);
-        m_winchTalon.getSelectedSensorPosition();
+        resetEncoder();
+
+        m_winchTalon.setNeutralMode(NeutralMode.Brake);
 
         //TEMP SMARTDASHBOARD PUTNUMBER
         SmartDashboard.putNumber("ExtendedValue", Constants.climb.extendedValue);
