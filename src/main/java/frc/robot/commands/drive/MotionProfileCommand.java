@@ -53,7 +53,6 @@ public class MotionProfileCommand extends CommandBase {
     public void execute() {
         Trajectory.State setpoint = m_trajectory.sample(timer.get());
         ChassisSpeeds chassisSpeeds = controller.calculate(m_drive.getRobotPos(), setpoint);
-        m_drive.debug();
         m_drive.voltageDrive(chassisSpeeds);
     }
 

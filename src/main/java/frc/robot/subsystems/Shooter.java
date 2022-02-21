@@ -32,7 +32,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     m_motor.set(m_speeds);
-    m_motor2.set(m_speeds);
+    m_motor2.set(-m_speeds);
   }
 
   /**

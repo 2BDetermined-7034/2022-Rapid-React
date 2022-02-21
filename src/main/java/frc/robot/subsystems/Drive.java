@@ -28,7 +28,7 @@ public class Drive extends SubsystemBase {
 
     private final DifferentialDrive m_differentialDrive;
 
-    private DifferentialDrivePoseEstimator m_locationManager;
+    private final DifferentialDrivePoseEstimator m_locationManager;
     DifferentialDriveKinematics m_kinematics;
 
     private boolean inverted;
@@ -186,7 +186,7 @@ public class Drive extends SubsystemBase {
         m_differentialDrive.arcadeDrive(xSpeed, zRotation);
     }
 
-    public void splitArcadeDrive(Double left, double right) {
+    public void splitArcadeDrive(double left, double right) {
         m_left.set(left);
         m_right.set(right);
     }
@@ -221,7 +221,8 @@ public class Drive extends SubsystemBase {
      * Set drive speeds to zero
      */
     public void stop(){
-        m_differentialDrive.arcadeDrive(0, 0);
+        m_right.setVoltage(0);
+        m_left.setVoltage(0);
     }
 
     @Override

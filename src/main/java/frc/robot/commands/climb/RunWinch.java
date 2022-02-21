@@ -15,17 +15,15 @@ public class RunWinch extends CommandBase {
     private final Climber m_climber;
 
     private final DoubleSupplier m_fowSpeed;
-    private final DoubleSupplier m_backSpeed;
 
     /**
      * Raises the robot's climber (telescoping).
      *
      * @param climber The robot's climber (telescoping)
      */
-    public RunWinch(Climber climber, DoubleSupplier fowSpeed, DoubleSupplier backSpeed) {
+    public RunWinch(Climber climber, DoubleSupplier speed) {
         m_climber = climber;
-        m_fowSpeed = fowSpeed;
-        m_backSpeed = backSpeed;
+        m_fowSpeed = speed;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_climber);
     }
@@ -39,11 +37,8 @@ public class RunWinch extends CommandBase {
     @Override
     public void execute() {
         //m_legoClimb.runWinch(SmartDashboard.getNumber("TeleClimberWinchSpeed", 0));
-        if(m_fowSpeed.getAsDouble() > 0){
-            m_climber.runWinch(m_fowSpeed.getAsDouble());
-        }else if(m_backSpeed.getAsDouble() > 0){
-            m_climber.runWinch(-m_backSpeed.getAsDouble());
-        }
+        m_climber.runWinch(m_fowSpeed.getAsDouble());
+
     }
 
     // Called once the command ends or is interrupted.

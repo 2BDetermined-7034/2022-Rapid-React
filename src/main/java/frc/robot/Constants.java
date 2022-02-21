@@ -68,8 +68,8 @@ public final class Constants {
         public static final int driveR2ID = 2;
         public static final int driveR3ID = 3;
         //Shifter
-        public static final int leftShifterID = 0;
-        public static final int rightShifterID = 7;
+        public static final int leftShifterID = 2;
+        public static final int rightShifterID = 3;
         // Speed
         public static final double xSpeed = 0.75;
         public static final double xRot = .5;
@@ -92,8 +92,8 @@ public final class Constants {
 
     public final static class climb {
         public static final int winchMotorID = 1;
-        public static final int solenoidForwardID = 2;
-        public static final int solenoidBackID = 3;
+        public static final int solenoidForwardID = 4;
+        public static final int solenoidBackID = 5;
         public static final double winchSpeed = 0.5;
         //PID Values
         public static final double kP = 0.05;
@@ -104,9 +104,9 @@ public final class Constants {
         public static final double extendedValue = -150;
     }
     public final static class intake {
-        public static final int intakeMotor = 8;
-        public static final int solenoidForward = 1;
-        public static final int solenoidReverse = 3;
+        public static final int intakeMotor = 9;
+        public static final int solenoidForward = 0;
+        public static final int solenoidReverse = 1;
         public static final double speedMinus = 0.3;
         public static final boolean intakeUp = true;
         public static final boolean intakeDown = false;
