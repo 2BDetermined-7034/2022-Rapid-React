@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.auto.TestPathAuto;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
 import frc.robot.controllers.*;
@@ -25,9 +26,9 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
     private final X3D joystick = new X3D(2);
-
     public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
     public final X3D joystick2 = new X3D(Constants.controller.climbGamePadPort);
+    public final GPad climbPad = new GPad(4);
 
     private final CargoIntake m_cargoIntake = new CargoIntake();
     private final Indexer m_indexer = new Indexer();
@@ -88,6 +89,11 @@ public class RobotContainer {
         joystick2.getButton(5).whenHeld(m_runWinch);
         joystick2.getButton(3).whenHeld(m_runWinchBack);
 
+
+        climbPad.getButton("RB").whenHeld(m_runWinch);
+        climbPad.getButton("LB").whenHeld(m_runWinchBack);
+        climbPad.getButton("A").whenPressed(m_toggleClimbSolenoid);
+
         //joystick2.getButton(5).whenHeld(m_runWinch);
         //joystick2.getButton(3).whenHeld(m_runWinchBack);
 
@@ -104,6 +110,8 @@ public class RobotContainer {
         joystick.getButton(5).whenHeld(m_runIndexer);
         joystick.getButton(12).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
 
+        joystick.getButton(9).toggleWhenPressed(m_runShooter);
+
         /* Gamepad */
 
         // Intake
@@ -114,7 +122,7 @@ public class RobotContainer {
         m_GPad.getButton("BACK").whenPressed(m_solDown);
         m_GPad.getButton("START").whenPressed(m_solUp);
         // Indexer
-        m_GPad.getButton("Y").whileHeld(m_runIndexer);
+        m_GPad.getButton("B").whileHeld(m_runIndexer);
         m_GPad.getButton("RB").whileHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
 
         // Shooter
@@ -132,6 +140,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         //Returns the "auto" command, which we want to run in autonomous.
-        return new MotionProfileCommand(m_drive, "5ball", true);
+        return new TestPathAuto(m_drive, m_indexer, m_analogSenseor, m_cargoIntake);
     }
 }

@@ -32,8 +32,10 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
 
-    m_motor.set(-SmartDashboard.getNumber("Shooter Speed", 0));
-    m_motor2.set(-SmartDashboard.getNumber("Shooter Speed", 0));
+    m_motor.setVoltage(m_speeds);
+    m_motor2.setVoltage(m_speeds);
+      //m_motor.set(-SmartDashboard.getNumber("Shooter Speed", 0));
+      //m_motor.set(-SmartDashboard.getNumber("Shooter Speed", 0));
   }
 
   /**
@@ -41,8 +43,7 @@ public class Shooter extends SubsystemBase {
    * @param speed to be taken from Vision
    */
   public void setSpeed(double speed) {
-      SmartDashboard.putNumber("Shooter Speed", 0.2);
-    m_speeds = speed;
+      m_speeds = speed;
   }
 
 

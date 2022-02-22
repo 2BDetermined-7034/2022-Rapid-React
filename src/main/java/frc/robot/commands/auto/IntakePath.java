@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.drive.MotionProfileCommand;
 import frc.robot.commands.indexer.RunIndexer;
 import frc.robot.commands.intake.RunIntakeMotors;
+import frc.robot.commands.intake.Solenoid;
 import frc.robot.subsystems.AnalogSensor;
 import frc.robot.subsystems.CargoIntake;
 import frc.robot.subsystems.Drive;

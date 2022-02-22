@@ -71,7 +71,7 @@ public final class Constants {
         public static final int leftShifterID = 2;
         public static final int rightShifterID = 3;
         // Speed
-        public static final double xSpeed = 1;
+        public static final double xSpeed = 0.75;
         public static final double xRot = .5;
     }
     public static final class motion {
@@ -114,7 +114,7 @@ public final class Constants {
     }
 
     public final static class indexer {
-        public static final double speed = .75;
+        public static final double speed = .55;
         public static final int indexerMotor1 = 10;
         public static final int indexerMotor2 = 7; // Haha funny number
     }
@@ -132,6 +132,6 @@ public final class Constants {
         public static final double VisY_VTol = 100;
         public static final double VisX_VTol = 100;
         public static final int Vis_TimerConfidence = 5;
-        public static double Vis_LLAngle = 20.5;
+        public static double Vis_LLAngle = 35;
     }
 }

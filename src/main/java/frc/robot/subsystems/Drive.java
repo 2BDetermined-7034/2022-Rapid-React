@@ -160,11 +160,9 @@ public class Drive extends SubsystemBase {
             m_rightEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelMeterRatio);
             m_leftEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelMeterRatio);
             m_rightEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelMeterRatio);
-
         } else {
             m_leftEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
             m_rightEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
-
             m_leftEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
             m_rightEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
         }
@@ -232,6 +230,7 @@ public class Drive extends SubsystemBase {
             m_right.set(rightSpeed);
         }
         m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
-        debug();
+        //debug();
+
     }
 }
