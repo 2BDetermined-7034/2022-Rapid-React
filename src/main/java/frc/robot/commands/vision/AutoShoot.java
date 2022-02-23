@@ -40,7 +40,7 @@ public class AutoShoot extends CommandBase {
     @Override
     public void execute() {
         // If the timer is over 4 seconds, start the indexer, hypothetically should work
-        if(timer.get() > 2) {
+        if(timer.get() > 1.5) {
             m_indexer.setSpeed(Constants.indexer.speed);
         }
         //set the variable to Y-axis
