@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.auto.TestPathAuto;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
+import frc.robot.commands.sensor.SensorOverride;
 import frc.robot.controllers.*;
 import frc.robot.subsystems.*;
 import frc.robot.commands.intake.*;
@@ -63,6 +64,10 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+      SmartDashboard.putData("Indexer Sensor Override", m_sensorOverride);
+      SmartDashboard.putData("Solenoid Down", m_solDown);
+      SmartDashboard.putData("Solenoid Up", m_solUp);
+      SmartDashboard.putData("Reset Climb Encoder", new ResetWinchEncoder(m_climber));
       // Register
       m_drive.register();
       m_cargoIntake.register();
@@ -71,7 +76,7 @@ public class RobotContainer {
       //m_climber.setDefaultCommand(new RunWinch(m_climber, () -> -joystick2.getY()));
 
       //SmartDashboard.putBoolean("switched", joystick.getRawButtonPressed(3));
-      // Default commands
+
       //m_drive.setDefaultCommand(new TuneVelocity(m_drive, () -> m_GPad.getAxis("LTrigger")));
 
       if(Constants.controller.useJoystick)

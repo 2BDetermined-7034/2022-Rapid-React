@@ -22,20 +22,32 @@ public class Indexer extends SubsystemBase {
 
     }
 
+    /**
+     *
+     * @param speed The speed of the motor / Double 0-1
+     */
     public void setSpeed(double speed) {
         m_indexer1.set(-speed);
         m_indexer2.set(-speed);
     }
 
+    /**
+     *
+     * @param speed The speed of a single motor / Double 0-1
+     */
     public void setIndexer1(double speed) {
         m_indexer1.set(speed);
     }
 
+    /**
+     *
+     * @param speed The speed of a single motor / Double 0-1
+     */
     public void setIndexer2(double speed) {
         m_indexer2.set(-speed);
     }
 
-    // Does absolutely nothing.
+
     public void debug() {
         SmartDashboard.putNumber("Indexer speed", m_speed);
     }

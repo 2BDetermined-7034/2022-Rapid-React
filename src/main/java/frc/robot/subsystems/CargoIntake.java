@@ -17,12 +17,14 @@ public class CargoIntake extends SubsystemBase {
         this.cargoMotor = new CANSparkMax(Constants.intake.intakeMotor, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_speed = 0.0;
     }
-
+    public void periodic() {
+        cargoMotor.set(m_speed);
+    }
     /**
      * @param speed The speed you want to move the motor at.
      */
     public void setSpeed(double speed) {
-        cargoMotor.set(speed);
+        this.m_speed = speed;
     }
 
     /**

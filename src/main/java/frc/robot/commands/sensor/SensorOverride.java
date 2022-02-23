@@ -27,7 +27,6 @@ public class SensorOverride extends CommandBase {
      */
     @Override
     public void execute() {
-
         m_sensor.override = true;
     }
 

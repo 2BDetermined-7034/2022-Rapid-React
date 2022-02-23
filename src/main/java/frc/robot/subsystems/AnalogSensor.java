@@ -18,12 +18,17 @@ public class AnalogSensor extends SubsystemBase {
 
     /**
      *
-     * @return Boolean - If something trips the sensor (True = yes, something tripped the sensor | false = no, nothing tripped the sensor
+     * @return Boolean - If something is in front of the sensor that's plugged into port 0, true = something is in front of the sensor, false = no something is not in front of the sensor
      */
     public boolean sensorBoolean0(){
         if(override) return false;
         return m_sensor.getAverageValue() <= 7;
     }
+
+    /**
+     *
+     * @return Boolean - If something is in front of the sensor that's plugged into port 1, true = something is in front of the sensor, false = no something is not in front of the sensor
+     */
 
     public boolean sensorBoolean1(){
         if(override) return false;
