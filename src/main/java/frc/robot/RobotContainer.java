@@ -25,34 +25,40 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+    // Controllers
     private final X3D joystick = new X3D(2);
     public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
     public final X3D joystick2 = new X3D(Constants.controller.climbGamePadPort);
     public final GPad climbPad = new GPad(4);
 
-    private final CargoIntake m_cargoIntake = new CargoIntake();
-    private final Indexer m_indexer = new Indexer();
-    private final AnalogSensor m_analogSenseor = new AnalogSensor();
-    private final LimeLight m_limeLight = new LimeLight();
-    private final Drive m_drive = new Drive();
-    private final Shooter m_shooter = new Shooter();
+    // Subsystems
+    private final CargoIntake m_cargoIntake = new CargoIntake(); // Intake
+    private final Indexer m_indexer = new Indexer(); // Indexer
+    private final AnalogSensor m_analogSenseor = new AnalogSensor(); // Color sensor
+    private final LimeLight m_limeLight = new LimeLight(); // Limelight
+    private final Drive m_drive = new Drive(); // Drivebase
+    private final Shooter m_shooter = new Shooter(); // Shooter
+    private final AutoShoot m_autoShoot = new AutoShoot(m_analogSenseor, m_indexer, m_limeLight, m_shooter);
 
+    // Commands
+
+    /* Shooter */
     private final RunShooter m_runShooter = new RunShooter(m_shooter, m_indexer, () -> Constants.shooter.speed);
 
+    /* Indexer */
     private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> Constants.indexer.speed, m_analogSenseor);
+    private final SensorOverride m_sensorOverride = new SensorOverride(m_analogSenseor);
+
+    /* Intake */
     private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor);
-
     private final SolenoidToggle m_intakeSolToggle = new SolenoidToggle(m_cargoIntake);
-
     private final Solenoid m_solUp = new Solenoid(m_cargoIntake, true);
     private final Solenoid m_solDown = new Solenoid(m_cargoIntake, false);
 
-
-    // Climb
+    /* Climber */
     public final Climber m_climber = new Climber();
-
-    public final RunWinch m_runWinch = new RunWinch(m_climber, () -> 0.3);
-    public final RunWinch m_runWinchBack = new RunWinch(m_climber, () -> -0.3);
+    public final RunWinch m_runWinch = new RunWinch(m_climber, () -> 0.7);
+    public final RunWinch m_runWinchBack = new RunWinch(m_climber, () -> -0.7);
     public final RunSolenoidToggle m_toggleClimbSolenoid = new RunSolenoidToggle(m_climber);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -60,18 +66,18 @@ public class RobotContainer {
       // Register
       m_drive.register();
       m_cargoIntake.register();
-      //m_climber.register();
+      m_climber.register();
 
-     //m_climber.setDefaultCommand(new RunWinch(m_climber, () -> joystick2.getY()));
+      //m_climber.setDefaultCommand(new RunWinch(m_climber, () -> -joystick2.getY()));
 
       //SmartDashboard.putBoolean("switched", joystick.getRawButtonPressed(3));
       // Default commands
       //m_drive.setDefaultCommand(new TuneVelocity(m_drive, () -> m_GPad.getAxis("LTrigger")));
 
-      // Easy controller switching because I kept forgetting how to get the axis
       if(Constants.controller.useJoystick)
           m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX));
-      else m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
+      else
+          m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("RX")));
 
       configureButtonBindings();
   }
@@ -84,12 +90,13 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-        joystick2.getButton(2).whenPressed(m_toggleClimbSolenoid);
+        // Climber controller
 
+        /* Joystick */
+        joystick2.getButton(2).whileHeld(m_toggleClimbSolenoid);
         joystick2.getButton(5).whenHeld(m_runWinch);
         joystick2.getButton(3).whenHeld(m_runWinchBack);
-
-
+        /* Gamepad */
         climbPad.getButton("RB").whenHeld(m_runWinch);
         climbPad.getButton("LB").whenHeld(m_runWinchBack);
         climbPad.getButton("A").whenPressed(m_toggleClimbSolenoid);
@@ -97,39 +104,40 @@ public class RobotContainer {
         //joystick2.getButton(5).whenHeld(m_runWinch);
         //joystick2.getButton(3).whenHeld(m_runWinchBack);
 
-        /* joystick */
+       // Main Joystick
         joystick.getButton(2).toggleWhenPressed(new Shift(m_drive, true));
-        // Intake
         joystick.getButton(6).toggleWhenPressed(m_intakeSolToggle);
-
         joystick.getButton(1).whenHeld(m_runIntake);
+        joystick.getButton(1).whenHeld(m_runIndexer);
         joystick.getButton(11).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> Constants.intake.speed, m_analogSenseor));
-        joystick.getButton(6).toggleWhenPressed(m_runShooter);
+        //joystick.getButton(6).toggleWhenPressed(m_runShooter);
+        //joystick.getButton(5).whenHeld(m_runIndexer);
+        //joystick.getButton(12).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
+        joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+        joystick.getButton(5).whenHeld(m_autoShoot);
+        joystick.getButton(7).whenHeld(m_runShooter);
+        joystick.getButton(9).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_analogSenseor));
+        joystick.getButton(9).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
+        // Main Gamepad (Max configs)
 
-        // Indexer
-        joystick.getButton(5).whenHeld(m_runIndexer);
-        joystick.getButton(12).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
-
-        joystick.getButton(9).toggleWhenPressed(m_runShooter);
-
-        /* Gamepad */
-
-        // Intake
-        m_GPad.getButton("B").whileHeld(m_runIntake);
-        m_GPad.getButton("X").toggleWhenPressed(new Shift(m_drive, true));
-        m_GPad.getButton("RB").whileHeld(new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_analogSenseor));
-
+        /* Intake */
+        m_GPad.getButton("RB").whileHeld(m_runIntake);
         m_GPad.getButton("BACK").whenPressed(m_solDown);
         m_GPad.getButton("START").whenPressed(m_solUp);
-        // Indexer
-        m_GPad.getButton("B").whileHeld(m_runIndexer);
-        m_GPad.getButton("RB").whileHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
+        m_GPad.getButton("LB").whileHeld(new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_analogSenseor));
 
-        // Shooter
-        m_GPad.getButton("A").toggleWhenPressed(m_runShooter);
-        m_GPad.getButton("LSB").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+        /* Drive */
+        m_GPad.getButton("A").toggleWhenPressed(new Shift(m_drive, true));
 
-        // Climb
+        /* Indexer */
+        m_GPad.getButton("RB").whileHeld(m_runIndexer);
+        m_GPad.getButton("LB").whileHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
+
+        /* Shooter */
+        //m_GPad.getButton("A").toggleWhenPressed(m_runShooter);
+        m_GPad.getButton("X").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+        m_GPad.getButton("Y").whenHeld(m_autoShoot);
+
 
     }
 

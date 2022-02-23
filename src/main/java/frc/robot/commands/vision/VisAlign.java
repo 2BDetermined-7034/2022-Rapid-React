@@ -83,8 +83,8 @@ public class VisAlign extends CommandBase {
             //targetY = .8*Math.toDegrees(Math.atan(.7*(distance+1)));
             targetY = 90-(visY+Constants.vision.Vis_LLAngle);
 
-
-            errorX = visX;
+            //add .6 to errorX to help reach actual target
+            errorX = visX > 0 ? visX + .6 : visX - .6;
             //errorY = m_shoot.getPivotPosition() - targetY;
 
             double n = 3;

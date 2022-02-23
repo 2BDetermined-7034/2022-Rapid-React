@@ -15,6 +15,7 @@ public class CargoIntake extends SubsystemBase {
     public CargoIntake() {
         this.m_solenoid = new DoubleSolenoid(Constants.pneumatics.intake, Constants.intake.solenoidForward, Constants.intake.solenoidReverse);
         this.cargoMotor = new CANSparkMax(Constants.intake.intakeMotor, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_speed = 0.0;
     }
 
     /**

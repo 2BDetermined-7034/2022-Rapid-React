@@ -6,6 +6,7 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.DoubleSupplier;
+import edu.wpi.first.wpilibj.Timer;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.Indexer;
@@ -14,7 +15,7 @@ import frc.robot.subsystems.Shooter;
 
 public class RunShooter extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-
+    private final Timer timer = new Timer();
     private final Shooter m_shooter;
     private final Indexer m_index;
     private final DoubleSupplier shooterSpeed;
@@ -30,6 +31,7 @@ public class RunShooter extends CommandBase {
         m_shooter = subsystem;
         shooterSpeed = speed;
 
+
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_shooter);
     }
@@ -37,21 +39,24 @@ public class RunShooter extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        //SmartDashboard.putNumber("Shooter Speed", 0.1);
+        timer.reset();
+        timer.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        //double speed = shooterSpeed.getAsDouble();
-       // m_index.setSpeed(Constants.indexer.speed);
-        m_shooter.setSpeed(SmartDashboard.getNumber("Shooter Speed", 0.1));
+        // If the timer is over 4 seconds, start the indexer, hypothetically should work
+        //if(timer.get() > 3) {
+        //    m_index.setSpeed(Constants.indexer.speed);
+        //}
+        m_shooter.setSpeed(4);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_index.setSpeed(0);
+        //m_index.setSpeed(0);
         m_shooter.setSpeed(0);
     }
 
