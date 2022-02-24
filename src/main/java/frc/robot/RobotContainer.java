@@ -101,7 +101,7 @@ public class RobotContainer {
         joystick2.getButton(2).whileHeld(m_toggleClimbSolenoid);
         joystick2.getButton(5).whenHeld(m_runWinch);
         joystick2.getButton(3).whenHeld(m_runWinchBack);
-        joystick2.getButton(6).whenPressed(new AutoClimbGroup(m_climber, () -> joystick2.getButton(4).get()));
+        joystick2.getButton(6).whenPressed(new AutoClimbGroup(m_climber, () -> joystick2.getButton(4).get(), m_cargoIntake));
         /* Gamepad */
         climbPad.getButton("RB").whenHeld(m_runWinch);
         climbPad.getButton("LB").whenHeld(m_runWinchBack);
