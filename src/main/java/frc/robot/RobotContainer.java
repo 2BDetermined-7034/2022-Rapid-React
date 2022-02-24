@@ -64,6 +64,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+      // SmartDashboard Data
       SmartDashboard.putData("Indexer Sensor Override", m_sensorOverride);
       SmartDashboard.putData("Solenoid Down", m_solDown);
       SmartDashboard.putData("Solenoid Up", m_solUp);
@@ -73,12 +74,7 @@ public class RobotContainer {
       m_cargoIntake.register();
       m_climber.register();
 
-      //m_climber.setDefaultCommand(new RunWinch(m_climber, () -> -joystick2.getY()));
-
-      //SmartDashboard.putBoolean("switched", joystick.getRawButtonPressed(3));
-
-      //m_drive.setDefaultCommand(new TuneVelocity(m_drive, () -> m_GPad.getAxis("LTrigger")));
-
+      // Drive default command
       if(Constants.controller.useJoystick)
           m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX));
       else
@@ -121,7 +117,7 @@ public class RobotContainer {
         //joystick.getButton(12).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
         joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
         joystick.getButton(5).whenHeld(m_autoShoot);
-        joystick.getButton(7).whenHeld(m_runShooter);
+        //joystick.getButton(7).whenHeld(m_runShooter);
         joystick.getButton(9).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_analogSenseor));
         joystick.getButton(9).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
         // Main Gamepad (Max configs)

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.commands.sensor.SensorOverride;
 import frc.robot.subsystems.AnalogSensor;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.LimeLight;
@@ -18,6 +19,7 @@ public class AutoShoot extends CommandBase {
     private final LimeLight m_ll;
     private final Shooter m_shooter;
     private final Timer timer = new Timer();
+    private final AnalogSensor m_sensor = new AnalogSensor();
 
     private double llY;
 
@@ -39,10 +41,17 @@ public class AutoShoot extends CommandBase {
 
     @Override
     public void execute() {
-        // If the timer is over 4 seconds, start the indexer, hypothetically should work
         if(timer.get() > 1.5) {
+            new SensorOverride(m_sensor);
+            SmartDashboard.putNumber("Shooter Value?", m_shooter.getMotor());
+
             m_indexer.setSpeed(Constants.indexer.speed);
         }
+        /* Here's the thing, I have no clue if this works or will work.
+            while(m_shooter.getMotor() == -1*(5.21+(.00695*llY)+(.00146*Math.pow(llY, 2))+(.00034*Math.pow(llY, 3)))) {
+                m_indexer.setSpeed(Constants.indexer.speed);
+            }
+             */
         //set the variable to Y-axis
         llY = m_ll.getYAngle();
         //plug into equation
