@@ -100,8 +100,8 @@ public final class Constants {
         public static final double kI = 0;
         public static final double kD = 0;
         //Encoder garbage (maybe remove if not being used)
-        public static final double degreesPerRot = 360;
-        public static final double extendedValue = -150;
+        public static final int extendedValue = 0;
+        public static final int encoderAcceptableError = 10;
     }
     public final static class intake {
         public static final int intakeMotor = 9;

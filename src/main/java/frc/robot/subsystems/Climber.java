@@ -43,9 +43,6 @@ public class Climber extends SubsystemBase {
     public void setSolenoid(boolean broken) {
         m_solenoid.set(broken ? Value.kForward : Value.kReverse);
     }
-    public void toggleSolenoid(){
-        m_solenoid.toggle();
-    }
 
     public void setWinchPosition(double angle){
         m_winchTalon.set(ControlMode.Position, angle);
@@ -57,6 +54,10 @@ public class Climber extends SubsystemBase {
 
     public void setEncoder(double pos) {
         m_winchTalon.setSelectedSensorPosition(pos);
+    }
+
+    public double getEncoderPosition(){
+        return m_winchTalon.getSelectedSensorPosition();
     }
 
     @Override
