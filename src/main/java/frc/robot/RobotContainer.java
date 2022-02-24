@@ -67,8 +67,8 @@ public class RobotContainer {
   public RobotContainer() {
       // SmartDashboard Data
       SmartDashboard.putData("Indexer Sensor Override", m_sensorOverride);
-      SmartDashboard.putData("Solenoid Down", m_solDown);
-      SmartDashboard.putData("Solenoid Up", m_solUp);
+      SmartDashboard.putData("Intake Solenoid", m_intakeSolToggle);
+      SmartDashboard.putData("Climb Solenoid", m_toggleClimbSolenoid);
       SmartDashboard.putData("Reset Climb Encoder", new ResetWinchEncoder(m_climber));
       // Register
       m_drive.register();
