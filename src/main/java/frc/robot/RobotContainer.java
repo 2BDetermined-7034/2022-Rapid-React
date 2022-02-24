@@ -27,10 +27,11 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
     // Controllers
-    private final X3D joystick = new X3D(2);
+    private final X3D joystick = new X3D(Constants.controller.driveJoystick);
+    public final X3D climbJoystick = new X3D(Constants.controller.climbGamePadPort);
+
     public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
-    public final X3D joystick2 = new X3D(Constants.controller.climbGamePadPort);
-    public final GPad climbPad = new GPad(4);
+    public final GPad climbPad = new GPad(Constants.controller.climbGamePadPort);
 
     // Subsystems
     private final CargoIntake m_cargoIntake = new CargoIntake(); // Intake
@@ -80,6 +81,9 @@ public class RobotContainer {
       else
           m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("RX")));
 
+      //Note: Might need to tweak the division
+      m_climber.setDefaultCommand(new DriveCommand(m_drive, () -> - climbJoystick.getY()/3, () -> - climbJoystick.getX()/3));
+
       configureButtonBindings();
   }
 
@@ -94,10 +98,10 @@ public class RobotContainer {
         // Climber controller
 
         /* Joystick */
-        joystick2.getButton(2).whileHeld(m_toggleClimbSolenoid);
-        joystick2.getButton(5).whenHeld(m_runWinch);
-        joystick2.getButton(3).whenHeld(m_runWinchBack);
-        joystick2.getButton(6).whenPressed(new AutoClimbGroup(m_climber, () -> joystick2.getButton(4).get(), m_cargoIntake));
+        climbJoystick.getButton(2).whileHeld(m_toggleClimbSolenoid);
+        climbJoystick.getButton(5).whenHeld(m_runWinch);
+        climbJoystick.getButton(3).whenHeld(m_runWinchBack);
+        climbJoystick.getButton(6).whenPressed(new AutoClimbGroup(m_climber, () -> climbJoystick.getButton(4).get(), m_cargoIntake));
         /* Gamepad */
         climbPad.getButton("RB").whenHeld(m_runWinch);
         climbPad.getButton("LB").whenHeld(m_runWinchBack);
