@@ -42,6 +42,7 @@ public class AutoShoot extends CommandBase {
     public void execute() {
         //set the variable to Y-axis
         llY = m_ll.getYAngle();
+        // equation
         double visSpeed = -1*(5.21+(.00695*llY)+(.00146*Math.pow(llY, 2))+(.00034*Math.pow(llY, 3)));
 
         if(timer.get() > 1.5) {
@@ -52,8 +53,8 @@ public class AutoShoot extends CommandBase {
             m_indexer.setSpeed(Constants.indexer.speed + .1);
         }
         /* Here's the thing, I have no clue if this works or will work.
-            while(m_shooter.getMotor() == -1*(5.21+(.00695*llY)+(.00146*Math.pow(llY, 2))+(.00034*Math.pow(llY, 3)))) {
-                m_indexer.setSpeed(Constants.indexer.speed);
+            while(m_shooter.getMotor() == visSpeed) {
+                m_indexer.setSpeed(Constants.indexer.speed + 1);
             }
              */
 
