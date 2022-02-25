@@ -59,8 +59,8 @@ public class RobotContainer {
 
     /* Climber */
     public final Climber m_climber = new Climber();
-    public final RunWinch m_runWinch = new RunWinch(m_climber, () -> 0.7);
-    public final RunWinch m_runWinchBack = new RunWinch(m_climber, () -> -0.7);
+    public final RunWinch m_runWinch = new RunWinch(m_climber, () -> 0.3);
+    public final RunWinch m_runWinchBack = new RunWinch(m_climber, () -> -0.3);
     public final RunSolenoidToggle m_toggleClimbSolenoid = new RunSolenoidToggle(m_climber);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -101,7 +101,7 @@ public class RobotContainer {
         climbJoystick.getButton(2).whileHeld(m_toggleClimbSolenoid);
         climbJoystick.getButton(5).whenHeld(m_runWinch);
         climbJoystick.getButton(3).whenHeld(m_runWinchBack);
-        climbJoystick.getButton(6).whenPressed(new AutoClimbGroup(m_climber, () -> climbJoystick.getButton(4).get(), m_cargoIntake));
+        // climbJoystick.getButton(6).whenPressed(new AutoClimbGroup(m_climber, () -> climbJoystick.getButton(4).get(), m_cargoIntake));
         /* Gamepad */
         climbPad.getButton("RB").whenHeld(m_runWinch);
         climbPad.getButton("LB").whenHeld(m_runWinchBack);

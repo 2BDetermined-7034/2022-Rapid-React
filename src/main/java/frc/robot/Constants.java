@@ -29,8 +29,8 @@ public final class Constants {
         public static final int buttonPadPort = 2;
         public static final boolean useJoystick = true; // Switch between using gamepad and joystick
 
-        public static final double yGate = 0.1;
-        public static final double xGate = 0.1;
+        public static final double yGate = 0.15;
+        public static final double xGate = 0.15;
     }
 
     public static final class pneumatics {
@@ -92,8 +92,8 @@ public final class Constants {
 
     public final static class climb {
         public static final int winchMotorID = 1;
-        public static final int solenoidForwardID = 4;
-        public static final int solenoidBackID = 5;
+        public static final int solenoidForwardID = 0;
+        public static final int solenoidBackID = 1;
         public static final double winchSpeed = 0.5;
         //PID Values
         public static final double kP = 0.05;
@@ -105,8 +105,8 @@ public final class Constants {
     }
     public final static class intake {
         public static final int intakeMotor = 9;
-        public static final int solenoidForward = 0;
-        public static final int solenoidReverse = 1;
+        public static final int solenoidForward = 4;
+        public static final int solenoidReverse = 5;
         public static final double speed = 0.4;
         public static final boolean intakeUp = true;
         public static final boolean intakeDown = false;

@@ -32,9 +32,9 @@ public class CargoIntake extends SubsystemBase {
      */
     public void setSolenoid(boolean thing) {
         if (thing) {
-            m_solenoid.set(DoubleSolenoid.Value.kForward);
-        } else {
             m_solenoid.set(DoubleSolenoid.Value.kReverse);
+        } else {
+            m_solenoid.set(DoubleSolenoid.Value.kForward);
         }
     }
 }

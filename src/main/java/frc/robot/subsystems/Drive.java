@@ -230,7 +230,7 @@ public class Drive extends SubsystemBase {
             m_right.set(rightSpeed);
         }
         m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
-        //debug();
+        debug();
 
     }
 }

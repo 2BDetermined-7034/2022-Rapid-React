@@ -32,7 +32,7 @@ private final AnalogSensor m_sensor;
      */
     @Override
     public void execute() {
-        m_indexer.setIndexer2(m_speed.getAsDouble());
+        m_indexer.setSpeed(m_speed.getAsDouble());
     }
 
     /**
@@ -54,7 +54,7 @@ private final AnalogSensor m_sensor;
         // if upper sensor
         // then run stop upper indexer
 
-        /*
+
         if(m_sensor.sensorBoolean0()) {
             m_indexer.setIndexer1(0);
         }
@@ -64,7 +64,7 @@ private final AnalogSensor m_sensor;
 
             return true;
         }
-         */
+
 
 
         return false;

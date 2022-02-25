@@ -38,12 +38,11 @@ public class RunIntakeMotors extends CommandBase {
     @Override
     public boolean isFinished() {
 
-       /*
        if(m_analog.sensorBoolean1_2()) {
            m_intake.setSpeed(0);
            m_intake.setSolenoid(true);
        }
-        */
+
         return false;
 
     }
