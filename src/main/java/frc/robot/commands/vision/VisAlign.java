@@ -84,7 +84,7 @@ public class VisAlign extends CommandBase {
             targetY = 90-(visY+Constants.vision.Vis_LLAngle);
 
             //add .6 to errorX to help reach actual target
-            errorX = visX > 0 ? visX + .6 : visX - .6;
+            errorX = visX > 0 ? visX + .9 : visX - .9;
             //errorY = m_shoot.getPivotPosition() - targetY;
 
             double n = 3;
@@ -96,7 +96,7 @@ public class VisAlign extends CommandBase {
 
         if(liteMode) {
             //m_dt.setGear(Constants.HIGH_GEAR);
-            m_dt.arcadeDrive(drive, -errorX/10);
+            m_dt.arcadeDrive(drive, -errorX/15);
             //targetX_L = m_dt.getPositionL();
             //targetX_R = m_dt.getPositionR();
         }

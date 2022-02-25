@@ -72,6 +72,6 @@ public class AnalogSensor extends SubsystemBase {
         SmartDashboard.putNumber("Sensor 0 Value", getSensor0AvValue());
         SmartDashboard.putNumber("Sensor 1 Value", getSensor1AvValue());
         // If both sensor 0 and 1 is true, it'll show that the indexer is full.
-        SmartDashboard.putBoolean("Is Indexer Full?", sensorBoolean0());
+        SmartDashboard.putBoolean("Is Indexer Full?", sensorBoolean1_2());
     }
 }

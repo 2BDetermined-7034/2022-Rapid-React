@@ -19,7 +19,6 @@ public class AutoShoot extends CommandBase {
     private final LimeLight m_ll;
     private final Shooter m_shooter;
     private final Timer timer = new Timer();
-    private final AnalogSensor m_sensor = new AnalogSensor();
 
     private double llY;
 
@@ -42,7 +41,7 @@ public class AutoShoot extends CommandBase {
     @Override
     public void execute() {
         if(timer.get() > 1.5) {
-            new SensorOverride(m_sensor);
+            new SensorOverride(analogSensor);
             SmartDashboard.putNumber("Shooter Value?", m_shooter.getMotor());
 
             m_indexer.setSpeed(Constants.indexer.speed);

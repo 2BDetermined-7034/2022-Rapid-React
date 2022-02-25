@@ -61,13 +61,13 @@ public class Drive extends SubsystemBase {
         m_differentialDrive = new DifferentialDrive(m_left, m_right);
         m_kinematics = new DifferentialDriveKinematics(Constants.driveBase.width);
 
-        m_right.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_right.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_right2.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_right3.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_right3.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
-        m_left.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_left.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_left2.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_left3.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_left3.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
         m_leftEnc = m_left.getEncoder();
         m_rightEnc = m_right.getEncoder();

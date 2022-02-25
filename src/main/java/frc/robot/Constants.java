@@ -71,8 +71,8 @@ public final class Constants {
         public static final int leftShifterID = 2;
         public static final int rightShifterID = 3;
         // Speed
-        public static final double xSpeed = 0.75;
-        public static final double xRot = .7;
+        public static final double xSpeed = .9;
+        public static final double xRot = .75;
     }
     public static final class motion {
         //Ramsete gains

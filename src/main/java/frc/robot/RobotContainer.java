@@ -82,7 +82,7 @@ public class RobotContainer {
           m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("RX")));
 
       //Note: Might need to tweak the division
-      m_climber.setDefaultCommand(new DriveCommand(m_drive, () -> - climbJoystick.getY()/3, () -> - climbJoystick.getX()/3));
+      //m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> - climbJoystick.getY()/3, () -> - climbJoystick.getX()/3));
 
       configureButtonBindings();
   }
@@ -110,7 +110,7 @@ public class RobotContainer {
         //joystick2.getButton(5).whenHeld(m_runWinch);
         //joystick2.getButton(3).whenHeld(m_runWinchBack);
 
-       // Main Joystick
+       // Main Joystick ( Maddie configs )
         joystick.getButton(2).toggleWhenPressed(new Shift(m_drive, true));
         joystick.getButton(6).toggleWhenPressed(m_intakeSolToggle);
         joystick.getButton(1).whenHeld(m_runIntake);
