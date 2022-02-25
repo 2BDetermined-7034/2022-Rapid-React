@@ -82,7 +82,7 @@ public class RobotContainer {
           m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("RX")));
 
       //Note: Might need to tweak the division
-      //m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> - climbJoystick.getY()/3, () -> - climbJoystick.getX()/3));
+      m_climber.setDefaultCommand(new DriveCommand(m_drive, () -> -climbPad.getAxis("LY")/3, () -> - climbPad.getAxis("LX")/3));
 
       configureButtonBindings();
   }
@@ -106,6 +106,7 @@ public class RobotContainer {
         climbPad.getButton("RB").whenHeld(m_runWinch);
         climbPad.getButton("LB").whenHeld(m_runWinchBack);
         climbPad.getButton("A").whenPressed(m_toggleClimbSolenoid);
+        climbPad.getButton("B").whenPressed(new AutoClimbGroup(m_climber, () -> climbPad.getButton("Y").get(), m_cargoIntake)); // ??
 
         //joystick2.getButton(5).whenHeld(m_runWinch);
         //joystick2.getButton(3).whenHeld(m_runWinchBack);
