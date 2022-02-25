@@ -50,7 +50,7 @@ public class Shooter extends SubsystemBase {
   }
 
     public double getMotor() {
-        return m_controlGroup.get();
+        return m_motor.getBusVoltage();
     }
 
   public void debug() {
