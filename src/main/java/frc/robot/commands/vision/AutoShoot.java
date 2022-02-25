@@ -49,6 +49,7 @@ public class AutoShoot extends CommandBase {
             new SensorOverride(analogSensor);
             SmartDashboard.putNumber("Shooter Vis Speed", visSpeed);
             SmartDashboard.putNumber("Shooter Voltage", m_shooter.getMotor());
+            SmartDashboard.putBoolean("Is shooter speed equal", m_shooter.getMotor() == visSpeed);
 
             m_indexer.setSpeed(Constants.indexer.speed + .1);
         }
