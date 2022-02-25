@@ -40,21 +40,25 @@ public class AutoShoot extends CommandBase {
 
     @Override
     public void execute() {
+        //set the variable to Y-axis
+        llY = m_ll.getYAngle();
+        double visSpeed = -1*(5.21+(.00695*llY)+(.00146*Math.pow(llY, 2))+(.00034*Math.pow(llY, 3)));
+
         if(timer.get() > 1.5) {
             new SensorOverride(analogSensor);
-            SmartDashboard.putNumber("Shooter Value?", m_shooter.getMotor());
+            SmartDashboard.putNumber("Shooter Vis Speed", visSpeed);
+            SmartDashboard.putNumber("Shooter Voltage", m_shooter.getMotor());
 
-            m_indexer.setSpeed(Constants.indexer.speed);
+            m_indexer.setSpeed(Constants.indexer.speed + .1);
         }
         /* Here's the thing, I have no clue if this works or will work.
             while(m_shooter.getMotor() == -1*(5.21+(.00695*llY)+(.00146*Math.pow(llY, 2))+(.00034*Math.pow(llY, 3)))) {
                 m_indexer.setSpeed(Constants.indexer.speed);
             }
              */
-        //set the variable to Y-axis
-        llY = m_ll.getYAngle();
+
         //plug into equation
-        m_shooter.setSpeed(-1*(5.21+(.00695*llY)+(.00146*Math.pow(llY, 2))+(.00034*Math.pow(llY, 3))));
+        m_shooter.setSpeed(visSpeed);
     }
 
     @Override
