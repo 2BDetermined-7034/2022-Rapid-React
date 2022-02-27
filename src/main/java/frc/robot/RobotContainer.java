@@ -129,7 +129,7 @@ public class RobotContainer {
         //joystick.getButton(12).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
         joystick.getButton(5).whenHeld(m_autoShoot);
         joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
-        joystick.getButton(11).whenHeld(new AlignAutoShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter));
+        //joystick.getButton(11).whenHeld(new AlignAutoShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter));
 
         //joystick.getButton(7).whenHeld(m_runShooter);
         joystick.getButton(9).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_analogSenseor));

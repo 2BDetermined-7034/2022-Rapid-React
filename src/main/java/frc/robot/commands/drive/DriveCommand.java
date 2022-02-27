@@ -45,7 +45,7 @@ public class DriveCommand extends CommandBase {
         if (Math.abs(xSpeed) < Constants.controller.yGate) xSpeed = 0;
         if (Math.abs(zRotation) < Constants.controller.xGate) zRotation = 0;
 
-        m_drive.arcadeDrive(-m_driveY.getAsDouble(), m_driveX.getAsDouble());
+        m_drive.arcadeDrive(m_driveY.getAsDouble(), m_driveX.getAsDouble());
     }
 
     /**

@@ -1,5 +1,6 @@
 package frc.robot.commands.indexer;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.AnalogSensor;
 import frc.robot.subsystems.Indexer;
@@ -53,7 +54,8 @@ private final AnalogSensor m_sensor;
     public boolean isFinished() {
         // if upper sensor
         // then run stop upper indexer
-
+        SmartDashboard.putNumber("Sensor 0 Value", m_sensor.getSensor0AvValue());
+        SmartDashboard.putNumber("Sensor 1 Value", m_sensor.getSensor1AvValue());
 
         if(m_sensor.sensorBoolean0()) {
             m_indexer.setIndexer1(0);

@@ -20,7 +20,7 @@ public class CargoIntake extends SubsystemBase {
         m_speed = 0.0;
     }
     public void periodic() {
-        cargoMotor.set(m_speed);
+        cargoMotor.set(-m_speed);
         cargoMotor2.set(-m_speed);
     }
     /**
