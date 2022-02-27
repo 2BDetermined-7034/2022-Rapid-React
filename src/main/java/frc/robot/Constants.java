@@ -109,6 +109,7 @@ public final class Constants {
     }
     public final static class intake {
         public static final int intakeMotor = 9;
+        public static final int intakeMotor2 = 10;
         public static final int solenoidForward = 4;
         public static final int solenoidReverse = 5;
         public static final double speed = 0.4;
