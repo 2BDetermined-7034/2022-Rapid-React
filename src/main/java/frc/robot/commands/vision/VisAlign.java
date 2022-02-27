@@ -19,7 +19,7 @@ public class VisAlign extends CommandBase {
     private BooleanSupplier m_vis;
     private BooleanSupplier m_interrupt;
     private DoubleSupplier m_drive;
-
+ 
     private boolean tapeDetected;
 
     private int tapeTimer;

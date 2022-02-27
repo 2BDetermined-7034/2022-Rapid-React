@@ -49,9 +49,10 @@ public class Shooter extends SubsystemBase {
       m_speeds = speed;
   }
 
-    public double getMotor() {
-        return m_motor.getBusVoltage();
-    }
+  public double getVoltage() {
+      return m_motor.getAppliedOutput() * m_motor.getBusVoltage();
+  }
+
 
   public void debug() {
       SmartDashboard.putNumber("Shooter Speed", m_speeds);

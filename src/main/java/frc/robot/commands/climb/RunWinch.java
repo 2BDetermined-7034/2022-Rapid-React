@@ -37,8 +37,8 @@ public class RunWinch extends CommandBase {
     @Override
     public void execute() {
         //m_legoClimb.runWinch(SmartDashboard.getNumber("TeleClimberWinchSpeed", 0));
-        m_climber.runWinch(m_fowSpeed.getAsDouble());
-
+        //m_climber.runWinch(m_fowSpeed.getAsDouble());
+        m_climber.runWinchSafely(m_fowSpeed.getAsDouble());
     }
 
     // Called once the command ends or is interrupted.

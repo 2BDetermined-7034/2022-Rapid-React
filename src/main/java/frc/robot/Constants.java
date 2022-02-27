@@ -27,7 +27,7 @@ public final class Constants {
         public static final int gamePadPort = 0;
         public static final int climberGamepad = 6;
         public static final int buttonPadPort = 2;
-        public static final boolean useJoystick = true; // Switch between using gamepad and joystick
+        public static final boolean useJoystick = true; // Switch between using gamepad and joystick (for driver)
 
         public static final double yGate = 0.15;
         public static final double xGate = 0.15;
@@ -88,6 +88,7 @@ public final class Constants {
         public static final int rightShooterNEO = 11;
         public static final double speed = .25;
         public static final int shooterMultiplier = 1;
+        public static final double shooterRange = 0.1;
     }
 
     public final static class climb {
@@ -100,6 +101,9 @@ public final class Constants {
         public static final double kI = 0;
         public static final double kD = 0;
         //Encoder garbage (maybe remove if not being used)
+
+        public static final int maxPos = 312252;
+
         public static final int extendedValue = 0;
         public static final int encoderAcceptableError = 10;
     }
@@ -114,7 +118,7 @@ public final class Constants {
     }
 
     public final static class indexer {
-        public static final double speed = .55;
+        public static final double speed = .75;
         public static final int indexerMotor1 = 10;
         public static final int indexerMotor2 = 7; // Haha funny number
     }

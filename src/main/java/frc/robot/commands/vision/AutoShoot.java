@@ -45,19 +45,21 @@ public class AutoShoot extends CommandBase {
         // equation
         double visSpeed = -1*(5.21+(.00695*llY)+(.00146*Math.pow(llY, 2))+(.00034*Math.pow(llY, 3)));
 
+        SmartDashboard.putNumber("Shooter Vis Speed", visSpeed);
+        SmartDashboard.putNumber("Shooter Voltage", m_shooter.getVoltage());
+        SmartDashboard.putBoolean("Is shooter speed equal", m_shooter.getVoltage() == visSpeed);
+        /*
         if(timer.get() > 1.5) {
             new SensorOverride(analogSensor);
-            SmartDashboard.putNumber("Shooter Vis Speed", visSpeed);
-            SmartDashboard.putNumber("Shooter Voltage", m_shooter.getMotor());
-            SmartDashboard.putBoolean("Is shooter speed equal", m_shooter.getMotor() == visSpeed);
-
             m_indexer.setSpeed(Constants.indexer.speed + .1);
         }
-        /* Here's the thing, I have no clue if this works or will work.
-            while(m_shooter.getMotor() == visSpeed) {
+         */
+
+            while(m_shooter.getVoltage() == visSpeed) {
+            new SensorOverride(analogSensor);
                 m_indexer.setSpeed(Constants.indexer.speed + 1);
             }
-             */
+
 
         //plug into equation
         m_shooter.setSpeed(visSpeed);

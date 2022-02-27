@@ -40,6 +40,17 @@ public class Climber extends SubsystemBase {
     public void runWinch(double speed){
         m_winchTalon.set(speed);
     }
+
+
+    public void runWinchSafely(double speed){
+        if (getEncoderPosition() <= 0) return;
+
+        if (speed > 0 && getEncoderPosition() <= Constants.climb.maxPos) m_winchTalon.set(speed);
+
+    }
+
+
+
     public void setSolenoid(boolean broken) {
         m_solenoid.set(broken ? Value.kForward : Value.kReverse);
     }

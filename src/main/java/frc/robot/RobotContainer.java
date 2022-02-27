@@ -45,7 +45,7 @@ public class RobotContainer {
     // Commands
 
     /* Shooter */
-    private final RunShooter m_runShooter = new RunShooter(m_shooter, m_indexer, () -> Constants.shooter.speed);
+    private final RunShooter m_runShooter = new RunShooter(m_shooter, m_indexer, () -> Constants.shooter.speed, m_analogSenseor);
 
     /* Indexer */
     private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> Constants.indexer.speed, m_analogSenseor);
@@ -69,11 +69,14 @@ public class RobotContainer {
       SmartDashboard.putData("Indexer Sensor Override", m_sensorOverride);
       SmartDashboard.putData("Intake Solenoid", m_intakeSolToggle);
       SmartDashboard.putData("Climb Solenoid", m_toggleClimbSolenoid);
-      SmartDashboard.putData("Reset Climb Encoder", new ResetWinchEncoder(m_climber));
+      //SmartDashboard.putData("Reset Climb Encoder", new ResetWinchEncoder(m_climber));
       // Register
       m_drive.register();
       m_cargoIntake.register();
       m_climber.register();
+      m_shooter.register();
+
+      m_shooter.setDefaultCommand(new RunShooter(m_shooter, m_indexer, () -> climbPad.getAxis("RY"), m_analogSenseor));
 
       // Drive default command
       if(Constants.controller.useJoystick)
@@ -82,7 +85,7 @@ public class RobotContainer {
           m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("RX")));
 
       //Note: Might need to tweak the division
-      m_climber.setDefaultCommand(new DriveCommand(m_drive, () -> -climbPad.getAxis("LY")/3, () -> - climbPad.getAxis("LX")/3));
+      //m_climber.setDefaultCommand(new DriveCommand(m_drive, () -> -climbPad.getAxis("LY")/3, () -> - climbPad.getAxis("LX")/3));
 
       configureButtonBindings();
   }
@@ -97,31 +100,37 @@ public class RobotContainer {
 
         // Climber controller
 
-        /* Joystick */
-        climbJoystick.getButton(2).whileHeld(m_toggleClimbSolenoid);
-        climbJoystick.getButton(5).whenHeld(m_runWinch);
-        climbJoystick.getButton(3).whenHeld(m_runWinchBack);
-        // climbJoystick.getButton(6).whenPressed(new AutoClimbGroup(m_climber, () -> climbJoystick.getButton(4).get(), m_cargoIntake));
         /* Gamepad */
         climbPad.getButton("RB").whenHeld(m_runWinch);
         climbPad.getButton("LB").whenHeld(m_runWinchBack);
-        climbPad.getButton("A").whenPressed(m_toggleClimbSolenoid);
-        climbPad.getButton("B").whenPressed(new AutoClimbGroup(m_climber, () -> climbPad.getButton("Y").get(), m_cargoIntake)); // ??
+        climbPad.getButton("B").whenHeld(m_toggleClimbSolenoid);
+        climbPad.getButton("START").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+        climbPad.getButton("BACK").whenHeld(m_autoShoot);
+
+
+
+        //climbPad.getButton("B").whenPressed(new AutoClimbGroup(m_climber, () -> climbPad.getButton("Y").get(), m_cargoIntake)); // ??
 
         //joystick2.getButton(5).whenHeld(m_runWinch);
         //joystick2.getButton(3).whenHeld(m_runWinchBack);
 
-       // Main Joystick ( Maddie configs )
-        joystick.getButton(2).toggleWhenPressed(new Shift(m_drive, true));
-        joystick.getButton(6).toggleWhenPressed(m_intakeSolToggle);
+       // Main Joystick ( configs )
+        joystick.getButton(10).toggleWhenPressed(new Shift(m_drive, true));
+        joystick.getButton(8).toggleWhenPressed(m_intakeSolToggle);
+        joystick.getButton(6).whenHeld(m_runWinch);
+        joystick.getButton(4).whenHeld(m_runWinchBack);
+
+
         joystick.getButton(1).whenHeld(m_runIntake);
         joystick.getButton(1).whenHeld(m_runIndexer);
         joystick.getButton(11).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> Constants.intake.speed, m_analogSenseor));
         //joystick.getButton(6).toggleWhenPressed(m_runShooter);
         //joystick.getButton(5).whenHeld(m_runIndexer);
         //joystick.getButton(12).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
-        joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
         joystick.getButton(5).whenHeld(m_autoShoot);
+        joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+        joystick.getButton(11).whenHeld(new AlignAutoShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter));
+
         //joystick.getButton(7).whenHeld(m_runShooter);
         joystick.getButton(9).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_analogSenseor));
         joystick.getButton(9).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));

@@ -58,8 +58,8 @@ public class AnalogSensor extends SubsystemBase {
      * @return Boolean / If the color sensors have something in front of them - True = There is something in front of the color sensor.
      */
     public boolean sensorBoolean1_2() {
-        boolean sen1  = m_sensor.getAverageValue() > 7;
-        boolean sen2 = m_sensor2.getAverageValue() > 7;
+        boolean sen1  = m_sensor.getAverageValue() >= 7;
+        boolean sen2 = m_sensor2.getAverageValue() >= 7;
 
         if(override) return false;
         return !sen1 && !sen2;
@@ -69,8 +69,10 @@ public class AnalogSensor extends SubsystemBase {
 
     @Override
     public void periodic() {
+        /*
         SmartDashboard.putNumber("Sensor 0 Value", getSensor0AvValue());
         SmartDashboard.putNumber("Sensor 1 Value", getSensor1AvValue());
+         */
         // If both sensor 0 and 1 is true, it'll show that the indexer is full.
         SmartDashboard.putBoolean("Is Indexer Full?", sensorBoolean1_2());
     }

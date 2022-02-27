@@ -9,16 +9,20 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.Timer;
 
 import frc.robot.Constants;
+import frc.robot.commands.sensor.SensorOverride;
+import frc.robot.subsystems.AnalogSensor;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
 
 public class RunShooter extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Timer timer = new Timer();
+    private final AnalogSensor analogSensor;
+
     private final Shooter m_shooter;
     private final Indexer m_index;
     private final DoubleSupplier shooterSpeed;
+
 
     /**
      * Creates a new RunShooter.
@@ -26,8 +30,9 @@ public class RunShooter extends CommandBase {
      * @param subsystem The subsystem used by this command.
      * @param speed DoubleSupplier for the motor.
      */
-    public RunShooter(Shooter subsystem, Indexer indexer, DoubleSupplier speed) {
+    public RunShooter(Shooter subsystem, Indexer indexer, DoubleSupplier speed, AnalogSensor sensor) {
         this.m_index = indexer;
+        this.analogSensor = sensor;
         m_shooter = subsystem;
         shooterSpeed = speed;
 
@@ -39,24 +44,23 @@ public class RunShooter extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        timer.reset();
-        timer.start();
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         // If the timer is over 4 seconds, start the indexer, hypothetically should work
-        //if(timer.get() > 3) {
-        //    m_index.setSpeed(Constants.indexer.speed);
-        //}
-        m_shooter.setSpeed(4);
+        new SensorOverride(analogSensor);
+
+        m_index.setSpeed(shooterSpeed.getAsDouble());
+        m_shooter.setSpeed(shooterSpeed.getAsDouble() * 2);// ??
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        //m_index.setSpeed(0);
+        m_index.setSpeed(0);
         m_shooter.setSpeed(0);
     }
 
