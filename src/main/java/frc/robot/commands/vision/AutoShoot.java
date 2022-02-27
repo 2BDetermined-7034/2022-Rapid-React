@@ -55,7 +55,7 @@ public class AutoShoot extends CommandBase {
         }
          */
 
-            while(m_shooter.getVoltage() == visSpeed) {
+            while(Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
             new SensorOverride(analogSensor);
                 m_indexer.setSpeed(Constants.indexer.speed + 1);
             }

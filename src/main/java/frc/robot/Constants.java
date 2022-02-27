@@ -88,7 +88,7 @@ public final class Constants {
         public static final int rightShooterNEO = 11;
         public static final double speed = .25;
         public static final int shooterMultiplier = 1;
-        public static final double shooterRange = 0.1;
+        public static final double shooterRange = 0.2;
     }
 
     public final static class climb {
