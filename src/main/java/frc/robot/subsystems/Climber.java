@@ -43,7 +43,7 @@ public class Climber extends SubsystemBase {
 
 
     public void runWinchSafely(double speed){
-        if (getEncoderPosition() <= 0 && speed < 0) return;
+        if (getEncoderPosition() <= 0 && speed < 0) speed = 0;
 
         if (getEncoderPosition() <= Constants.climb.maxPos) m_winchTalon.set(speed);
 
