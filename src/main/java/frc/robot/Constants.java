@@ -31,6 +31,8 @@ public final class Constants {
 
         public static final double yGate = 0.15;
         public static final double xGate = 0.15;
+
+        public static final int autoNumber = 2;
     }
 
     public static final class pneumatics {
@@ -44,11 +46,11 @@ public final class Constants {
         // Odometry
         public static final double length = 0.762; // Distance from
         public static final double width = 0.7112; //Length from left wheel to right
-        public static final double highRatio = 1/4.17;
-        public static final double lowRatio = 1/15.32;
+        public static final double highRatio = 1/7.08;
+        public static final double lowRatio = 1/18.75;
         public static final double wheelMeterRatio = (0.31918581/61) * (1.15);
-        public static final boolean HIGH_GEAR = true;
-        public static final boolean LOW_GEAR = false;
+        public static final boolean HIGH_GEAR = false;
+        public static final boolean LOW_GEAR = true;
         //PID
         public static final double leftFF = 0;
         public static final double leftP = 0.029;
@@ -76,10 +78,10 @@ public final class Constants {
     }
     public static final class motion {
         //Ramsete gains
-        public static final double b = 1.7;
-        public static final double zeta = 1;
+        public static final double b = 1.45;
+        public static final double zeta = 0.5;
         //Max values
-        public static final double maxVelocity = 0.6;
+        public static final double maxVelocity = 1;
         public static final double maxAcceleration = 0.4;
     }
 
@@ -87,8 +89,7 @@ public final class Constants {
         public static final int leftShooterNEO = 8;
         public static final int rightShooterNEO = 11;
         public static final double speed = .25;
-        public static final int shooterMultiplier = 1;
-        public static final double shooterRange = 0.2;
+        public static final double shooterRange = 0.005;
     }
 
     public final static class climb {
@@ -119,7 +120,7 @@ public final class Constants {
     }
 
     public final static class indexer {
-        public static final double speed = .75;
+        public static final double speed = 0.85;
         public static final int indexerMotor1 = 10;
         public static final int indexerMotor2 = 7; // Haha funny number
     }

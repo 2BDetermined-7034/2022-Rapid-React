@@ -43,9 +43,9 @@ public class Climber extends SubsystemBase {
 
 
     public void runWinchSafely(double speed){
-        if (getEncoderPosition() <= 0 && speed < 0) speed = 0;
+        if ((getEncoderPosition() <= 0 && speed < 0) || (getEncoderPosition() >= Constants.climb.maxPos && speed > 0)) speed = 0;
 
-        if (getEncoderPosition() <= Constants.climb.maxPos) m_winchTalon.set(speed);
+        m_winchTalon.set(speed);
 
     }
 
@@ -76,7 +76,7 @@ public class Climber extends SubsystemBase {
         String test;
         if(m_solenoid.get() == DoubleSolenoid.Value.kForward){
             test = "Forward";
-        }else{
+        } else {
             test = "Backward";
         }
         SmartDashboard.putString("Solenoid State", test);

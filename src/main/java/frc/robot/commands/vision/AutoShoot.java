@@ -27,8 +27,6 @@ public class AutoShoot extends CommandBase {
         m_indexer = indexer;
         m_ll = limeLight;
         m_shooter = shooter;
-        // each subsystem used by the command must be passed into the
-        // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.analogSensor, m_indexer, m_ll, m_shooter);
     }
 
@@ -45,20 +43,13 @@ public class AutoShoot extends CommandBase {
         // equation
         double visSpeed = -1*(5.21+(.00695*llY)+(.00146*Math.pow(llY, 2))+(.00034*Math.pow(llY, 3)));
 
-        SmartDashboard.putNumber("Shooter Vis Speed", visSpeed);
-        SmartDashboard.putNumber("Shooter Voltage", m_shooter.getVoltage());
-        SmartDashboard.putBoolean("Is shooter speed equal", m_shooter.getVoltage() == visSpeed);
-        /*
-        if(timer.get() > 1.5) {
-            new SensorOverride(analogSensor);
-            m_indexer.setSpeed(Constants.indexer.speed + .1);
-        }
-         */
 
-            while(Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
+        //visSpeed = SmartDashboard.getNumber("Shooter Speed", 0);
+
+        if(Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
             new SensorOverride(analogSensor);
-                m_indexer.setSpeed(Constants.indexer.speed + 1);
-            }
+            m_indexer.setSpeed(Constants.indexer.speed);
+        }
 
 
         //plug into equation

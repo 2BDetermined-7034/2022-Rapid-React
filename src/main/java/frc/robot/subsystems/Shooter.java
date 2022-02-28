@@ -30,13 +30,16 @@ public class Shooter extends SubsystemBase {
         m_motor2.setIdleMode(IdleMode.kCoast);
 
         m_speeds = 0;
+        SmartDashboard.putNumber("Shooter Speed", 0);
     }
 
   @Override
   public void periodic() {
 
-    m_motor.setVoltage(m_speeds);
-    m_motor2.setVoltage(m_speeds);
+        SmartDashboard.putNumber("Shooter Vis Speed", m_speeds);
+        SmartDashboard.putNumber("Shooter Voltage", getVoltage());
+        m_motor.setVoltage(m_speeds);
+        m_motor2.setVoltage(m_speeds);
       //m_motor.set(-SmartDashboard.getNumber("Shooter Speed", 0));
       //m_motor.set(-SmartDashboard.getNumber("Shooter Speed", 0));
   }

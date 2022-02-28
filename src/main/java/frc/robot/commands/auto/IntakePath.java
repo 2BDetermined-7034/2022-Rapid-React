@@ -12,7 +12,18 @@ import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Indexer;
 
 public class IntakePath extends ParallelCommandGroup {
+    AnalogSensor sensor;
+
+
     public IntakePath(Drive m_drive, Indexer m_indexer, AnalogSensor m_sensor, CargoIntake m_cargoIntake, String path, boolean inverted, double intakeSpeed, double indexerSpeed) {
         super(new MotionProfileCommand(m_drive, path, inverted), new RunIndexer(m_indexer,() -> indexerSpeed, m_sensor), new RunIntakeMotors(m_cargoIntake, () -> intakeSpeed, m_sensor));
+        sensor = m_sensor;
     }
+
+    @Override
+    public boolean isFinished() {
+        return sensor.sensorBoolean1_2();
+    }
+
+
 }

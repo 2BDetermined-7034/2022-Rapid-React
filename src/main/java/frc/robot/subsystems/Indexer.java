@@ -19,6 +19,8 @@ public class Indexer extends SubsystemBase {
     public Indexer() {
         m_indexer1 = new CANSparkMax(Constants.indexer.indexerMotor1, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_indexer2 = new CANSparkMax(Constants.indexer.indexerMotor2, CANSparkMaxLowLevel.MotorType.kBrushless);
+        m_indexer1.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        m_indexer2.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
     }
 

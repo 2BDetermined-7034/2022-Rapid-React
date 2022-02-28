@@ -1,16 +1,15 @@
 package frc.robot.commands.vision;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.commands.sensor.SensorOverride;
+import frc.robot.subsystems.*;
+
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.Shortcuts;
-import frc.robot.subsystems.*;
 
-
-public class VisAlign extends CommandBase {
+public class VisShoot extends CommandBase {
 
     private final Drive m_dt;
     private final LimeLight m_ll;
@@ -19,7 +18,11 @@ public class VisAlign extends CommandBase {
     private BooleanSupplier m_vis;
     private BooleanSupplier m_interrupt;
     private DoubleSupplier m_drive;
- 
+
+    private final AnalogSensor analogSensor;
+    private final Indexer m_indexer;
+    private final Shooter m_shooter;
+
     private boolean tapeDetected;
 
     private int tapeTimer;
@@ -31,13 +34,19 @@ public class VisAlign extends CommandBase {
     private double targetX_R;
     private double distance;
 
-    public VisAlign(Drive dt, LimeLight ll, BooleanSupplier useVision, BooleanSupplier interrupt, DoubleSupplier drive) {
+    public VisShoot(Drive dt, LimeLight ll, AnalogSensor analogSensor, Indexer indexer, Shooter shooter, BooleanSupplier useVision, BooleanSupplier interrupt, DoubleSupplier drive) {
         m_dt = dt;
         m_ll = ll;
         //m_shoot = shooter;
         m_vis = useVision;
         m_interrupt = interrupt;
         m_drive = drive;
+
+        this.analogSensor = analogSensor;
+        m_indexer = indexer;
+        m_shooter = shooter;
+
+
         addRequirements(dt);
         //addRequirements(shooter);
         addRequirements(ll);
@@ -90,24 +99,21 @@ public class VisAlign extends CommandBase {
             double n = 3;
             //double distance = 0.0256*Constants.vision.VisY_distanceConstant/visA;
 
-        } else {
-
         }
 
-        if(liteMode) {
-            //m_dt.setGear(Constants.HIGH_GEAR);
-            m_dt.arcadeDrive(drive, -errorX/15);
-            //targetX_L = m_dt.getPositionL();
-            //targetX_R = m_dt.getPositionR();
+        m_dt.arcadeDrive(drive, -errorX/15);
+
+        double llY = m_ll.getYAngle();
+
+        // equation
+        double visSpeed = -1 * (5.21 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)));
+
+        m_shooter.setSpeed(visSpeed);
+        if (Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
+            new SensorOverride(analogSensor);
+            m_indexer.setSpeed(Constants.indexer.speed);
         }
-        else {
-            //m_dt.setGear(Constants.LOW_GEAR);
-            //m_dt.setPositionTarget(targetX_L, targetX_R);
-        }
 
-
-
-        //m_shoot.setPivotTarget(targetY);
 
 
     }
@@ -130,6 +136,8 @@ public class VisAlign extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
+        m_shooter.setSpeed(0);
+        m_indexer.setSpeed(0);
         //m_dt.setGear(Constants.HIGH_GEAR);
     }
 }

@@ -7,7 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.auto.IntakePath;
 import frc.robot.commands.auto.TestPathAuto;
+import frc.robot.commands.auto.TwoBallBot;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
 import frc.robot.commands.sensor.SensorOverride;
@@ -41,7 +43,7 @@ public class RobotContainer {
     private final Drive m_drive = new Drive(); // Drivebase
     private final Shooter m_shooter = new Shooter(); // Shooter
     private final AutoShoot m_autoShoot = new AutoShoot(m_analogSenseor, m_indexer, m_limeLight, m_shooter);
-
+    private final TrollShot m_trollShot = new TrollShot(m_shooter, m_indexer, m_analogSenseor);
     // Commands
 
     /* Shooter */
@@ -76,7 +78,6 @@ public class RobotContainer {
       m_climber.register();
       m_shooter.register();
 
-      m_shooter.setDefaultCommand(new RunShooter(m_shooter, m_indexer, () -> climbPad.getAxis("RY"), m_analogSenseor));
 
       // Drive default command
       if(Constants.controller.useJoystick)
@@ -104,36 +105,40 @@ public class RobotContainer {
         climbPad.getButton("RB").whenHeld(m_runWinch);
         climbPad.getButton("LB").whenHeld(m_runWinchBack);
         climbPad.getButton("B").whenHeld(m_toggleClimbSolenoid);
+        climbPad.getButton("Y").toggleWhenPressed(m_intakeSolToggle);
         climbPad.getButton("START").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
         climbPad.getButton("BACK").whenHeld(m_autoShoot);
 
 
-
-        //climbPad.getButton("B").whenPressed(new AutoClimbGroup(m_climber, () -> climbPad.getButton("Y").get(), m_cargoIntake)); // ??
-
-        //joystick2.getButton(5).whenHeld(m_runWinch);
-        //joystick2.getButton(3).whenHeld(m_runWinchBack);
-
        // Main Joystick ( configs )
-        joystick.getButton(10).toggleWhenPressed(new Shift(m_drive, true));
-        joystick.getButton(8).toggleWhenPressed(m_intakeSolToggle);
-        joystick.getButton(6).whenHeld(m_runWinch);
-        joystick.getButton(4).whenHeld(m_runWinchBack);
-
-
         joystick.getButton(1).whenHeld(m_runIntake);
         joystick.getButton(1).whenHeld(m_runIndexer);
-        joystick.getButton(11).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> Constants.intake.speed, m_analogSenseor));
+        joystick.getButton(2).toggleWhenPressed(m_intakeSolToggle);
+        joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+
+        joystick.getButton(4).toggleWhenPressed(new Shift(m_drive, true));
+        joystick.getButton(5).whenHeld(m_autoShoot);
+
+        //joystick.getButton(7).whenHeld(alignAutoShoot);
+        joystick.getButton(7).whenHeld(new VisShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter, () -> true,  () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+
+        //joystick.getButton(7).whenHeld(new VisAlign(m_drive, m_limeLight, ()-> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+        //joystick.getButton(7).whenHeld(m_autoShoot);
+
+        joystick.getButton(8).whenHeld(m_trollShot);
+        joystick.getButton(9).whenHeld(m_runWinchBack);
+        joystick.getButton(10).whenHeld(m_runWinch);
+
+        //joystick.getButton(11).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> Constants.intake.speed, m_analogSenseor));
+
         //joystick.getButton(6).toggleWhenPressed(m_runShooter);
         //joystick.getButton(5).whenHeld(m_runIndexer);
         //joystick.getButton(12).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
-        joystick.getButton(5).whenHeld(m_autoShoot);
-        joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
         //joystick.getButton(11).whenHeld(new AlignAutoShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter));
 
         //joystick.getButton(7).whenHeld(m_runShooter);
-        joystick.getButton(9).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_analogSenseor));
-        joystick.getButton(9).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
+        //joystick.getButton(9).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_analogSenseor));
+        //joystick.getButton(9).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
         // Main Gamepad (Max configs)
 
         /* Intake */
@@ -163,7 +168,19 @@ public class RobotContainer {
      * @return The command to run in autonomous.
      */
     public Command getAutonomousCommand() {
-        //Returns the "auto" command, which we want to run in autonomous.
-        return new TestPathAuto(m_drive, m_indexer, m_analogSenseor, m_cargoIntake);
+
+        switch (Constants.controller.autoNumber) {
+            case 0:
+                return new MotionProfileCommand(m_drive, "5ball", false);
+            case 1:
+                return new TestPathAuto(m_drive, m_indexer, m_analogSenseor, m_cargoIntake);
+            case 2:
+                return new TwoBallBot(m_drive, m_limeLight,m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
+            default:
+                throw new IllegalStateException("Unexpected path: " + Constants.controller.autoNumber);
+        }
+
+
+
     }
 }
