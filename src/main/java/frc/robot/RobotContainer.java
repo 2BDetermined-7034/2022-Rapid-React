@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.auto.IntakePath;
 import frc.robot.commands.auto.TestPathAuto;
+import frc.robot.commands.auto.ThreeBall;
 import frc.robot.commands.auto.TwoBallBot;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
@@ -59,10 +60,13 @@ public class RobotContainer {
     private final Solenoid m_solUp = new Solenoid(m_cargoIntake, true);
     private final Solenoid m_solDown = new Solenoid(m_cargoIntake, false);
 
+    private final EjectBot m_ejectBot = new EjectBot(m_shooter, m_indexer, m_cargoIntake, m_analogSenseor);
+    private final EjectTop m_ejectTop = new EjectTop(m_shooter, m_indexer, m_analogSenseor);
+
     /* Climber */
     public final Climber m_climber = new Climber();
-    public final RunWinch m_runWinch = new RunWinch(m_climber, () -> 0.3);
-    public final RunWinch m_runWinchBack = new RunWinch(m_climber, () -> -0.3);
+    public final RunWinch m_runWinch = new RunWinch(m_climber, () -> 0.9, ()-> m_GPad.getAxis("LTrigger"));
+    public final RunWinch m_runWinchBack = new RunWinch(m_climber, () -> -0.9, () -> m_GPad.getAxis("LTrigger"));
     public final RunSolenoidToggle m_toggleClimbSolenoid = new RunSolenoidToggle(m_climber);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -72,6 +76,7 @@ public class RobotContainer {
       SmartDashboard.putData("Intake Solenoid", m_intakeSolToggle);
       SmartDashboard.putData("Climb Solenoid", m_toggleClimbSolenoid);
       //SmartDashboard.putData("Reset Climb Encoder", new ResetWinchEncoder(m_climber));
+
       // Register
       m_drive.register();
       m_cargoIntake.register();
@@ -106,21 +111,22 @@ public class RobotContainer {
         climbPad.getButton("LB").whenHeld(m_runWinchBack);
         climbPad.getButton("B").whenHeld(m_toggleClimbSolenoid);
         climbPad.getButton("Y").toggleWhenPressed(m_intakeSolToggle);
-        climbPad.getButton("START").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
-        climbPad.getButton("BACK").whenHeld(m_autoShoot);
+        climbPad.getButton("BACK").whenHeld(m_ejectBot);
+        climbPad.getButton("START").whenHeld(m_ejectTop);
 
 
        // Main Joystick ( configs )
         joystick.getButton(1).whenHeld(m_runIntake);
         joystick.getButton(1).whenHeld(m_runIndexer);
         joystick.getButton(2).toggleWhenPressed(m_intakeSolToggle);
-        joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+        //joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+        joystick.getButton(3).whenHeld(new VisShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter, () -> true,  () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
+
 
         joystick.getButton(4).toggleWhenPressed(new Shift(m_drive, true));
         joystick.getButton(5).whenHeld(m_autoShoot);
 
         //joystick.getButton(7).whenHeld(alignAutoShoot);
-        joystick.getButton(7).whenHeld(new VisShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter, () -> true,  () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
 
         //joystick.getButton(7).whenHeld(new VisAlign(m_drive, m_limeLight, ()-> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
         //joystick.getButton(7).whenHeld(m_autoShoot);
@@ -176,6 +182,8 @@ public class RobotContainer {
                 return new TestPathAuto(m_drive, m_indexer, m_analogSenseor, m_cargoIntake);
             case 2:
                 return new TwoBallBot(m_drive, m_limeLight,m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
+            case 3:
+                return new ThreeBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
             default:
                 throw new IllegalStateException("Unexpected path: " + Constants.controller.autoNumber);
         }

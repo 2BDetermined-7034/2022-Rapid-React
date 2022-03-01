@@ -14,7 +14,7 @@ public class TwoBallBot extends SequentialCommandGroup {
         addCommands(
                 new Solenoid(m_intake, true),
                 new IntakePath(m_drive, m_indexer,m_analogSensor, m_intake, "2ballIntake", true, Constants.intake.speed, Constants.indexer.speed),
-                new TimedShooter(m_drive, ll, m_analogSensor, m_indexer, m_shooter, 7)
+                new TimedShooter(m_drive, ll, m_analogSensor, m_indexer, m_shooter, 2.5)
         );
     }
 }

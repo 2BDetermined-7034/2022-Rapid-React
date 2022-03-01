@@ -22,11 +22,12 @@ public class TimedShooter extends CommandBase {
     private final LimeLight m_ll;
     private final AnalogSensor analogSensor;
 
-
     private final Shooter m_shooter;
     private final Indexer m_index;
     private final Timer timer = new Timer();
     private final double totalTime;
+
+    private boolean hasAligned;
 
     public TimedShooter(Drive drive, LimeLight limelight, AnalogSensor colorSensor, Indexer indexer, Shooter shooter, double time) {
         this.m_drive = drive;
@@ -36,6 +37,7 @@ public class TimedShooter extends CommandBase {
         this.m_shooter = shooter;
         this.totalTime = time;
 
+        hasAligned = false;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_shooter);
     }
@@ -43,6 +45,7 @@ public class TimedShooter extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        SmartDashboard.putBoolean("Lined", false);
         timer.reset();
         timer.start();
     }
@@ -50,23 +53,20 @@ public class TimedShooter extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-
-        SmartDashboard.putNumber("Nut", 69);
-        m_ll.setLights(true);
-
         double llY = m_ll.getYAngle();
+        double visSpeed = -1 * (5.21 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)));
+        m_shooter.setSpeed(visSpeed);
+        m_ll.setLights(true);
 
         double visX = m_ll.getXAngle() + Constants.vision.VisX_Offset;
 
-        double errorX = visX > 0 ? visX + .9 : visX - .9;
-        m_drive.arcadeDrive(0, -errorX/15);
+        double errorX = visX > 0 ? visX + 1.2 : visX - 1.2;
+        m_drive.arcadeDrive(0, -errorX/ 14);
 
+        SmartDashboard.putNumber("ErrorX", errorX);
 
-        double visSpeed = -1 * (5.21 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)));
-
-        m_shooter.setSpeed(visSpeed);
-
-        if (errorX <= 1.8) {
+        if(Math.abs(errorX) <= 2.0) {
+            SmartDashboard.putBoolean("Lined", true);
             if (Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
                 new SensorOverride(analogSensor);
                 m_index.setSpeed(Constants.indexer.speed);

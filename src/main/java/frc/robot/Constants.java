@@ -32,7 +32,7 @@ public final class Constants {
         public static final double yGate = 0.15;
         public static final double xGate = 0.15;
 
-        public static final int autoNumber = 2;
+        public static final int autoNumber = 3;
     }
 
     public static final class pneumatics {

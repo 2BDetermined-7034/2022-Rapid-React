@@ -4,6 +4,7 @@
 
 package frc.robot.commands.climb;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
@@ -15,15 +16,17 @@ public class RunWinch extends CommandBase {
     private final Climber m_climber;
 
     private final DoubleSupplier m_fowSpeed;
+    private final DoubleSupplier m_override;
 
     /**
      * Raises the robot's climber (telescoping).
      *
      * @param climber The robot's climber (telescoping)
      */
-    public RunWinch(Climber climber, DoubleSupplier speed) {
+    public RunWinch(Climber climber, DoubleSupplier speed, DoubleSupplier override) {
         m_climber = climber;
         m_fowSpeed = speed;
+        m_override = override;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_climber);
     }
@@ -39,6 +42,14 @@ public class RunWinch extends CommandBase {
         //m_legoClimb.runWinch(SmartDashboard.getNumber("TeleClimberWinchSpeed", 0));
         //m_climber.runWinch(m_fowSpeed.getAsDouble());
         m_climber.runWinchSafely(m_fowSpeed.getAsDouble());
+        SmartDashboard.putNumber("bruhspeed", m_override.getAsDouble());
+        if (m_override.getAsDouble() >= 0.5) {
+            m_climber.runWinch(m_fowSpeed.getAsDouble());
+        } else {
+            m_climber.runWinchSafely(m_fowSpeed.getAsDouble());
+        }
+
+
     }
 
     // Called once the command ends or is interrupted.
