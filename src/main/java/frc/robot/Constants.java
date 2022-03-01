@@ -122,7 +122,7 @@ public final class Constants {
     public final static class indexer {
         public static final double speed = 0.85;
         public static final int indexerMotor1 = 10;
-        public static final int indexerMotor2 = 7; // Haha funny number
+        public static final int indexerMotor2 = 7;
     }
 
     public static final class vision {
