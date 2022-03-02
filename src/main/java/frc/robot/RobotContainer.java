@@ -66,7 +66,7 @@ public class RobotContainer {
     public final Climber m_climber = new Climber();
     //public final RunWinch m_runWinch = new RunWinch(m_climber, () -> 0.9, ()-> m_GPad.getAxis("LTrigger"));
     //public final RunWinch m_runWinchBack = new RunWinch(m_climber, () -> -0.9, () -> m_GPad.getAxis("LTrigger"));
-    public final SetSolenoid m_toggleClimbSolenoid = new SetSolenoid(m_climber, true);
+    public final RunSolenoid m_toggleClimbSolenoid = new RunSolenoid(m_climber);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -110,10 +110,12 @@ public class RobotContainer {
         // Climber controller
 
         /* Gamepad */
-        climbPad.getButton("RB").whenHeld(new RunWinch(m_climber, () -> 0.9, ()-> m_GPad.getAxis("LTrigger")));
-        climbPad.getButton("LB").whenHeld(new RunWinch(m_climber, () -> -0.9, () -> m_GPad.getAxis("LTrigger")));
-        climbPad.getButton("B").whenHeld(m_toggleClimbSolenoid);
+        climbPad.getButton("RB").whenHeld(new RunWinch(m_climber, () -> 0.9, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
+        climbPad.getButton("LB").whenHeld(new RunWinch(m_climber, () -> -0.9, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
+        climbPad.getButton("B").toggleWhenPressed(m_toggleClimbSolenoid);
         climbPad.getButton("Y").toggleWhenPressed(m_intakeSolToggle);
+        //climbPad.getButton("X").whenPressed(new AutoClimbGroup(m_climber, () -> true, m_cargoIntake));
+        //climbPad.getButton("X").whenHeld(new AutoClimbGroup(m_climber, () -> false, m_cargoIntake));
         climbPad.getButton("BACK").whenHeld(m_ejectBot);
         climbPad.getButton("START").whenHeld(m_ejectTop);
 
@@ -135,8 +137,8 @@ public class RobotContainer {
         //joystick.getButton(7).whenHeld(m_autoShoot);
 
         joystick.getButton(8).whenHeld(m_trollShot);
-        joystick.getButton(9).whenHeld(new RunWinch(m_climber, () -> -0.9, () -> m_GPad.getAxis("LTrigger")));
-        joystick.getButton(10).whenHeld(new RunWinch(m_climber, () -> 0.9, ()-> m_GPad.getAxis("LTrigger")));
+        joystick.getButton(9).whenHeld(new RunWinch(m_climber, () -> -0.9, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
+        joystick.getButton(10).whenHeld(new RunWinch(m_climber, () -> 0.9, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
 
         //joystick.getButton(11).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> Constants.intake.speed, m_analogSenseor));
 

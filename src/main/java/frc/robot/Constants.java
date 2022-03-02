@@ -105,7 +105,7 @@ public final class Constants {
 
         public static final int maxPos = 312252;
 
-        public static final int extendedValue = 0;
+        public static final int extendedValue = 312252;
         public static final int encoderAcceptableError = 10;
     }
     public final static class intake {

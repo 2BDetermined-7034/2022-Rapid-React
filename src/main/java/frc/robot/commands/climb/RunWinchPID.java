@@ -33,7 +33,8 @@ public class RunWinchPID extends CommandBase {
         // Checks to see if the encoder is within 10 degrees/points or whatever
         // The point value should probably be adjustable as a constant tbh.
         // If it is, then the command ends because it's close enough ¯\_(ツ)_/¯
-        return m_climber.getEncoderPosition() >= m_setpoint - acceptableError && m_climber.getEncoderPosition() <= m_setpoint + acceptableError;
+        //return m_climber.getEncoderPosition() >= m_setpoint - acceptableError && m_climber.getEncoderPosition() <= m_setpoint + acceptableError;
+        return false;
     }
 
     @Override

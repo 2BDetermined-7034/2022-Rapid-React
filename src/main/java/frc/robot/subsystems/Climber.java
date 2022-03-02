@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -36,6 +37,9 @@ public class Climber extends SubsystemBase {
 
         //TEMP SMARTDASHBOARD PUTNUMBER
         SmartDashboard.putNumber("ExtendedValue", Constants.climb.extendedValue);
+
+        m_winchTalon.config_kP(0, 1);
+        //m_winchTalon.config_kI()
     }
 
     public void runWinch(double speed){
@@ -65,7 +69,7 @@ public class Climber extends SubsystemBase {
     }
 
     public void setWinchPosition(double angle){
-        m_winchTalon.set(ControlMode.Position, angle);
+        m_winchTalon.set(TalonFXControlMode.Position, angle);
     }
 
     public void resetEncoder(){

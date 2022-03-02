@@ -10,15 +10,13 @@ import frc.robot.subsystems.*;
 import java.util.function.BooleanSupplier;
 
 public class AutoClimbGroup extends SequentialCommandGroup {
-    Climber m_climber;
-    BooleanSupplier m_end;
-    CargoIntake m_cargoIntake;
-    public AutoClimbGroup(Climber climber, BooleanSupplier end, CargoIntake intake) {
-        m_climber = climber;
-        m_end = end;
-        m_cargoIntake = intake;
+    //Climber m_climber;
+    //BooleanSupplier m_end;
+    //CargoIntake m_cargoIntake;
+    public AutoClimbGroup(Climber m_climber, BooleanSupplier end, CargoIntake intake) {
         addCommands(
                 new RunWinchPID(m_climber, 0),
+
                 new RunWinchPID(m_climber, Constants.climb.extendedValue / 2.0),
                 new RunSolenoid(m_climber),
                 new RunWinchPID(m_climber, Constants.climb.extendedValue),
@@ -35,14 +33,19 @@ public class AutoClimbGroup extends SequentialCommandGroup {
                 new RunWinchPID(m_climber, 0),
                 new RunWinchPID(m_climber, Constants.climb.extendedValue / 4.0)
         );
+
+        //addRequirements(m_climber, m_cargoIntake);
     }
+    /*
     @Override
     public boolean isFinished(){
-        return m_end.getAsBoolean();
+        //return m_end.getAsBoolean();
+        return false;
     }
 
     @Override
     public void initialize(){
-        m_cargoIntake.setSolenoid(true);
+        //m_cargoIntake.setSolenoid(true);
     }
+     */
 }
