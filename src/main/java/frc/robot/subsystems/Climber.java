@@ -29,6 +29,7 @@ public class Climber extends SubsystemBase {
         m_winchTalon = new WPI_TalonFX(Constants.climb.winchMotorID);
 
         m_solenoid = new DoubleSolenoid(Constants.pneumatics.climber,Constants.climb.solenoidForwardID, Constants.climb.solenoidBackID);
+        //m_solenoid.set(Value.kForward);
         resetEncoder();
 
         m_winchTalon.setNeutralMode(NeutralMode.Brake);
@@ -55,6 +56,14 @@ public class Climber extends SubsystemBase {
         m_solenoid.set(broken ? Value.kForward : Value.kReverse);
     }
 
+    public void toggleSolenoid(){
+        if(m_solenoid.get().equals(Value.kForward)){
+            m_solenoid.set(Value.kReverse);
+        }else{
+            m_solenoid.set(Value.kForward);
+        }
+    }
+
     public void setWinchPosition(double angle){
         m_winchTalon.set(ControlMode.Position, angle);
     }
@@ -79,9 +88,9 @@ public class Climber extends SubsystemBase {
         } else {
             test = "Backward";
         }
-        SmartDashboard.putString("Solenoid State", test);
+        SmartDashboard.putString("Arm state: ", test);
 
-        SmartDashboard.putNumber("Encoder Position", m_winchTalon.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Climb Winch Position", m_winchTalon.getSelectedSensorPosition());
     }
 
     @Override

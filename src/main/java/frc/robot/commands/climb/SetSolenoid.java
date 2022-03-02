@@ -4,13 +4,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
 
-public class RunSolenoidToggle extends CommandBase {
+public class SetSolenoid extends CommandBase {
     Climber m_climber;
-    boolean m_direction = false;
+    boolean m_direction;
 
 
-    public RunSolenoidToggle(Climber climber) {
+    public SetSolenoid(Climber climber, boolean dir) {
         m_climber = climber;
+        m_direction = dir;
 
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
@@ -19,7 +20,7 @@ public class RunSolenoidToggle extends CommandBase {
 
     @Override
     public void initialize() {
-        m_direction = !m_direction;
+
     }
 
     @Override
@@ -29,7 +30,7 @@ public class RunSolenoidToggle extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override

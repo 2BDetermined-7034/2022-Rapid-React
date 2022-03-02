@@ -141,10 +141,11 @@ public class Drive extends SubsystemBase {
      * @param gear high is false, low is true
      */
     public void shift(boolean gear){
-        SmartDashboard.putBoolean("state", gear);
         if (gear) {
+            SmartDashboard.putString("Gear", "High");
             m_shifter.set(DoubleSolenoid.Value.kForward);
         } else {
+            SmartDashboard.putString("Gear", "High");
             m_shifter.set(DoubleSolenoid.Value.kReverse);
         }
         setEncoderRatio(gear);
@@ -230,7 +231,7 @@ public class Drive extends SubsystemBase {
             m_right.set(rightSpeed);
         }
         m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
-        debug();
+        //debug();
 
     }
 }

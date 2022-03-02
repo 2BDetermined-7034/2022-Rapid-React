@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.auto.IntakePath;
 import frc.robot.commands.auto.TestPathAuto;
 import frc.robot.commands.auto.ThreeBall;
 import frc.robot.commands.auto.TwoBallBot;
@@ -65,9 +64,9 @@ public class RobotContainer {
 
     /* Climber */
     public final Climber m_climber = new Climber();
-    public final RunWinch m_runWinch = new RunWinch(m_climber, () -> 0.9, ()-> m_GPad.getAxis("LTrigger"));
-    public final RunWinch m_runWinchBack = new RunWinch(m_climber, () -> -0.9, () -> m_GPad.getAxis("LTrigger"));
-    public final RunSolenoidToggle m_toggleClimbSolenoid = new RunSolenoidToggle(m_climber);
+    //public final RunWinch m_runWinch = new RunWinch(m_climber, () -> 0.9, ()-> m_GPad.getAxis("LTrigger"));
+    //public final RunWinch m_runWinchBack = new RunWinch(m_climber, () -> -0.9, () -> m_GPad.getAxis("LTrigger"));
+    public final SetSolenoid m_toggleClimbSolenoid = new SetSolenoid(m_climber, true);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -75,6 +74,10 @@ public class RobotContainer {
       SmartDashboard.putData("Indexer Sensor Override", m_sensorOverride);
       SmartDashboard.putData("Intake Solenoid", m_intakeSolToggle);
       SmartDashboard.putData("Climb Solenoid", m_toggleClimbSolenoid);
+      SmartDashboard.putData("Eject Top", m_ejectTop);
+      SmartDashboard.putData("Eject Bot", m_ejectBot);
+
+
       //SmartDashboard.putData("Reset Climb Encoder", new ResetWinchEncoder(m_climber));
 
       // Register
@@ -107,8 +110,8 @@ public class RobotContainer {
         // Climber controller
 
         /* Gamepad */
-        climbPad.getButton("RB").whenHeld(m_runWinch);
-        climbPad.getButton("LB").whenHeld(m_runWinchBack);
+        climbPad.getButton("RB").whenHeld(new RunWinch(m_climber, () -> 0.9, ()-> m_GPad.getAxis("LTrigger")));
+        climbPad.getButton("LB").whenHeld(new RunWinch(m_climber, () -> -0.9, () -> m_GPad.getAxis("LTrigger")));
         climbPad.getButton("B").whenHeld(m_toggleClimbSolenoid);
         climbPad.getButton("Y").toggleWhenPressed(m_intakeSolToggle);
         climbPad.getButton("BACK").whenHeld(m_ejectBot);
@@ -132,8 +135,8 @@ public class RobotContainer {
         //joystick.getButton(7).whenHeld(m_autoShoot);
 
         joystick.getButton(8).whenHeld(m_trollShot);
-        joystick.getButton(9).whenHeld(m_runWinchBack);
-        joystick.getButton(10).whenHeld(m_runWinch);
+        joystick.getButton(9).whenHeld(new RunWinch(m_climber, () -> -0.9, () -> m_GPad.getAxis("LTrigger")));
+        joystick.getButton(10).whenHeld(new RunWinch(m_climber, () -> 0.9, ()-> m_GPad.getAxis("LTrigger")));
 
         //joystick.getButton(11).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> Constants.intake.speed, m_analogSenseor));
 

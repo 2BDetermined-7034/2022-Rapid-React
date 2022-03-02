@@ -19,21 +19,21 @@ public class AutoClimbGroup extends SequentialCommandGroup {
         m_cargoIntake = intake;
         addCommands(
                 new RunWinchPID(m_climber, 0),
-                new RunWinchPID(m_climber, Constants.climb.extendedValue / 2),
-                new RunSolenoid(m_climber,false),
+                new RunWinchPID(m_climber, Constants.climb.extendedValue / 2.0),
+                new RunSolenoid(m_climber),
                 new RunWinchPID(m_climber, Constants.climb.extendedValue),
-                new RunSolenoid(m_climber, true),
-                new RunWinchPID(m_climber, Constants.climb.extendedValue / 2),
+                new RunSolenoid(m_climber),
+                new RunWinchPID(m_climber, Constants.climb.extendedValue / 2.0),
                 new WaitCommand(5),
                 new RunWinchPID(m_climber, 0),
-                new RunWinchPID(m_climber, Constants.climb.extendedValue / 2),
-                new RunSolenoid(m_climber, false),
+                new RunWinchPID(m_climber, Constants.climb.extendedValue / 2.0),
+                new RunSolenoid(m_climber),
                 new RunWinchPID(m_climber, Constants.climb.extendedValue),
-                new RunSolenoid(m_climber, true),
-                new RunWinchPID(m_climber, Constants.climb.extendedValue / 2),
+                new RunSolenoid(m_climber),
+                new RunWinchPID(m_climber, Constants.climb.extendedValue / 2.0),
                 new WaitCommand(5),
                 new RunWinchPID(m_climber, 0),
-                new RunWinchPID(m_climber, Constants.climb.extendedValue / 4)
+                new RunWinchPID(m_climber, Constants.climb.extendedValue / 4.0)
         );
     }
     @Override
