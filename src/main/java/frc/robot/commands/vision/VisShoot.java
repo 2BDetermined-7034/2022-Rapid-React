@@ -101,7 +101,7 @@ public class VisShoot extends CommandBase {
 
         }
 
-        m_dt.arcadeDrive(drive, -errorX/15);
+        m_dt.arcadeDrive(drive, -errorX/Constants.vision.pGain);
 
         double llY = m_ll.getYAngle();
 

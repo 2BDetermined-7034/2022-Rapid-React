@@ -8,7 +8,6 @@ public class SolenoidToggle extends CommandBase {
     CargoIntake m_intake;
     boolean m_direction = false;
 
-
     public SolenoidToggle(CargoIntake intake) {
         m_intake = intake;
 
@@ -24,12 +23,12 @@ public class SolenoidToggle extends CommandBase {
 
     @Override
     public void execute() {
-        m_intake.setSolenoid(m_direction);
+        m_intake.toggleSolenoid();
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override

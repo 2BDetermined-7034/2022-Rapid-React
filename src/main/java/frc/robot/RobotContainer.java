@@ -56,6 +56,7 @@ public class RobotContainer {
     /* Intake */
     private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor);
     private final SolenoidToggle m_intakeSolToggle = new SolenoidToggle(m_cargoIntake);
+    private final Solenoid m_intakeup = new Solenoid(m_cargoIntake, false);
     private final Solenoid m_solUp = new Solenoid(m_cargoIntake, true);
     private final Solenoid m_solDown = new Solenoid(m_cargoIntake, false);
 
@@ -113,7 +114,7 @@ public class RobotContainer {
         climbPad.getButton("RB").whenHeld(new RunWinch(m_climber, () -> 0.9, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
         climbPad.getButton("LB").whenHeld(new RunWinch(m_climber, () -> -0.9, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
         climbPad.getButton("B").toggleWhenPressed(m_toggleClimbSolenoid);
-        climbPad.getButton("Y").toggleWhenPressed(m_intakeSolToggle);
+        climbPad.getButton("Y").whenPressed(m_intakeup);
         //climbPad.getButton("X").whenPressed(new AutoClimbGroup(m_climber, () -> true, m_cargoIntake));
         //climbPad.getButton("X").whenHeld(new AutoClimbGroup(m_climber, () -> false, m_cargoIntake));
         climbPad.getButton("BACK").whenHeld(m_ejectBot);
@@ -123,7 +124,7 @@ public class RobotContainer {
        // Main Joystick ( configs )
         joystick.getButton(1).whenHeld(m_runIntake);
         joystick.getButton(1).whenHeld(m_runIndexer);
-        joystick.getButton(2).toggleWhenPressed(m_intakeSolToggle);
+        joystick.getButton(2).whenPressed(m_intakeSolToggle);
         //joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
         joystick.getButton(3).whenHeld(new VisShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter, () -> true,  () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
 

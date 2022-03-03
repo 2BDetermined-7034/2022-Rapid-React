@@ -30,7 +30,7 @@ public class Climber extends SubsystemBase {
         m_winchTalon = new WPI_TalonFX(Constants.climb.winchMotorID);
 
         m_solenoid = new DoubleSolenoid(Constants.pneumatics.climber,Constants.climb.solenoidForwardID, Constants.climb.solenoidBackID);
-        //m_solenoid.set(Value.kForward);
+        m_solenoid.set(Value.kForward);
         resetEncoder();
 
         m_winchTalon.setNeutralMode(NeutralMode.Brake);

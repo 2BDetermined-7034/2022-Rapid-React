@@ -61,7 +61,7 @@ public class TimedShooter extends CommandBase {
         double visX = m_ll.getXAngle() + Constants.vision.VisX_Offset;
 
         double errorX = visX > 0 ? visX + 1.2 : visX - 1.2;
-        m_drive.arcadeDrive(0, -errorX/ 14);
+        m_drive.arcadeDrive(0, -errorX/ Constants.vision.pGain);
 
         SmartDashboard.putNumber("ErrorX", errorX);
 

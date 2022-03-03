@@ -67,8 +67,6 @@ private final AnalogSensor m_sensor;
             return true;
         }
 
-
-
         return false;
     }
 
