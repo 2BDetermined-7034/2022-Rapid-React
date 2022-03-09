@@ -32,7 +32,7 @@ public final class Constants {
         public static final double yGate = 0.15;
         public static final double xGate = 0.15;
 
-        public static final int autoNumber = 2;
+        public static final int autoNumber = 1;
     }
 
     public static final class pneumatics {
@@ -127,7 +127,7 @@ public final class Constants {
 
     public static final class vision {
 
-        public static final int pGain = 12;
+        public static final int pGain = 15;
 
         public static final double VisX_kP = 1;
         public static final double VisX_MAX = .3;

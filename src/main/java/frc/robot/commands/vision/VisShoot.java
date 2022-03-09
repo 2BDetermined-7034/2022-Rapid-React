@@ -106,7 +106,7 @@ public class VisShoot extends CommandBase {
         double llY = m_ll.getYAngle();
 
         // equation
-        double visSpeed = -1 * (5.21 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)));
+        double visSpeed = -1 * (5.205 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)));
 
         m_shooter.setSpeed(visSpeed);
         if (Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {

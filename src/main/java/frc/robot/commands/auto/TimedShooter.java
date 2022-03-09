@@ -4,6 +4,7 @@
 
 package frc.robot.commands.auto;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -27,7 +28,7 @@ public class TimedShooter extends CommandBase {
     private final Timer timer = new Timer();
     private final double totalTime;
 
-    private boolean hasAligned;
+    private final PIDController shooterLock;
 
     public TimedShooter(Drive drive, LimeLight limelight, AnalogSensor colorSensor, Indexer indexer, Shooter shooter, double time) {
         this.m_drive = drive;
@@ -37,7 +38,8 @@ public class TimedShooter extends CommandBase {
         this.m_shooter = shooter;
         this.totalTime = time;
 
-        hasAligned = false;
+        shooterLock = new PIDController(0.0666, 0.01, 0);
+
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_shooter);
     }
@@ -61,39 +63,18 @@ public class TimedShooter extends CommandBase {
         double visX = m_ll.getXAngle() + Constants.vision.VisX_Offset;
 
         double errorX = visX > 0 ? visX + 1.2 : visX - 1.2;
-        m_drive.arcadeDrive(0, -errorX/ Constants.vision.pGain);
+        m_drive.arcadeDrive(0, -errorX / 12);
+        //double errorX = shooterLock.calculate(visX, 0);
 
         SmartDashboard.putNumber("ErrorX", errorX);
 
-        if(Math.abs(errorX) <= 2.0) {
+        if(Math.abs(errorX) <= 2.2) {
             SmartDashboard.putBoolean("Lined", true);
             if (Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
                 new SensorOverride(analogSensor);
                 m_index.setSpeed(Constants.indexer.speed);
             }
         }
-
-
-        /*
-        if (tapeTimer >= Constants.vision.Vis_TimerConfidence) {
-
-            double errorX = visX > 0 ? visX + .9 : visX - .9;
-            m_drive.arcadeDrive(0, errorX);
-
-            double visSpeed = -1 * (5.21 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)));
-
-            m_shooter.setSpeed(visSpeed);
-
-            if (errorX < 1.7) {
-                if (Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
-                    new SensorOverride(analogSensor);
-                    m_index.setSpeed(Constants.indexer.speed);
-                }
-            }
-
-         */
-
-
 
     }
 

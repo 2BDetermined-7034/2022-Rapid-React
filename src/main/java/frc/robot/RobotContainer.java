@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.auto.TestPathAuto;
 import frc.robot.commands.auto.ThreeBall;
 import frc.robot.commands.auto.TwoBallBot;
+import frc.robot.commands.auto.TwoBallMid;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
 import frc.robot.commands.sensor.SensorOverride;
@@ -185,7 +186,7 @@ public class RobotContainer {
             case 0:
                 return new MotionProfileCommand(m_drive, "5ball", false);
             case 1:
-                return new TestPathAuto(m_drive, m_indexer, m_analogSenseor, m_cargoIntake);
+                return new TwoBallMid(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
             case 2:
                 return new TwoBallBot(m_drive, m_limeLight,m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
             case 3:
