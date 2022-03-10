@@ -1,3 +1,6 @@
 # 2022-Rapid-React
+<p>Team 7034 2022 Robot Code</br>
 
-This is the code for team 7034's robot
+
+
+[Website](http://wlhsfrc.com/home)
