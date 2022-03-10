@@ -36,9 +36,11 @@ private final AnalogSensor m_sensor;
         /** 
          * TODO i don't understand the problem
         */
-
-        //1 for red, 0 for blue
-        Stack<Integer> stack = new Stack<Integer>();
+        //Check for both prescence of a ball and color (I don't know how to get colors from color sensor)
+        while((m_sensor.sensorBoolean1() && true) | (m_sensor.sensorBoolean0() && true)) {
+            //Get bad balls out
+            m_indexer.setSpeed(0.8)
+        }
 
         /**
          * If sensors detects a ball, add its color to the Stack
@@ -49,7 +51,7 @@ private final AnalogSensor m_sensor;
          * Case 2: Stack is full (2 elements)
          *   Timeout for intake
          * 
-         * Case 3: ~~~
+         * Case 3: ~~~~~~ :(
          */
 
 
