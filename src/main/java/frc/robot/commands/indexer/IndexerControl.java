@@ -34,12 +34,16 @@ private final AnalogSensor m_sensor;
     @Override
     public void execute() {
         /** 
-         * TODO i don't understand the problem
+         * TODO i don't understand the problem this already exists but better
         */
+
         //Check for both prescence of a ball and color (I don't know how to get colors from color sensor)
-        while((m_sensor.sensorBoolean1() && true) | (m_sensor.sensorBoolean0() && true)) {
+        while((m_sensor.sensorBoolean1() && true)) {
             //Get bad balls out
-            m_indexer.setSpeed(0.8)
+            m_indexer.setSpeed(0.5);
+        }
+        while((m_sensor.sensorBoolean0() && true) {
+            m_shooter.setSpeed(-3);
         }
 
 
