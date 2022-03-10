@@ -7,7 +7,7 @@ import frc.robot.subsystems.Indexer;
 
 import java.util.function.DoubleSupplier;
 
-public class RunIndexer extends CommandBase {
+public class IndexerControl extends CommandBase {
 
 private final Indexer m_indexer; // NeoIndexer
 private final DoubleSupplier m_speed;
@@ -41,18 +41,6 @@ private final AnalogSensor m_sensor;
             //Get bad balls out
             m_indexer.setSpeed(0.8)
         }
-
-        /**
-         * If sensors detects a ball, add its color to the Stack
-         * 
-         * Case 1: 0 balls in stack, pick up bad ball 
-         *   Index bad ball
-         * 
-         * Case 2: Stack is full (2 elements)
-         *   Timeout for intake
-         * 
-         * Case 3: ~~~~~~ :(
-         */
 
 
     }
