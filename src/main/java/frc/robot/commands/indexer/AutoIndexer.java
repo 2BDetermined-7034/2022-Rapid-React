@@ -34,7 +34,7 @@ private final AnalogSensor m_sensor;
     @Override
     public void execute() {
         /** 
-         * TODO i don't understand the problem
+         * TODO i don't understand the problem and can't interpret analoginput values
         */
 
         //1 for red, 0 for blue
