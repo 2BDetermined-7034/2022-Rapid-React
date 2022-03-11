@@ -123,6 +123,7 @@ public final class Constants {
         public static final double speed = 0.8; //changed from 85
         public static final int indexerMotor1 = 10;
         public static final int indexerMotor2 = 7;
+        public static final String teamColor = "Red";
     }
 
     public static final class vision {
