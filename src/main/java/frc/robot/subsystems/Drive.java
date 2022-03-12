@@ -31,15 +31,12 @@ public class Drive extends SubsystemBase {
     private final DifferentialDrivePoseEstimator m_locationManager;
     DifferentialDriveKinematics m_kinematics;
 
-    private boolean inverted;
     private boolean autoEnabled;
 
     private double leftSpeed;
     private double rightSpeed;
 
     public Drive() {
-        inverted = false;
-
         m_left = new CANSparkMax(Constants.driveBase.driveL1ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left2 = new CANSparkMax(Constants.driveBase.driveL2ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left3 = new CANSparkMax(Constants.driveBase.driveL3ID, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -74,8 +71,6 @@ public class Drive extends SubsystemBase {
 
         m_gyro = new AHRS(SPI.Port.kMXP);
         m_shifter = new DoubleSolenoid(Constants.pneumatics.shifter, Constants.driveBase.rightShifterID, Constants.driveBase.leftShifterID);
-
-        shift(Constants.driveBase.LOW_GEAR);
 
         m_locationManager = new DifferentialDrivePoseEstimator(Rotation2d.fromDegrees(-m_gyro.getYaw()), new Pose2d(),
                 new MatBuilder<>(Nat.N5(), Nat.N1()).fill(0.02, 0.02, 0.01, 0.02, 0.02), // State measurement standard deviations. X, Y, theta.
@@ -132,6 +127,10 @@ public class Drive extends SubsystemBase {
         m_locationManager.resetPosition(startingPose, Rotation2d.fromDegrees(-m_gyro.getYaw()));
     }
 
+    public DifferentialDriveKinematics get_kinematics() {
+        return m_kinematics;
+    }
+
     public void setAutoEnabled(boolean auto){
         autoEnabled = auto;
     }
@@ -157,24 +156,16 @@ public class Drive extends SubsystemBase {
      */
     public void setEncoderRatio(boolean gear){
         if (gear == Constants.driveBase.HIGH_GEAR){
-            m_leftEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelMeterRatio);
-            m_rightEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelMeterRatio);
-            m_leftEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelMeterRatio);
-            m_rightEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelMeterRatio);
+            m_leftEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelRatio);
+            m_rightEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelRatio);
+            m_leftEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelRatio);
+            m_rightEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelRatio);
         } else {
-            m_leftEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
-            m_rightEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
-            m_leftEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
-            m_rightEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelMeterRatio);
+            m_leftEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelRatio);
+            m_rightEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelRatio);
+            m_leftEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelRatio);
+            m_rightEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelRatio);
         }
-    }
-
-    /**
-     * Set the invert
-     * @param setting true inverted false not inverted
-     */
-    public void setInverted(boolean setting){
-        inverted = setting;
     }
 
     /**
@@ -183,10 +174,6 @@ public class Drive extends SubsystemBase {
      * @param zRotation sideways rotation in speed -1 to 1
      */
     public void arcadeDrive(double xSpeed, double zRotation){
-        if (inverted) {
-            xSpeed *= -1;
-            zRotation *= -1;
-        }
         xSpeed *= Constants.driveBase.xSpeed;
         zRotation *= Constants.driveBase.xRot;
         m_differentialDrive.arcadeDrive(xSpeed, zRotation);
@@ -200,9 +187,18 @@ public class Drive extends SubsystemBase {
         DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
         leftSpeed = wheelSpeeds.leftMetersPerSecond;
         rightSpeed = wheelSpeeds.rightMetersPerSecond;
-
     }
-
+    /**
+     * Controls the left and right sides of the drive directly with voltages.
+     *
+     * @param leftVolts the commanded left output
+     * @param rightVolts the commanded right output
+     */
+    public void tankDriveVolts(double leftVolts, double rightVolts) {
+        m_left.setVoltage(leftVolts);
+        m_right.setVoltage(rightVolts);
+        m_differentialDrive.feed();
+    }
     /**
      * Simple function to print drive values
      */
@@ -226,10 +222,14 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic() {
+        /*
         if (autoEnabled) {
             m_left.set(leftSpeed);
             m_right.set(rightSpeed);
         }
+
+         */
+
         m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
         //debug();
 

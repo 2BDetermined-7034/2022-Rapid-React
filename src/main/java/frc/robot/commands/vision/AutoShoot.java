@@ -1,20 +1,17 @@
 package frc.robot.commands.vision;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.commands.sensor.SensorOverride;
-import frc.robot.subsystems.AnalogSensor;
+import frc.robot.subsystems.DigitalSensor;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.Shooter;
 
-import java.util.function.DoubleSupplier;
-
 
 public class AutoShoot extends CommandBase {
-    private final AnalogSensor analogSensor;
+    private final DigitalSensor analogSensor;
     private final Indexer m_indexer;
     private final LimeLight m_ll;
     private final Shooter m_shooter;
@@ -22,7 +19,7 @@ public class AutoShoot extends CommandBase {
 
     private double llY;
 
-    public AutoShoot(AnalogSensor analogSensor, Indexer indexer, LimeLight limeLight, Shooter shooter) {
+    public AutoShoot(DigitalSensor analogSensor, Indexer indexer, LimeLight limeLight, Shooter shooter) {
         this.analogSensor = analogSensor;
         m_indexer = indexer;
         m_ll = limeLight;

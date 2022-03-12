@@ -10,18 +10,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.commands.sensor.SensorOverride;
-import frc.robot.commands.vision.VisAlign;
-import frc.robot.commands.vision.VisShoot;
 import frc.robot.subsystems.*;
-
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
 
 
 public class TimedShooter extends CommandBase {
     private final Drive m_drive;
     private final LimeLight m_ll;
-    private final AnalogSensor analogSensor;
+    private final DigitalSensor analogSensor;
 
     private final Shooter m_shooter;
     private final Indexer m_index;
@@ -30,7 +25,7 @@ public class TimedShooter extends CommandBase {
 
     private final PIDController shooterLock;
 
-    public TimedShooter(Drive drive, LimeLight limelight, AnalogSensor colorSensor, Indexer indexer, Shooter shooter, double time) {
+    public TimedShooter(Drive drive, LimeLight limelight, DigitalSensor colorSensor, Indexer indexer, Shooter shooter, double time) {
         this.m_drive = drive;
         this.m_ll = limelight;
         this.analogSensor = colorSensor;

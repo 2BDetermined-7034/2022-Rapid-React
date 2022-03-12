@@ -19,7 +19,7 @@ public class VisShoot extends CommandBase {
     private BooleanSupplier m_interrupt;
     private DoubleSupplier m_drive;
 
-    private final AnalogSensor analogSensor;
+    private final DigitalSensor analogSensor;
     private final Indexer m_indexer;
     private final Shooter m_shooter;
 
@@ -34,7 +34,7 @@ public class VisShoot extends CommandBase {
     private double targetX_R;
     private double distance;
 
-    public VisShoot(Drive dt, LimeLight ll, AnalogSensor analogSensor, Indexer indexer, Shooter shooter, BooleanSupplier useVision, BooleanSupplier interrupt, DoubleSupplier drive) {
+    public VisShoot(Drive dt, LimeLight ll, DigitalSensor analogSensor, Indexer indexer, Shooter shooter, BooleanSupplier useVision, BooleanSupplier interrupt, DoubleSupplier drive) {
         m_dt = dt;
         m_ll = ll;
         //m_shoot = shooter;

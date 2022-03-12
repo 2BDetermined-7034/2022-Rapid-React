@@ -7,10 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.auto.TestPathAuto;
-import frc.robot.commands.auto.ThreeBall;
-import frc.robot.commands.auto.TwoBallBot;
-import frc.robot.commands.auto.TwoBallMid;
+import frc.robot.commands.auto.*;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
 import frc.robot.commands.sensor.SensorOverride;
@@ -39,7 +36,7 @@ public class RobotContainer {
     // Subsystems
     private final CargoIntake m_cargoIntake = new CargoIntake(); // Intake
     private final Indexer m_indexer = new Indexer(); // Indexer
-    private final AnalogSensor m_analogSenseor = new AnalogSensor(); // Color sensor
+    private final DigitalSensor m_analogSenseor = new DigitalSensor(); // Color sensor
     private final LimeLight m_limeLight = new LimeLight(); // Limelight
     private final Drive m_drive = new Drive(); // Drivebase
     private final Shooter m_shooter = new Shooter(); // Shooter
@@ -87,6 +84,7 @@ public class RobotContainer {
       m_cargoIntake.register();
       m_climber.register();
       m_shooter.register();
+      m_analogSenseor.register();
 
 
       // Drive default command
@@ -184,7 +182,7 @@ public class RobotContainer {
 
         switch (Constants.controller.autoNumber) {
             case 0:
-                return new MotionProfileCommand(m_drive, "5ball", false);
+                //return new FollowPath(m_drive, "2ballBack", false).getRamseteCommand();
             case 1:
                 return new TwoBallMid(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
             case 2:
@@ -192,7 +190,7 @@ public class RobotContainer {
             case 3:
                 return new ThreeBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
             default:
-                throw new IllegalStateException("Unexpected path: " + Constants.controller.autoNumber);
+                throw new IllegalStateException("Unexpected Auto: " + Constants.controller.autoNumber);
         }
 
 

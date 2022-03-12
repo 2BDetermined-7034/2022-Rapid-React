@@ -1,13 +1,12 @@
 package frc.robot.commands.sensor;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.AnalogSensor;
+import frc.robot.subsystems.DigitalSensor;
 
 public class SensorOverride extends CommandBase {
-    private final AnalogSensor m_sensor;
+    private final DigitalSensor m_sensor;
 
-    public SensorOverride(AnalogSensor analogSensor) {
+    public SensorOverride(DigitalSensor analogSensor) {
         m_sensor = analogSensor;
 
         addRequirements(m_sensor);

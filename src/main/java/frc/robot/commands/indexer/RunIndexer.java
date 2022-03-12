@@ -1,8 +1,7 @@
 package frc.robot.commands.indexer;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.AnalogSensor;
+import frc.robot.subsystems.DigitalSensor;
 import frc.robot.subsystems.Indexer;
 
 import java.util.function.DoubleSupplier;
@@ -11,8 +10,8 @@ public class RunIndexer extends CommandBase {
 
 private final Indexer m_indexer; // NeoIndexer
 private final DoubleSupplier m_speed;
-private final AnalogSensor m_sensor;
-    public RunIndexer(Indexer indexer, DoubleSupplier speed, AnalogSensor colorSensor) {
+private final DigitalSensor m_sensor;
+    public RunIndexer(Indexer indexer, DoubleSupplier speed, DigitalSensor colorSensor) {
         this.m_indexer = indexer;
         this.m_speed = speed;
         this.m_sensor = colorSensor;
@@ -33,7 +32,17 @@ private final AnalogSensor m_sensor;
      */
     @Override
     public void execute() {
-        m_indexer.setSpeed(m_speed.getAsDouble());
+       if(m_sensor.getTopSensor()) {
+            m_indexer.setIndexer1(0);
+            m_indexer.setIndexer2(m_speed.getAsDouble());
+        } else {
+            m_indexer.setSpeed(m_speed.getAsDouble());
+        }
+
+
+
+
+        m_sensor.debug();
     }
 
     /**
@@ -52,20 +61,14 @@ private final AnalogSensor m_sensor;
      */
     @Override
     public boolean isFinished() {
-        // if upper sensor
-        // then run stop upper indexer
-        SmartDashboard.putNumber("Sensor 0 Value", m_sensor.getSensor0AvValue());
-        SmartDashboard.putNumber("Sensor 1 Value", m_sensor.getSensor1AvValue());
 
-        if(m_sensor.sensorBoolean0()) {
-            m_indexer.setIndexer1(0);
-        }
 
         if(m_sensor.sensorBoolean1_2()) {
             m_indexer.setSpeed(0);
 
             return true;
         }
+
 
         return false;
     }

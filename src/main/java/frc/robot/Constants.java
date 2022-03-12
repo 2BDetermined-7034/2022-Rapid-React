@@ -46,21 +46,12 @@ public final class Constants {
         // Odometry
         public static final double length = 0.762; // Distance from
         public static final double width = 0.7112; //Length from left wheel to right
-        public static final double highRatio = 1/7.08;
-        public static final double lowRatio = 1/18.75;
-        public static final double wheelMeterRatio = (0.31918581/61) * (1.15);
+        public static final double highRatio = 1 / 7.08;
+        public static final double lowRatio = 1 / 18.75;
+        public static final double wheelRatio = 0.0254 / 2 * Math.PI;
+        //public static final double wheelMeterRatio = (0.31918581/61) * (1.15);
         public static final boolean HIGH_GEAR = false;
-        public static final boolean LOW_GEAR = true;
-        //PID
-        public static final double leftFF = 0;
-        public static final double leftP = 0.029;
-        public static final double leftI = 0;
-        public static final double leftD = 0.01;
 
-        public static final double rightFF = 0.0;
-        public static final double rightP = 0.029;
-        public static final double rightI = 0;
-        public static final double rightD = 0.01;
         // Left
         public static final int driveL1ID = 4;
         public static final int driveL2ID = 5;
@@ -77,10 +68,17 @@ public final class Constants {
         public static final double xRot = .75;
     }
     public static final class motion {
+        //Drivebase tuning
+        public static final double ksVolts = 0.22;
+        public static final double kvVoltSecondsPerMeter = 1.98;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.2;
+        public static final double kPDriveVel = 8.5;
+
         //Ramsete gains
         public static final double b = 1.45;
         public static final double zeta = 0.5;
         //Max values
+
         public static final double maxVelocity = 1;
         public static final double maxAcceleration = 0.4;
     }
@@ -113,7 +111,7 @@ public final class Constants {
         public static final int intakeMotor2 = 12;
         public static final int solenoidForward = 4;
         public static final int solenoidReverse = 5;
-        public static final double speed = 0.4;
+        public static final double speed = 0.2; // 0.4
         public static final boolean intakeUp = true;
         public static final boolean intakeDown = false;
         public static final int IDcompressor = 0;

@@ -10,7 +10,7 @@ import frc.robot.subsystems.*;
 
 public class TwoBallMid extends SequentialCommandGroup {
 
-    public TwoBallMid(Drive m_drive, LimeLight ll, Shooter m_shooter, Indexer m_indexer, AnalogSensor m_analogSensor, CargoIntake m_intake) {
+    public TwoBallMid(Drive m_drive, LimeLight ll, Shooter m_shooter, Indexer m_indexer, DigitalSensor m_analogSensor, CargoIntake m_intake) {
         addCommands(
                 new Solenoid(m_intake, true),
                 new IntakePath(m_drive, m_indexer,m_analogSensor, m_intake, "2ballIntake", true, Constants.intake.speed, Constants.indexer.speed),
