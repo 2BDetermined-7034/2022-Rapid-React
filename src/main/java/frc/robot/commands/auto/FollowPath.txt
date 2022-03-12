@@ -1,0 +1,63 @@
+package frc.robot.commands.auto;
+
+import com.pathplanner.lib.PathPlanner;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryParameterizer;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import frc.robot.Constants;
+import frc.robot.subsystems.Drive;
+
+public class FollowPath {
+
+    private final RamseteCommand ramseteCommand;
+
+    public FollowPath(Drive m_drive, String path, boolean reversed) {
+
+        /*
+        DifferentialDriveVoltageConstraint constraint = new DifferentialDriveVoltageConstraint(
+                new SimpleMotorFeedforward(Constants.motion.ksVolts, Constants.motion.kvVoltSecondsPerMeter, Constants.motion.kaVoltSecondsSquaredPerMeter),
+                m_drive.get_kinematics(), Constants.motion.kMaxVolts);
+
+        TrajectoryConfig config =
+                new TrajectoryConfig(
+                        Constants.motion.kMaxSpeedMetersPerSecond,
+                        Constants.motion.kMaxAccelerationMetersPerSecondSquared)
+                        // Add kinematics to ensure max speed is actually obeyed
+                        .setKinematics(m_drive.get_kinematics())
+                        // Apply the voltage constraint
+                        .addConstraint(constraint);
+         */
+
+        Trajectory m_trajectory;
+        try {
+            m_trajectory = PathPlanner.loadPath(path, Constants.motion.maxVelocity, Constants.motion.maxAcceleration, reversed);
+        } catch (TrajectoryParameterizer.TrajectoryGenerationException exception) {
+            m_trajectory = new Trajectory();
+            DriverStation.reportError("Failed to load trajectory", false);
+        }
+
+        ramseteCommand = new RamseteCommand(
+                m_trajectory,
+                m_drive::getRobotPos,
+                new RamseteController(Constants.motion.b, Constants.motion.zeta),
+                new SimpleMotorFeedforward(
+                        Constants.motion.ksVolts,
+                        Constants.motion.kvVoltSecondsPerMeter,
+                        Constants.motion.kaVoltSecondsSquaredPerMeter),
+                m_drive.get_kinematics(),
+                m_drive::getWheelVelocity,
+                new PIDController(Constants.motion.kPDriveVel, 0, 0),
+                new PIDController(Constants.motion.kPDriveVel, 0, 0),
+                // RamseteCommand passes volts to the callback
+                m_drive::tankDriveVolts,
+                m_drive);
+    }
+
+    public RamseteCommand getRamseteCommand() {
+        return ramseteCommand;
+    }
+}
