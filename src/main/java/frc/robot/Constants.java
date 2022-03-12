@@ -32,7 +32,7 @@ public final class Constants {
         public static final double yGate = 0.15;
         public static final double xGate = 0.15;
 
-        public static final int autoNumber = 1;
+        public static final int autoNumber = 0;
     }
 
     public static final class pneumatics {
@@ -47,8 +47,8 @@ public final class Constants {
         public static final double length = 0.762; // Distance from
         public static final double width = 0.7112; //Length from left wheel to right
         public static final double highRatio = 1 / 7.08;
-        public static final double lowRatio = 1 / 18.75;
-        public static final double wheelRatio = 0.0254 / 2 * Math.PI;
+        public static final double lowRatio = 1 / 18.75; // 18.75
+        public static final double wheelRatio = 0.3192;
         //public static final double wheelMeterRatio = (0.31918581/61) * (1.15);
         public static final boolean HIGH_GEAR = false;
 

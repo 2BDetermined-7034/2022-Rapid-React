@@ -79,7 +79,6 @@ public class TimedShooter extends CommandBase {
         m_shooter.setSpeed(0);
         m_index.setSpeed(0);
         m_drive.stop();
-        m_drive.setAutoEnabled(false);
     }
 
     // Returns true when the command should end.

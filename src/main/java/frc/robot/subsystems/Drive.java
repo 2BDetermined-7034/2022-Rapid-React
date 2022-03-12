@@ -31,8 +31,6 @@ public class Drive extends SubsystemBase {
     private final DifferentialDrivePoseEstimator m_locationManager;
     DifferentialDriveKinematics m_kinematics;
 
-    private boolean autoEnabled;
-
     private double leftSpeed;
     private double rightSpeed;
 
@@ -131,9 +129,6 @@ public class Drive extends SubsystemBase {
         return m_kinematics;
     }
 
-    public void setAutoEnabled(boolean auto){
-        autoEnabled = auto;
-    }
 
     /**
      * Method to set gear on the shifter
@@ -156,13 +151,17 @@ public class Drive extends SubsystemBase {
      */
     public void setEncoderRatio(boolean gear){
         if (gear == Constants.driveBase.HIGH_GEAR){
+            SmartDashboard.putString("Gear", "High");
             m_leftEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelRatio);
             m_rightEnc.setPositionConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelRatio);
+
             m_leftEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelRatio);
             m_rightEnc.setVelocityConversionFactor(Constants.driveBase.highRatio * Constants.driveBase.wheelRatio);
         } else {
+            SmartDashboard.putString("Gear", "Low");
             m_leftEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelRatio);
             m_rightEnc.setPositionConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelRatio);
+
             m_leftEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelRatio);
             m_rightEnc.setVelocityConversionFactor(Constants.driveBase.lowRatio * Constants.driveBase.wheelRatio);
         }
@@ -206,8 +205,8 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("NavX", getCurrentAngle());
         SmartDashboard.putNumber("Right Encoder", getRightEncoderPosition());
         SmartDashboard.putNumber("Left Encoder", getLeftEncoderPosition());
-        SmartDashboard.putNumber("Odometry X", m_locationManager.getEstimatedPosition().getX());
-        SmartDashboard.putNumber("Odometry Y", m_locationManager.getEstimatedPosition().getY());
+        SmartDashboard.putNumber("Odometry X pos", m_locationManager.getEstimatedPosition().getX());
+        SmartDashboard.putNumber("Odometry Y pos", m_locationManager.getEstimatedPosition().getY());
         SmartDashboard.putNumber("Right Velocity", getWheelVelocity().rightMetersPerSecond);
         SmartDashboard.putNumber("Left Velocity", getWheelVelocity().leftMetersPerSecond);
     }
@@ -222,16 +221,7 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic() {
-        /*
-        if (autoEnabled) {
-            m_left.set(leftSpeed);
-            m_right.set(rightSpeed);
-        }
-
-         */
-
         m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
-        //debug();
-
+        debug();
     }
 }

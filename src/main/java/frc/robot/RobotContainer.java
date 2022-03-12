@@ -4,9 +4,18 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.PathPlanner;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryParameterizer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.auto.*;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
@@ -89,7 +98,7 @@ public class RobotContainer {
 
       // Drive default command
       if(Constants.controller.useJoystick)
-          m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX));
+          m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX)); // Looks wrong do not change
       else
           m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("RX")));
 
@@ -182,7 +191,33 @@ public class RobotContainer {
 
         switch (Constants.controller.autoNumber) {
             case 0:
-                //return new FollowPath(m_drive, "2ballBack", false).getRamseteCommand();
+
+                Trajectory m_trajectory;
+                try {
+                    m_trajectory = PathPlanner.loadPath("1metertest", Constants.motion.maxVelocity, Constants.motion.maxAcceleration, false);
+                } catch (TrajectoryParameterizer.TrajectoryGenerationException exception) {
+                    m_trajectory = new Trajectory();
+                    DriverStation.reportError("Failed to load trajectory", false);
+                }
+
+
+                return new RamseteCommand(
+                        m_trajectory,
+                        m_drive::getRobotPos,
+                        new RamseteController(Constants.motion.b, Constants.motion.zeta),
+                        new SimpleMotorFeedforward(
+                                Constants.motion.ksVolts,
+                                Constants.motion.kvVoltSecondsPerMeter,
+                                Constants.motion.kaVoltSecondsSquaredPerMeter),
+                        m_drive.get_kinematics(),
+                        m_drive::getWheelVelocity,
+                        new PIDController(Constants.motion.kPDriveVel, 0, 0),
+                        new PIDController(Constants.motion.kPDriveVel, 0, 0),
+                        // RamseteCommand passes volts to the callback
+                        m_drive::tankDriveVolts,
+                        m_drive);
+
+
             case 1:
                 return new TwoBallMid(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
             case 2:
