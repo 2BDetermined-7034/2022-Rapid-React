@@ -13,7 +13,7 @@
   "Window": {
     "###Analyzer": {
       "Collapsed": "0",
-      "Pos": "554,36",
+      "Pos": "546,42",
       "Size": "450,687"
     },
     "###Generator": {
@@ -38,7 +38,7 @@
     },
     "Deploy Status": {
       "Collapsed": "0",
-      "Pos": "492,100",
+      "Pos": "495,100",
       "Size": "960,800"
     },
     "Diagnostic Plots": {
@@ -53,7 +53,7 @@
     },
     "Warning": {
       "Collapsed": "0",
-      "Pos": "969,3",
+      "Pos": "977,3",
       "Size": "812,995"
     }
   }

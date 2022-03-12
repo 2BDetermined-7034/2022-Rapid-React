@@ -49,6 +49,7 @@ public final class Constants {
         public static final double highRatio = 1 / 7.08;
         public static final double lowRatio = 1 / 18.75; // 18.75
         public static final double wheelRatio = 0.3192;
+
         //public static final double wheelMeterRatio = (0.31918581/61) * (1.15);
         public static final boolean HIGH_GEAR = false;
 
@@ -69,10 +70,10 @@ public final class Constants {
     }
     public static final class motion {
         //Drivebase tuning
-        public static final double ksVolts = 0.22;
-        public static final double kvVoltSecondsPerMeter = 1.98;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.2;
-        public static final double kPDriveVel = 8.5;
+        public static final double ksVolts = 0.14059;
+        public static final double kvVoltSecondsPerMeter = 7.2507;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.6393;
+        public static final double kPDriveVel = 1.7626;
 
         //Ramsete gains
         public static final double b = 1.45;
