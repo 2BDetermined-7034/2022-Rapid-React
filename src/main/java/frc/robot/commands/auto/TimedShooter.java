@@ -51,7 +51,12 @@ public class TimedShooter extends CommandBase {
     @Override
     public void execute() {
         double llY = m_ll.getYAngle();
-        double visSpeed = -1 * (5.21 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)));
+        double visSpeed;
+        if(llY<6.2){visSpeed = -5.13;}
+        else if(llY<10){visSpeed = -5.145;}
+        else{
+            visSpeed = -26.4 + 5.55*llY + -0.538*Math.pow(llY, 2) + 0.023*Math.pow(llY, 3) + -3.78E-04*Math.pow(llY, 4);
+        }
         m_shooter.setSpeed(visSpeed);
         m_ll.setLights(true);
 

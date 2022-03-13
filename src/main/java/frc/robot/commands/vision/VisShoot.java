@@ -1,5 +1,6 @@
 package frc.robot.commands.vision;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.commands.sensor.SensorOverride;
@@ -63,6 +64,7 @@ public class VisShoot extends CommandBase {
         //targetX_R = m_dt.getPositionR();
         errorY = 0;
         errorX = 0;
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -104,9 +106,15 @@ public class VisShoot extends CommandBase {
         m_dt.arcadeDrive(drive, -errorX/Constants.vision.pGain);
 
         double llY = m_ll.getYAngle();
-
+        double visSpeed;
         // equation
-        double visSpeed = -1 * (5.205 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)));
+        if(llY<6.2){visSpeed = -5.13;}
+        else if(llY<10){visSpeed = -5.145;}
+        else{
+            visSpeed = -26.4 + 5.55*llY + -0.538*Math.pow(llY, 2) + 0.023*Math.pow(llY, 3) + -3.78E-04*Math.pow(llY, 4);
+        }
+        //double visSpeed = -1 * (5.16 + (.00605 * llY) + (.00146 * Math.pow(llY, 2)) + (.000348 * Math.pow(llY, 3)));
+        //double visSpeed = SmartDashboard.getNumber("Bruh", 0);
 
         m_shooter.setSpeed(visSpeed);
         if (Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
