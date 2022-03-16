@@ -57,7 +57,7 @@ public class RobotContainer {
     private final LimeLight m_limeLight = new LimeLight(); // Limelight
     private final Drive m_drive = new Drive(); // Drivebase
     private final Shooter m_shooter = new Shooter(); // Shooter
-    private final AutoShoot m_autoShoot = new AutoShoot(m_analogSenseor, m_indexer, m_limeLight, m_shooter);
+    //private final AutoShoot m_autoShoot = new AutoShoot(m_analogSenseor, m_indexer, m_limeLight, m_shooter);
     private final TrollShot m_trollShot = new TrollShot(m_shooter, m_indexer, m_analogSenseor);
     // Commands
 
@@ -92,6 +92,7 @@ public class RobotContainer {
       SmartDashboard.putData("Climb Solenoid", m_toggleClimbSolenoid);
       SmartDashboard.putData("Eject Top", m_ejectTop);
       SmartDashboard.putData("Eject Bot", m_ejectBot);
+      SmartDashboard.putNumber("Bruh", 0);
 
 
       //SmartDashboard.putData("Reset Climb Encoder", new ResetWinchEncoder(m_climber));
@@ -146,7 +147,7 @@ public class RobotContainer {
 
 
         joystick.getButton(4).toggleWhenPressed(new Shift(m_drive, true));
-        joystick.getButton(5).whenHeld(m_autoShoot);
+
 
         //joystick.getButton(7).whenHeld(alignAutoShoot);
 
@@ -185,7 +186,7 @@ public class RobotContainer {
         /* Shooter */
         //m_GPad.getButton("A").toggleWhenPressed(m_runShooter);
         m_GPad.getButton("X").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
-        m_GPad.getButton("Y").whenHeld(m_autoShoot);
+
 
 
     }

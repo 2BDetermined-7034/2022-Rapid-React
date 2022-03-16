@@ -54,6 +54,9 @@ public class LimeLight extends SubsystemBase {
     }
     SmartDashboard.putNumber(getName() + " X Angle", getXAngle());
     SmartDashboard.putNumber(getName() + " Y Angle", getYAngle());
+    SmartDashboard.putNumber(getName() + " EQ pow 1", getYAngle()*.00605);
+    SmartDashboard.putNumber(getName() + " EQ pow 2", Math.pow(getYAngle(), 2)*.00146);
+    SmartDashboard.putNumber(getName() + " EQ pow 3", Math.pow(getYAngle(), 3)*.000348);
     //SmartDashboard.putBoolean(getName() + " Detected", getDetected());
     SmartDashboard.putNumber(getName() + " Distance", getEstimatedDistance());
   }
