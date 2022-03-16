@@ -208,7 +208,7 @@ public class RobotContainer {
                                         Constants.motion.kvVoltSecondsPerMeter,
                                         Constants.motion.kaVoltSecondsSquaredPerMeter),
                                 m_drive.get_kinematics(),
-                                5);
+                                8);
 
                 // Create config for trajectory
                 TrajectoryConfig config =
@@ -220,7 +220,7 @@ public class RobotContainer {
                                 // Apply the voltage constraint
                                 .addConstraint(autoVoltageConstraint);
 
-                /*
+
                 Trajectory m_trajectory;
                 try {
                     m_trajectory = PathPlanner.loadPath("1metertest", Constants.motion.maxVelocity, Constants.motion.maxAcceleration, false);
@@ -229,23 +229,27 @@ public class RobotContainer {
                     DriverStation.reportError("Failed to load trajectory", false);
                 }
 
-                 */
 
 
+
+                /*
                 // An example trajectory to follow.  All units in meters.
                 Trajectory exampleTrajectory =
                         TrajectoryGenerator.generateTrajectory(
                                 // Start at the origin facing the +X direction
-                                new Pose2d(0, 0, new Rotation2d(0)),
+                                new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
                                 // Pass through these two interior waypoints, making an 's' curve path
-                                List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
+                                List.of(new Translation2d(0, 5)),
                                 // End 3 meters straight ahead of where we started, facing forward
-                                new Pose2d(3, 0, new Rotation2d(0)),
+                                new Pose2d(0, 10, Rotation2d.fromDegrees(0)),
                                 // Pass config
                                 config);
+                */
 
-                RamseteCommand ramseteCommand =  new RamseteCommand(
-                        exampleTrajectory,
+                m_drive.setRobotPos(m_trajectory.getInitialPose());
+
+                RamseteCommand ramseteCommand = new RamseteCommand(
+                        m_trajectory,
                         m_drive::getRobotPos,
                         new RamseteController(Constants.motion.b, Constants.motion.zeta),
                         new SimpleMotorFeedforward(
@@ -260,12 +264,11 @@ public class RobotContainer {
                         m_drive::tankDriveVolts,
                         m_drive);
 
-
                 // Reset odometry to the starting pose of the trajectory.
-                m_drive.setRobotPos(exampleTrajectory.getInitialPose());
+
 
                 // Run path following command, then stop at the end.
-                return ramseteCommand;
+                return ramseteCommand.andThen(() -> m_drive.tankDriveVolts(0, 0));
 
             case 1:
                 return new TwoBallMid(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);

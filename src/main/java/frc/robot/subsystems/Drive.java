@@ -42,15 +42,20 @@ public class Drive extends SubsystemBase {
         m_left2 = new CANSparkMax(Constants.driveBase.driveL2ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left3 = new CANSparkMax(Constants.driveBase.driveL3ID, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-
-
         m_left.setInverted(true);
         m_left2.setInverted(true);
         m_left3.setInverted(true);
 
+
+
         m_right = new CANSparkMax(Constants.driveBase.driveR1ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_right2 = new CANSparkMax(Constants.driveBase.driveR2ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_right3 = new CANSparkMax(Constants.driveBase.driveR3ID, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+
+        m_right.setInverted(false);
+        m_right2.setInverted(false);
+        m_right3.setInverted(false);
 
         m_left2.follow(m_left);
         m_left3.follow(m_left);
@@ -82,9 +87,9 @@ public class Drive extends SubsystemBase {
                 new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, 0.01) // Global measurement standard deviations. X, Y, and theta.
         );
         */
+        resetEncoders();
         m_odometry = new DifferentialDriveOdometry(getCurrentAngle());
 
-        resetEncoders();
     }
 
     /**
@@ -133,8 +138,8 @@ public class Drive extends SubsystemBase {
      * @param startingPose the robot's position
      */
     public void setRobotPos(Pose2d startingPose){
-        resetEncoders();
         m_odometry.resetPosition(startingPose, Rotation2d.fromDegrees(-m_gyro.getYaw()));
+        resetEncoders();
         //m_locationManager.resetPosition(startingPose, Rotation2d.fromDegrees(-m_gyro.getYaw()));
     }
 
@@ -197,8 +202,9 @@ public class Drive extends SubsystemBase {
      */
     public void voltageDrive(ChassisSpeeds chassisSpeeds){
         DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
-        leftSpeed = wheelSpeeds.leftMetersPerSecond;
-        rightSpeed = wheelSpeeds.rightMetersPerSecond;
+        m_left.setVoltage(wheelSpeeds.leftMetersPerSecond);
+        m_right.setVoltage(wheelSpeeds.rightMetersPerSecond);
+        m_differentialDrive.feed();
     }
 
     /**
@@ -208,6 +214,8 @@ public class Drive extends SubsystemBase {
      * @param rightVolts the commanded right output
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
+        SmartDashboard.putNumber("Left", -leftVolts);
+        SmartDashboard.putNumber("Right", -rightVolts);
         m_left.setVoltage(-leftVolts);
         m_right.setVoltage(-rightVolts);
         m_differentialDrive.feed();
@@ -220,8 +228,8 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("NavX", getCurrentAngle().getDegrees());
         SmartDashboard.putNumber("Right Encoder", getRightEncoderPosition());
         SmartDashboard.putNumber("Left Encoder", getLeftEncoderPosition());
-        SmartDashboard.putNumber("Odometry X pos", m_odometry.getPoseMeters().getX());
-        SmartDashboard.putNumber("Odometry Y pos", m_odometry.getPoseMeters().getY());
+        SmartDashboard.putNumber("Odometry X pos", getRobotPos().getX());
+        SmartDashboard.putNumber("Odometry Y pos", getRobotPos().getY());
         SmartDashboard.putNumber("Right Velocity", getWheelVelocity().rightMetersPerSecond);
         SmartDashboard.putNumber("Left Velocity", getWheelVelocity().leftMetersPerSecond);
     }

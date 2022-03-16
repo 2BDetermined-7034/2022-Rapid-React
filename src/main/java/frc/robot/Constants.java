@@ -49,7 +49,7 @@ public final class Constants {
         public static final double highRatio = 1 / 7.08;
         public static final double lowRatio = 1 / 18.75; // 18.75
         public static final double wheelRatio = 0.3192;
-        public static final double gyroOffset = 180;
+        public static final double gyroOffset = 0;
 
         //public static final double wheelMeterRatio = (0.31918581/61) * (1.15);
         public static final boolean HIGH_GEAR = false;
@@ -74,15 +74,15 @@ public final class Constants {
         public static final double ksVolts = 0.16346;
         public static final double kvVoltSecondsPerMeter = 2.7997; //7.2507
         public static final double kaVoltSecondsSquaredPerMeter = 0.36354;
-        public static final double kPDriveVel = 3.5796;
+        public static final double kPDriveVel = 3.5796;// 3.5796
 
         //Ramsete gains
         public static final double b = 2;
         public static final double zeta = 0.7;
         //Max values
 
-        public static final double maxVelocity = 0.5;
-        public static final double maxAcceleration = 0.5;
+        public static final double maxVelocity = 3;
+        public static final double maxAcceleration = 0.3;
     }
 
     public final static class shooter {
