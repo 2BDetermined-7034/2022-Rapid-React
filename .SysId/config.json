@@ -3,7 +3,7 @@
   "encoder type": "Encoder Port",
   "encoding": false,
   "gearing denominator": 1.0,
-  "gearing numerator": 18.75,
+  "gearing numerator": 7.08,
   "gyro": "NavX",
   "gyro ctor": "SPI (MXP)",
   "is drivetrain": true,
@@ -13,7 +13,7 @@
     "SPARK MAX (Brushless)"
   ],
   "number of samples per average": 1,
-  "primary encoder inverted": false,
+  "primary encoder inverted": true,
   "primary encoder ports": [
     0,
     1

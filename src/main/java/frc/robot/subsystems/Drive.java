@@ -6,6 +6,7 @@ import com.revrobotics.*;
 import edu.wpi.first.math.MatBuilder;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -28,16 +29,20 @@ public class Drive extends SubsystemBase {
 
     private final DifferentialDrive m_differentialDrive;
 
-    private final DifferentialDrivePoseEstimator m_locationManager;
+    //private final DifferentialDrivePoseEstimator m_locationManager;
+    private final DifferentialDriveOdometry m_odometry;
     DifferentialDriveKinematics m_kinematics;
 
     private double leftSpeed;
     private double rightSpeed;
 
     public Drive() {
+
         m_left = new CANSparkMax(Constants.driveBase.driveL1ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left2 = new CANSparkMax(Constants.driveBase.driveL2ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left3 = new CANSparkMax(Constants.driveBase.driveL3ID, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+
 
         m_left.setInverted(true);
         m_left2.setInverted(true);
@@ -70,11 +75,16 @@ public class Drive extends SubsystemBase {
         m_gyro = new AHRS(SPI.Port.kMXP);
         m_shifter = new DoubleSolenoid(Constants.pneumatics.shifter, Constants.driveBase.rightShifterID, Constants.driveBase.leftShifterID);
 
+        /*
         m_locationManager = new DifferentialDrivePoseEstimator(Rotation2d.fromDegrees(-m_gyro.getYaw()), new Pose2d(),
                 new MatBuilder<>(Nat.N5(), Nat.N1()).fill(0.02, 0.02, 0.01, 0.02, 0.02), // State measurement standard deviations. X, Y, theta.
                 new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01), // Local measurement standard deviations. Left encoder, right encoder, gyro.
                 new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, 0.01) // Global measurement standard deviations. X, Y, and theta.
         );
+        */
+        m_odometry = new DifferentialDriveOdometry(getCurrentAngle());
+
+        resetEncoders();
     }
 
     /**
@@ -82,7 +92,8 @@ public class Drive extends SubsystemBase {
      * @return the position of the robot in a pose2d
      */
     public Pose2d getRobotPos(){
-        return m_locationManager.getEstimatedPosition();
+        //return m_locationManager.getEstimatedPosition();
+        return m_odometry.getPoseMeters();
     }
 
     /**
@@ -109,20 +120,22 @@ public class Drive extends SubsystemBase {
         return m_leftEnc.getPosition();
     }
 
-    /**
-     * A simple function that returns the NavX value scoped
-     * @return NavX in range 0-360 (degrees)
-     */
-    public double getCurrentAngle(){
-        return m_gyro.getYaw();
+    public Rotation2d getCurrentAngle(){
+        return Rotation2d.fromDegrees(m_gyro.getYaw() + Constants.driveBase.gyroOffset);
     }
 
+    public void resetEncoders() {
+        m_rightEnc.setPosition(0);
+        m_leftEnc.setPosition(0);
+    }
     /**
      * Change the pose of the robot, this should be called at the start of every path
      * @param startingPose the robot's position
      */
     public void setRobotPos(Pose2d startingPose){
-        m_locationManager.resetPosition(startingPose, Rotation2d.fromDegrees(-m_gyro.getYaw()));
+        resetEncoders();
+        m_odometry.resetPosition(startingPose, Rotation2d.fromDegrees(-m_gyro.getYaw()));
+        //m_locationManager.resetPosition(startingPose, Rotation2d.fromDegrees(-m_gyro.getYaw()));
     }
 
     public DifferentialDriveKinematics get_kinematics() {
@@ -187,6 +200,7 @@ public class Drive extends SubsystemBase {
         leftSpeed = wheelSpeeds.leftMetersPerSecond;
         rightSpeed = wheelSpeeds.rightMetersPerSecond;
     }
+
     /**
      * Controls the left and right sides of the drive directly with voltages.
      *
@@ -194,19 +208,20 @@ public class Drive extends SubsystemBase {
      * @param rightVolts the commanded right output
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
-        m_left.setVoltage(leftVolts);
-        m_right.setVoltage(rightVolts);
+        m_left.setVoltage(-leftVolts);
+        m_right.setVoltage(-rightVolts);
         m_differentialDrive.feed();
     }
+
     /**
      * Simple function to print drive values
      */
     public void debug(){
-        SmartDashboard.putNumber("NavX", getCurrentAngle());
+        SmartDashboard.putNumber("NavX", getCurrentAngle().getDegrees());
         SmartDashboard.putNumber("Right Encoder", getRightEncoderPosition());
         SmartDashboard.putNumber("Left Encoder", getLeftEncoderPosition());
-        SmartDashboard.putNumber("Odometry X pos", m_locationManager.getEstimatedPosition().getX());
-        SmartDashboard.putNumber("Odometry Y pos", m_locationManager.getEstimatedPosition().getY());
+        SmartDashboard.putNumber("Odometry X pos", m_odometry.getPoseMeters().getX());
+        SmartDashboard.putNumber("Odometry Y pos", m_odometry.getPoseMeters().getY());
         SmartDashboard.putNumber("Right Velocity", getWheelVelocity().rightMetersPerSecond);
         SmartDashboard.putNumber("Left Velocity", getWheelVelocity().leftMetersPerSecond);
     }
@@ -221,7 +236,8 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
+        m_odometry.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getLeftEncoderPosition(), getRightEncoderPosition());
+        //m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
         debug();
     }
 }

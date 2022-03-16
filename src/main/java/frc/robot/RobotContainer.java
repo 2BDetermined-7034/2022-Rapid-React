@@ -8,8 +8,14 @@ import com.pathplanner.lib.PathPlanner;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryParameterizer;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -27,6 +33,8 @@ import frc.robot.commands.shooter.*;
 import frc.robot.commands.vision.*;
 import frc.robot.commands.climb.*;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import java.util.List;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -192,6 +200,26 @@ public class RobotContainer {
         switch (Constants.controller.autoNumber) {
             case 0:
 
+                var autoVoltageConstraint =
+                        new DifferentialDriveVoltageConstraint(
+                                new SimpleMotorFeedforward(
+                                        Constants.motion.ksVolts,
+                                        Constants.motion.kvVoltSecondsPerMeter,
+                                        Constants.motion.kaVoltSecondsSquaredPerMeter),
+                                m_drive.get_kinematics(),
+                                5);
+
+                // Create config for trajectory
+                TrajectoryConfig config =
+                        new TrajectoryConfig(
+                                Constants.motion.maxVelocity,
+                                Constants.motion.maxAcceleration)
+                                // Add kinematics to ensure max speed is actually obeyed
+                                .setKinematics(m_drive.get_kinematics())
+                                // Apply the voltage constraint
+                                .addConstraint(autoVoltageConstraint);
+
+                /*
                 Trajectory m_trajectory;
                 try {
                     m_trajectory = PathPlanner.loadPath("1metertest", Constants.motion.maxVelocity, Constants.motion.maxAcceleration, false);
@@ -200,9 +228,23 @@ public class RobotContainer {
                     DriverStation.reportError("Failed to load trajectory", false);
                 }
 
+                 */
 
-                return new RamseteCommand(
-                        m_trajectory,
+
+                // An example trajectory to follow.  All units in meters.
+                Trajectory exampleTrajectory =
+                        TrajectoryGenerator.generateTrajectory(
+                                // Start at the origin facing the +X direction
+                                new Pose2d(0, 0, new Rotation2d(0)),
+                                // Pass through these two interior waypoints, making an 's' curve path
+                                List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
+                                // End 3 meters straight ahead of where we started, facing forward
+                                new Pose2d(3, 0, new Rotation2d(0)),
+                                // Pass config
+                                config);
+
+                RamseteCommand ramseteCommand =  new RamseteCommand(
+                        exampleTrajectory,
                         m_drive::getRobotPos,
                         new RamseteController(Constants.motion.b, Constants.motion.zeta),
                         new SimpleMotorFeedforward(
@@ -217,6 +259,12 @@ public class RobotContainer {
                         m_drive::tankDriveVolts,
                         m_drive);
 
+
+                // Reset odometry to the starting pose of the trajectory.
+                m_drive.setRobotPos(exampleTrajectory.getInitialPose());
+
+                // Run path following command, then stop at the end.
+                return ramseteCommand;
 
             case 1:
                 return new TwoBallMid(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);

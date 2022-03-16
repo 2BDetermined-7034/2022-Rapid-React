@@ -49,6 +49,7 @@ public final class Constants {
         public static final double highRatio = 1 / 7.08;
         public static final double lowRatio = 1 / 18.75; // 18.75
         public static final double wheelRatio = 0.3192;
+        public static final double gyroOffset = 180;
 
         //public static final double wheelMeterRatio = (0.31918581/61) * (1.15);
         public static final boolean HIGH_GEAR = false;
@@ -62,26 +63,26 @@ public final class Constants {
         public static final int driveR2ID = 2;
         public static final int driveR3ID = 3;
         //Shifter
-        public static final int leftShifterID = 2;
-        public static final int rightShifterID = 3;
+        public static final int leftShifterID = 1;
+        public static final int rightShifterID = 0;
         // Speed
         public static final double xSpeed = .9;
         public static final double xRot = .75;
     }
     public static final class motion {
         //Drivebase tuning
-        public static final double ksVolts = 0.14059;
-        public static final double kvVoltSecondsPerMeter = 7.2507;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.6393;
-        public static final double kPDriveVel = 1.7626;
+        public static final double ksVolts = 0.16346;
+        public static final double kvVoltSecondsPerMeter = 2.7997; //7.2507
+        public static final double kaVoltSecondsSquaredPerMeter = 0.36354;
+        public static final double kPDriveVel = 3.5796;
 
         //Ramsete gains
-        public static final double b = 1.45;
-        public static final double zeta = 0.5;
+        public static final double b = 2;
+        public static final double zeta = 0.7;
         //Max values
 
-        public static final double maxVelocity = 1;
-        public static final double maxAcceleration = 0.4;
+        public static final double maxVelocity = 0.5;
+        public static final double maxAcceleration = 0.5;
     }
 
     public final static class shooter {
@@ -93,8 +94,8 @@ public final class Constants {
 
     public final static class climb {
         public static final int winchMotorID = 1;
-        public static final int solenoidForwardID = 0;
-        public static final int solenoidBackID = 1;
+        public static final int solenoidForwardID = 4;
+        public static final int solenoidBackID = 5;
         public static final double winchSpeed = 0.5;
         //PID Values
         public static final double kP = 0.05;
@@ -110,8 +111,8 @@ public final class Constants {
     public final static class intake {
         public static final int intakeMotor = 9;
         public static final int intakeMotor2 = 12;
-        public static final int solenoidForward = 4;
-        public static final int solenoidReverse = 5;
+        public static final int solenoidForward = 3;
+        public static final int solenoidReverse = 2;
         public static final double speed = 0.2; // 0.4
         public static final boolean intakeUp = true;
         public static final boolean intakeDown = false;
