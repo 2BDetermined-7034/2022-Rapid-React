@@ -7,7 +7,7 @@ import frc.robot.subsystems.Indexer;
 
 import java.util.function.DoubleSupplier;
 
-public class RunIndexer extends CommandBase {
+public class AutoIndexer extends CommandBase {
 
 private final Indexer m_indexer; // NeoIndexer
 private final DoubleSupplier m_speed;
@@ -33,24 +33,9 @@ private final AnalogSensor m_sensor;
      */
     @Override
     public void execute() {
-        /** 
-         * TODO i don't understand the problem and can't interpret analoginput values
-        */
+        m_indexer.setSpeed(m_speed.getAsDouble());
 
-        //1 for red, 0 for blue
-        Stack<Integer> stack = new Stack<Integer>();
 
-        /**
-         * If sensors detects a ball, add its color to the Stack
-         * 
-         * Case 1: 0 balls in stack, pick up bad ball 
-         *   Index bad ball
-         * 
-         * Case 2: Stack is full (2 elements)
-         *   Timeout for intake
-         * 
-         * Case 3: ~~~
-         */
 
 
     }
@@ -71,6 +56,16 @@ private final AnalogSensor m_sensor;
      */
     @Override
     public boolean isFinished() {
+        if(m_sensor.sensorBoolean0()) {
+            m_indexer.setIndexer1(0);
+        }
+
+        if(m_sensor.sensorBoolean1_2()) {
+            m_indexer.setSpeed(0);
+
+            return true;
+        }
+
         return false;
     }
 
