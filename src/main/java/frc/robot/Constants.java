@@ -89,7 +89,9 @@ public final class Constants {
         public static final int leftShooterNEO = 8;
         public static final int rightShooterNEO = 11;
         public static final double speed = .25;
+        public static final double passiveSpeed = 0; //Passive speed
         public static final double shooterRange = 0.005;
+
     }
 
     public final static class climb {
@@ -113,21 +115,24 @@ public final class Constants {
         public static final int intakeMotor2 = 12;
         public static final int solenoidForward = 3;
         public static final int solenoidReverse = 2;
-        public static final double speed = 0.2; // 0.4
+        public static final double speed = 0.4; // 0.4
+        public static final double stopSpeed = 0.35; //Speed when wrong color
         public static final boolean intakeUp = true;
         public static final boolean intakeDown = false;
         public static final int IDcompressor = 0;
     }
 
     public final static class indexer {
-        public static final double speed = 0.8; //changed from 85
+        public static final double speed = 0.85; //changed from 85
+
+
         public static final int indexerMotor1 = 10;
         public static final int indexerMotor2 = 7;
     }
 
     public static final class vision {
 
-        public static final int pGain = 15;
+        public static final int pGain = 16;
 
         public static final double VisX_kP = 1;
         public static final double VisX_MAX = .3;

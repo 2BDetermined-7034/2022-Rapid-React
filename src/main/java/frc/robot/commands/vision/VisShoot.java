@@ -106,13 +106,21 @@ public class VisShoot extends CommandBase {
         m_dt.arcadeDrive(drive, -errorX/Constants.vision.pGain);
 
         double llY = m_ll.getYAngle();
+        SmartDashboard.putNumber("lly", llY);
         double visSpeed;
+
+
         // equation
+        /*
         if(llY<6.2){visSpeed = -5.13;}
         else if(llY<10){visSpeed = -5.145;}
         else{
             visSpeed = -26.4 + 5.55*llY + -0.538*Math.pow(llY, 2) + 0.023*Math.pow(llY, 3) + -3.78E-04*Math.pow(llY, 4);
         }
+
+         */
+        visSpeed = -1 * (5.205 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)));
+
         //double visSpeed = -1 * (5.16 + (.00605 * llY) + (.00146 * Math.pow(llY, 2)) + (.000348 * Math.pow(llY, 3)));
         //double visSpeed = SmartDashboard.getNumber("Bruh", 0);
 
@@ -144,8 +152,9 @@ public class VisShoot extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
-        m_shooter.setSpeed(0);
+        m_shooter.setSpeed(Constants.shooter.passiveSpeed);
         m_indexer.setSpeed(0);
+        m_ll.setLights(false);
         //m_dt.setGear(Constants.HIGH_GEAR);
     }
 }

@@ -15,7 +15,7 @@ public class IntakePath extends ParallelRaceGroup {
 
 
     public IntakePath(Drive m_drive, Indexer m_indexer, DigitalSensor m_sensor, CargoIntake m_cargoIntake, String path, boolean inverted, double intakeSpeed, double indexerSpeed) {
-        super(new MotionProfileCommand(m_drive, path, inverted), new RunIndexer(m_indexer,() -> indexerSpeed, m_sensor), new RunIntakeMotors(m_cargoIntake, () -> intakeSpeed, m_sensor));
+        super(new MotionProfileCommand(m_drive, path, inverted), new RunIndexer(m_indexer,() -> indexerSpeed, m_sensor, () ->false), new RunIntakeMotors(m_cargoIntake, () -> intakeSpeed, m_sensor, () -> false));
         sensor = m_sensor;
     }
 

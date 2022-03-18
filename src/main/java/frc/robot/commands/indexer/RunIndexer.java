@@ -1,9 +1,11 @@
 package frc.robot.commands.indexer;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DigitalSensor;
 import frc.robot.subsystems.Indexer;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class RunIndexer extends CommandBase {
@@ -11,10 +13,12 @@ public class RunIndexer extends CommandBase {
 private final Indexer m_indexer; // NeoIndexer
 private final DoubleSupplier m_speed;
 private final DigitalSensor m_sensor;
-    public RunIndexer(Indexer indexer, DoubleSupplier speed, DigitalSensor colorSensor) {
+private final BooleanSupplier m_stop;
+    public RunIndexer(Indexer indexer, DoubleSupplier speed, DigitalSensor colorSensor, BooleanSupplier stop) {
         this.m_indexer = indexer;
         this.m_speed = speed;
         this.m_sensor = colorSensor;
+        this.m_stop = stop;
         addRequirements(m_indexer);
     }
 
@@ -32,7 +36,10 @@ private final DigitalSensor m_sensor;
      */
     @Override
     public void execute() {
-       if(m_sensor.getTopSensor()) {
+        SmartDashboard.putBoolean("Stop", m_stop.getAsBoolean());
+        if (m_stop.getAsBoolean()){
+            m_indexer.setSpeed(0);
+        } else if(m_sensor.getTopSensor()) {
             m_indexer.setIndexer1(0);
             m_indexer.setIndexer2(m_speed.getAsDouble());
         } else {

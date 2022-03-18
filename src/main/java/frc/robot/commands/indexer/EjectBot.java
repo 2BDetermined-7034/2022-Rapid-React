@@ -4,6 +4,7 @@
 
 package frc.robot.commands.indexer;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.sensor.SensorOverride;
 import frc.robot.subsystems.DigitalSensor;
@@ -38,15 +39,17 @@ public class EjectBot extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_intake.setSolenoid(false);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         new SensorOverride(analogSensor);
+
         m_index.setSpeed(-0.5);
-        m_intake.setSpeed(-0.5);
+        if (m_intake.getSolenoid() == DoubleSolenoid.Value.kReverse) {
+            m_intake.setSpeed(-0.5);
+        }
         m_shooter.setSpeed(3);
     }
 

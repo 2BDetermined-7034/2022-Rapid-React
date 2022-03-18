@@ -221,6 +221,11 @@ public class Drive extends SubsystemBase {
         m_differentialDrive.feed();
     }
 
+    public void resetNavx(){
+        m_gyro.reset();
+    }
+
+
     /**
      * Simple function to print drive values
      */

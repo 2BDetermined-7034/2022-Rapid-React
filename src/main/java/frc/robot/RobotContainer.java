@@ -65,11 +65,11 @@ public class RobotContainer {
     private final RunShooter m_runShooter = new RunShooter(m_shooter, m_indexer, () -> Constants.shooter.speed, m_analogSenseor);
 
     /* Indexer */
-    private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> Constants.indexer.speed, m_analogSenseor);
+    //private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> Constants.indexer.speed, m_analogSenseor, () -> climbPad.getButton("A").getAsBoolean());
     private final SensorOverride m_sensorOverride = new SensorOverride(m_analogSenseor);
 
     /* Intake */
-    private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor);
+    //private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor, () -> climbPad.getButton("A").getAsBoolean());
     private final SolenoidToggle m_intakeSolToggle = new SolenoidToggle(m_cargoIntake);
     private final Solenoid m_intakeup = new Solenoid(m_cargoIntake, false);
     private final Solenoid m_solUp = new Solenoid(m_cargoIntake, true);
@@ -139,54 +139,17 @@ public class RobotContainer {
 
 
        // Main Joystick ( configs )
-        joystick.getButton(1).whenHeld(m_runIntake);
-        joystick.getButton(1).whenHeld(m_runIndexer);
+        joystick.getButton(1).whenHeld(new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
+        joystick.getButton(1).whenHeld(new RunIndexer(m_indexer, () -> Constants.indexer.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
         joystick.getButton(2).whenPressed(m_intakeSolToggle);
         //joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
         joystick.getButton(3).whenHeld(new VisShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter, () -> true,  () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
 
-
         joystick.getButton(4).toggleWhenPressed(new Shift(m_drive, true));
-
-
-        //joystick.getButton(7).whenHeld(alignAutoShoot);
-
-        //joystick.getButton(7).whenHeld(new VisAlign(m_drive, m_limeLight, ()-> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
-        //joystick.getButton(7).whenHeld(m_autoShoot);
 
         joystick.getButton(8).whenHeld(m_trollShot);
         joystick.getButton(9).whenHeld(new RunWinch(m_climber, () -> -0.9, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
         joystick.getButton(10).whenHeld(new RunWinch(m_climber, () -> 0.9, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
-
-        //joystick.getButton(11).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> Constants.intake.speed, m_analogSenseor));
-
-        //joystick.getButton(6).toggleWhenPressed(m_runShooter);
-        //joystick.getButton(5).whenHeld(m_runIndexer);
-        //joystick.getButton(12).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
-        //joystick.getButton(11).whenHeld(new AlignAutoShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter));
-
-        //joystick.getButton(7).whenHeld(m_runShooter);
-        //joystick.getButton(9).whenHeld(new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_analogSenseor));
-        //joystick.getButton(9).whenHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
-        // Main Gamepad (Max configs)
-
-        /* Intake */
-        m_GPad.getButton("RB").whileHeld(m_runIntake);
-        m_GPad.getButton("BACK").whenPressed(m_solDown);
-        m_GPad.getButton("START").whenPressed(m_solUp);
-        m_GPad.getButton("LB").whileHeld(new RunIntakeMotors(m_cargoIntake, () -> -Constants.intake.speed, m_analogSenseor));
-
-        /* Drive */
-        m_GPad.getButton("A").toggleWhenPressed(new Shift(m_drive, true));
-
-        /* Indexer */
-        m_GPad.getButton("RB").whileHeld(m_runIndexer);
-        m_GPad.getButton("LB").whileHeld(new RunIndexer(m_indexer, () -> -Constants.indexer.speed, m_analogSenseor));
-
-        /* Shooter */
-        //m_GPad.getButton("A").toggleWhenPressed(m_runShooter);
-        m_GPad.getButton("X").whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
-
 
 
     }
@@ -200,7 +163,8 @@ public class RobotContainer {
 
         switch (Constants.controller.autoNumber) {
             case 0:
-
+                m_drive.resetNavx();
+                m_drive.shift(Constants.driveBase.HIGH_GEAR);
                 var autoVoltageConstraint =
                         new DifferentialDriveVoltageConstraint(
                                 new SimpleMotorFeedforward(
@@ -223,7 +187,7 @@ public class RobotContainer {
 
                 Trajectory m_trajectory;
                 try {
-                    m_trajectory = PathPlanner.loadPath("1metertest", Constants.motion.maxVelocity, Constants.motion.maxAcceleration, false);
+                    m_trajectory = PathPlanner.loadPath("1metertest", Constants.motion.maxVelocity, Constants.motion.maxAcceleration, true);
                 } catch (TrajectoryParameterizer.TrajectoryGenerationException exception) {
                     m_trajectory = new Trajectory();
                     DriverStation.reportError("Failed to load trajectory", false);
@@ -232,24 +196,22 @@ public class RobotContainer {
 
 
 
-                /*
+
                 // An example trajectory to follow.  All units in meters.
                 Trajectory exampleTrajectory =
                         TrajectoryGenerator.generateTrajectory(
                                 // Start at the origin facing the +X direction
                                 new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
                                 // Pass through these two interior waypoints, making an 's' curve path
-                                List.of(new Translation2d(0, 5)),
+                                List.of(new Translation2d(0.2, 0)),
                                 // End 3 meters straight ahead of where we started, facing forward
-                                new Pose2d(0, 10, Rotation2d.fromDegrees(0)),
+                                new Pose2d(0.4, 0, Rotation2d.fromDegrees(0)),
                                 // Pass config
                                 config);
-                */
 
-                m_drive.setRobotPos(m_trajectory.getInitialPose());
 
                 RamseteCommand ramseteCommand = new RamseteCommand(
-                        m_trajectory,
+                        exampleTrajectory,
                         m_drive::getRobotPos,
                         new RamseteController(Constants.motion.b, Constants.motion.zeta),
                         new SimpleMotorFeedforward(
@@ -265,6 +227,8 @@ public class RobotContainer {
                         m_drive);
 
                 // Reset odometry to the starting pose of the trajectory.
+
+                m_drive.setRobotPos(m_trajectory.getInitialPose());
 
 
                 // Run path following command, then stop at the end.
