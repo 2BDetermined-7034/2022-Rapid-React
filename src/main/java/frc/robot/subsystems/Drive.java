@@ -36,26 +36,26 @@ public class Drive extends SubsystemBase {
     private double leftSpeed;
     private double rightSpeed;
 
+    private double leftOffset;
+    private double rightOffset;
+
     public Drive() {
 
         m_left = new CANSparkMax(Constants.driveBase.driveL1ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left2 = new CANSparkMax(Constants.driveBase.driveL2ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_left3 = new CANSparkMax(Constants.driveBase.driveL3ID, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-        m_left.setInverted(true);
-        m_left2.setInverted(true);
-        m_left3.setInverted(true);
-
-
-
         m_right = new CANSparkMax(Constants.driveBase.driveR1ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_right2 = new CANSparkMax(Constants.driveBase.driveR2ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_right3 = new CANSparkMax(Constants.driveBase.driveR3ID, CANSparkMaxLowLevel.MotorType.kBrushless);
 
+        m_left.setInverted(false);
+        m_left2.setInverted(false);
+        m_left3.setInverted(false);
 
-        m_right.setInverted(false);
-        m_right2.setInverted(false);
-        m_right3.setInverted(false);
+        m_right.setInverted(true);
+        m_right2.setInverted(true);
+        m_right3.setInverted(true);
 
         m_left2.follow(m_left);
         m_left3.follow(m_left);
@@ -89,7 +89,7 @@ public class Drive extends SubsystemBase {
         */
         resetEncoders();
         m_odometry = new DifferentialDriveOdometry(getCurrentAngle());
-
+        m_gyro.reset();
     }
 
     /**
@@ -114,7 +114,7 @@ public class Drive extends SubsystemBase {
      * @return distance (meters?)
      */
     public double getRightEncoderPosition(){
-        return m_rightEnc.getPosition();
+        return m_rightEnc.getPosition() - rightOffset;
     }
 
     /**
@@ -122,7 +122,7 @@ public class Drive extends SubsystemBase {
      * @return distance (meters?)
      */
     public double getLeftEncoderPosition(){
-        return m_leftEnc.getPosition();
+        return m_leftEnc.getPosition() - leftOffset;
     }
 
     public Rotation2d getCurrentAngle(){
@@ -130,16 +130,16 @@ public class Drive extends SubsystemBase {
     }
 
     public void resetEncoders() {
-        m_rightEnc.setPosition(0);
-        m_leftEnc.setPosition(0);
+        rightOffset = m_rightEnc.getPosition();
+        leftOffset = m_leftEnc.getPosition();
     }
     /**
      * Change the pose of the robot, this should be called at the start of every path
      * @param startingPose the robot's position
      */
     public void setRobotPos(Pose2d startingPose){
-        m_odometry.resetPosition(startingPose, Rotation2d.fromDegrees(-m_gyro.getYaw()));
         resetEncoders();
+        m_odometry.resetPosition(startingPose, getCurrentAngle());
         //m_locationManager.resetPosition(startingPose, Rotation2d.fromDegrees(-m_gyro.getYaw()));
     }
 
@@ -193,7 +193,7 @@ public class Drive extends SubsystemBase {
     public void arcadeDrive(double xSpeed, double zRotation){
         xSpeed *= Constants.driveBase.xSpeed;
         zRotation *= Constants.driveBase.xRot;
-        m_differentialDrive.arcadeDrive(xSpeed, zRotation);
+        m_differentialDrive.arcadeDrive(-xSpeed, -zRotation);
     }
 
     /**
@@ -216,8 +216,8 @@ public class Drive extends SubsystemBase {
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         SmartDashboard.putNumber("Left", -leftVolts);
         SmartDashboard.putNumber("Right", -rightVolts);
-        m_left.setVoltage(-leftVolts);
-        m_right.setVoltage(-rightVolts);
+        m_left.setVoltage(leftVolts);
+        m_right.setVoltage(rightVolts);
         m_differentialDrive.feed();
     }
 
@@ -249,7 +249,7 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic() {
-        m_odometry.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getLeftEncoderPosition(), getRightEncoderPosition());
+        m_odometry.update(getCurrentAngle(), getLeftEncoderPosition(), getRightEncoderPosition());
         //m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
         debug();
     }

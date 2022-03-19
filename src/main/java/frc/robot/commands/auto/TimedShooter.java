@@ -52,23 +52,21 @@ public class TimedShooter extends CommandBase {
     public void execute() {
         double llY = m_ll.getYAngle();
         double visSpeed;
-        if(llY<6.2){visSpeed = -5.13;}
-        else if(llY<10){visSpeed = -5.145;}
-        else{
-            visSpeed = -26.4 + 5.55*llY + -0.538*Math.pow(llY, 2) + 0.023*Math.pow(llY, 3) + -3.78E-04*Math.pow(llY, 4);
-        }
+
+        visSpeed = -1 * (5.1 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)));
+
         m_shooter.setSpeed(visSpeed);
         m_ll.setLights(true);
 
         double visX = m_ll.getXAngle() + Constants.vision.VisX_Offset;
 
         double errorX = visX > 0 ? visX + 1.2 : visX - 1.2;
-        m_drive.arcadeDrive(0, -errorX / 12);
+        m_drive.arcadeDrive(0, -errorX / 13);
         //double errorX = shooterLock.calculate(visX, 0);
 
         SmartDashboard.putNumber("ErrorX", errorX);
 
-        if(Math.abs(errorX) <= 2.2) {
+        if(Math.abs(errorX) <= 2.4) {
             SmartDashboard.putBoolean("Lined", true);
             if (Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
                 new SensorOverride(analogSensor);

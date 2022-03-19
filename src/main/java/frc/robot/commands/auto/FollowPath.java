@@ -14,24 +14,10 @@ import frc.robot.subsystems.Drive;
 public class FollowPath {
 
     private final RamseteCommand ramseteCommand;
-
+    private final Drive m_drive;
+    private final Trajectory m_path;
     public FollowPath(Drive m_drive, String path, boolean reversed) {
-
-        /*
-        DifferentialDriveVoltageConstraint constraint = new DifferentialDriveVoltageConstraint(
-                new SimpleMotorFeedforward(Constants.motion.ksVolts, Constants.motion.kvVoltSecondsPerMeter, Constants.motion.kaVoltSecondsSquaredPerMeter),
-                m_drive.get_kinematics(), Constants.motion.kMaxVolts);
-
-        TrajectoryConfig config =
-                new TrajectoryConfig(
-                        Constants.motion.kMaxSpeedMetersPerSecond,
-                        Constants.motion.kMaxAccelerationMetersPerSecondSquared)
-                        // Add kinematics to ensure max speed is actually obeyed
-                        .setKinematics(m_drive.get_kinematics())
-                        // Apply the voltage constraint
-                        .addConstraint(constraint);
-         */
-
+        this.m_drive = m_drive;
         Trajectory m_trajectory;
         try {
             m_trajectory = PathPlanner.loadPath(path, Constants.motion.maxVelocity, Constants.motion.maxAcceleration, reversed);
@@ -39,7 +25,7 @@ public class FollowPath {
             m_trajectory = new Trajectory();
             DriverStation.reportError("Failed to load trajectory", false);
         }
-
+        this.m_path = m_trajectory;
         ramseteCommand = new RamseteCommand(
                 m_trajectory,
                 m_drive::getRobotPos,
@@ -55,9 +41,15 @@ public class FollowPath {
                 // RamseteCommand passes volts to the callback
                 m_drive::tankDriveVolts,
                 m_drive);
+
+        // Reset odometry to the starting pose of the trajectory.
+
     }
 
     public RamseteCommand getRamseteCommand() {
+
+        m_drive.shift(Constants.driveBase.HIGH_GEAR);
+        m_drive.setRobotPos(m_path.getInitialPose());
         return ramseteCommand;
     }
 }

@@ -163,83 +163,14 @@ public class RobotContainer {
 
         switch (Constants.controller.autoNumber) {
             case 0:
-                m_drive.resetNavx();
-                m_drive.shift(Constants.driveBase.HIGH_GEAR);
-                var autoVoltageConstraint =
-                        new DifferentialDriveVoltageConstraint(
-                                new SimpleMotorFeedforward(
-                                        Constants.motion.ksVolts,
-                                        Constants.motion.kvVoltSecondsPerMeter,
-                                        Constants.motion.kaVoltSecondsSquaredPerMeter),
-                                m_drive.get_kinematics(),
-                                8);
+                //return new FollowPath(m_drive, "2ball1", false).getRamseteCommand();
 
-                // Create config for trajectory
-                TrajectoryConfig config =
-                        new TrajectoryConfig(
-                                Constants.motion.maxVelocity,
-                                Constants.motion.maxAcceleration)
-                                // Add kinematics to ensure max speed is actually obeyed
-                                .setKinematics(m_drive.get_kinematics())
-                                // Apply the voltage constraint
-                                .addConstraint(autoVoltageConstraint);
-
-
-                Trajectory m_trajectory;
-                try {
-                    m_trajectory = PathPlanner.loadPath("1metertest", Constants.motion.maxVelocity, Constants.motion.maxAcceleration, true);
-                } catch (TrajectoryParameterizer.TrajectoryGenerationException exception) {
-                    m_trajectory = new Trajectory();
-                    DriverStation.reportError("Failed to load trajectory", false);
-                }
-
-
-
-
-
-                // An example trajectory to follow.  All units in meters.
-                Trajectory exampleTrajectory =
-                        TrajectoryGenerator.generateTrajectory(
-                                // Start at the origin facing the +X direction
-                                new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-                                // Pass through these two interior waypoints, making an 's' curve path
-                                List.of(new Translation2d(0.2, 0)),
-                                // End 3 meters straight ahead of where we started, facing forward
-                                new Pose2d(0.4, 0, Rotation2d.fromDegrees(0)),
-                                // Pass config
-                                config);
-
-
-                RamseteCommand ramseteCommand = new RamseteCommand(
-                        exampleTrajectory,
-                        m_drive::getRobotPos,
-                        new RamseteController(Constants.motion.b, Constants.motion.zeta),
-                        new SimpleMotorFeedforward(
-                                Constants.motion.ksVolts,
-                                Constants.motion.kvVoltSecondsPerMeter,
-                                Constants.motion.kaVoltSecondsSquaredPerMeter),
-                        m_drive.get_kinematics(),
-                        m_drive::getWheelVelocity,
-                        new PIDController(Constants.motion.kPDriveVel, 0, 0),
-                        new PIDController(Constants.motion.kPDriveVel, 0, 0),
-                        // RamseteCommand passes volts to the callback
-                        m_drive::tankDriveVolts,
-                        m_drive);
-
-                // Reset odometry to the starting pose of the trajectory.
-
-                m_drive.setRobotPos(m_trajectory.getInitialPose());
-
-
-                // Run path following command, then stop at the end.
-                return ramseteCommand.andThen(() -> m_drive.tankDriveVolts(0, 0));
-
-            case 1:
-                return new TwoBallMid(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
             case 2:
-                return new TwoBallBot(m_drive, m_limeLight,m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
+                return new TwoBallBot(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
             case 3:
                 return new ThreeBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
+            case 4:
+                return new FourBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
             default:
                 throw new IllegalStateException("Unexpected Auto: " + Constants.controller.autoNumber);
         }

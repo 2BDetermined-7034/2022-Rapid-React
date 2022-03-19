@@ -32,7 +32,7 @@ public final class Constants {
         public static final double yGate = 0.15;
         public static final double xGate = 0.15;
 
-        public static final int autoNumber = 0;
+        public static final int autoNumber = 4;
     }
 
     public static final class pneumatics {
@@ -71,10 +71,10 @@ public final class Constants {
     }
     public static final class motion {
         //Drivebase tuning
-        public static final double ksVolts = 0.16346;
-        public static final double kvVoltSecondsPerMeter = 2.7997; //7.2507
-        public static final double kaVoltSecondsSquaredPerMeter = 0.36354;
-        public static final double kPDriveVel = 3.5796;// 3.5796
+        public static final double ksVolts = 0.16302;
+        public static final double kvVoltSecondsPerMeter = 2.8008; //7.2507
+        public static final double kaVoltSecondsSquaredPerMeter = 0.36623;
+        public static final double kPDriveVel = 0;// 3.5796
 
         //Ramsete gains
         public static final double b = 2;
@@ -82,7 +82,7 @@ public final class Constants {
         //Max values
 
         public static final double maxVelocity = 3;
-        public static final double maxAcceleration = 0.3;
+        public static final double maxAcceleration = 2.0;
     }
 
     public final static class shooter {
@@ -91,6 +91,7 @@ public final class Constants {
         public static final double speed = .25;
         public static final double passiveSpeed = 0; //Passive speed
         public static final double shooterRange = 0.005;
+        public static final double shootTime = 2.1;
 
     }
 
