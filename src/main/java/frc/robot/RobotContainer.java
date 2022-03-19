@@ -162,9 +162,8 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
 
         switch (Constants.controller.autoNumber) {
-            case 0:
-                //return new FollowPath(m_drive, "2ball1", false).getRamseteCommand();
-
+            case 1:
+                return new TwoBallMid(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
             case 2:
                 return new TwoBallBot(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
             case 3:

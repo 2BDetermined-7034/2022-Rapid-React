@@ -89,7 +89,7 @@ public final class Constants {
         public static final int leftShooterNEO = 8;
         public static final int rightShooterNEO = 11;
         public static final double speed = .25;
-        public static final double passiveSpeed = 0; //Passive speed
+        public static final double passiveSpeed = -1; //Passive speed, should be negative
         public static final double shooterRange = 0.005;
         public static final double shootTime = 2.1;
 
