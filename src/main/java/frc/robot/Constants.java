@@ -89,7 +89,7 @@ public final class Constants {
         public static final int leftShooterNEO = 8;
         public static final int rightShooterNEO = 11;
         public static final double speed = .25;
-        public static final double passiveSpeed = -1; //Passive speed, should be negative
+        public static final double passiveSpeed = 0; //Passive speed, should be negative
         public static final double shooterRange = 0.005;
         public static final double shootTime = 2.1;
 
@@ -99,14 +99,14 @@ public final class Constants {
         public static final int winchMotorID = 1;
         public static final int solenoidForwardID = 4;
         public static final int solenoidBackID = 5;
-        public static final double winchSpeed = 0.5;
+        public static final double winchSpeed = 0.9;
         //PID Values
         public static final double kP = 0.05;
         public static final double kI = 0;
         public static final double kD = 0;
         //Encoder garbage (maybe remove if not being used)
 
-        public static final int maxPos = 312252;
+        public static final int maxPos = 227440;
 
         public static final int extendedValue = 312252;
         public static final int encoderAcceptableError = 10;

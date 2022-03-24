@@ -19,6 +19,7 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -45,10 +46,12 @@ import java.util.List;
 public class RobotContainer {
     // Controllers
     private final X3D joystick = new X3D(Constants.controller.driveJoystick);
-    public final X3D climbJoystick = new X3D(Constants.controller.climbGamePadPort);
 
     public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
     public final GPad climbPad = new GPad(Constants.controller.climbGamePadPort);
+
+
+    SendableChooser<Command> m_chooser;
 
     // Subsystems
     private final CargoIntake m_cargoIntake = new CargoIntake(); // Intake
@@ -57,7 +60,6 @@ public class RobotContainer {
     private final LimeLight m_limeLight = new LimeLight(); // Limelight
     private final Drive m_drive = new Drive(); // Drivebase
     private final Shooter m_shooter = new Shooter(); // Shooter
-    //private final AutoShoot m_autoShoot = new AutoShoot(m_analogSenseor, m_indexer, m_limeLight, m_shooter);
     private final TrollShot m_trollShot = new TrollShot(m_shooter, m_indexer, m_analogSenseor);
     // Commands
 
@@ -72,16 +74,12 @@ public class RobotContainer {
     //private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor, () -> climbPad.getButton("A").getAsBoolean());
     private final SolenoidToggle m_intakeSolToggle = new SolenoidToggle(m_cargoIntake);
     private final Solenoid m_intakeup = new Solenoid(m_cargoIntake, false);
-    private final Solenoid m_solUp = new Solenoid(m_cargoIntake, true);
-    private final Solenoid m_solDown = new Solenoid(m_cargoIntake, false);
 
     private final EjectBot m_ejectBot = new EjectBot(m_shooter, m_indexer, m_cargoIntake, m_analogSenseor);
     private final EjectTop m_ejectTop = new EjectTop(m_shooter, m_indexer, m_analogSenseor);
 
     /* Climber */
     public final Climber m_climber = new Climber();
-    //public final RunWinch m_runWinch = new RunWinch(m_climber, () -> 0.9, ()-> m_GPad.getAxis("LTrigger"));
-    //public final RunWinch m_runWinchBack = new RunWinch(m_climber, () -> -0.9, () -> m_GPad.getAxis("LTrigger"));
     public final RunSolenoid m_toggleClimbSolenoid = new RunSolenoid(m_climber);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -92,11 +90,6 @@ public class RobotContainer {
       SmartDashboard.putData("Climb Solenoid", m_toggleClimbSolenoid);
       SmartDashboard.putData("Eject Top", m_ejectTop);
       SmartDashboard.putData("Eject Bot", m_ejectBot);
-      SmartDashboard.putNumber("Bruh", 0);
-
-
-      //SmartDashboard.putData("Reset Climb Encoder", new ResetWinchEncoder(m_climber));
-
       // Register
       m_drive.register();
       m_cargoIntake.register();
@@ -104,16 +97,21 @@ public class RobotContainer {
       m_shooter.register();
       m_analogSenseor.register();
 
+      //Auto
+      m_chooser = new SendableChooser<>();
+
+      m_chooser.setDefaultOption("Four Ball", new FourBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
+      m_chooser.addOption("Two Ball Mid", new TwoBallMid(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
+      m_chooser.addOption("Two Ball Bot", new TwoBallBot(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
+      m_chooser.addOption("Three Ball", new ThreeBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
+
+      SmartDashboard.putData("Auto",m_chooser);
 
       // Drive default command
       if(Constants.controller.useJoystick)
           m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX)); // Looks wrong do not change
       else
           m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("RX")));
-
-      //Note: Might need to tweak the division
-      //m_climber.setDefaultCommand(new DriveCommand(m_drive, () -> -climbPad.getAxis("LY")/3, () -> - climbPad.getAxis("LX")/3));
-
       configureButtonBindings();
   }
 
@@ -125,11 +123,8 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-        // Climber controller
-
-        /* Gamepad */
-        climbPad.getButton("RB").whenHeld(new RunWinch(m_climber, () -> 0.9, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
-        climbPad.getButton("LB").whenHeld(new RunWinch(m_climber, () -> -0.9, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
+        climbPad.getButton("RB").whenHeld(new RunWinch(m_climber, () -> Constants.climb.winchSpeed, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
+        climbPad.getButton("LB").whenHeld(new RunWinch(m_climber, () -> -Constants.climb.winchSpeed * 0.75, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
         climbPad.getButton("B").toggleWhenPressed(m_toggleClimbSolenoid);
         climbPad.getButton("Y").whenPressed(m_intakeup);
         //climbPad.getButton("X").whenPressed(new AutoClimbGroup(m_climber, () -> true, m_cargoIntake));
@@ -137,20 +132,14 @@ public class RobotContainer {
         climbPad.getButton("BACK").whenHeld(m_ejectBot);
         climbPad.getButton("START").whenHeld(m_ejectTop);
 
-
-       // Main Joystick ( configs )
         joystick.getButton(1).whenHeld(new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
         joystick.getButton(1).whenHeld(new RunIndexer(m_indexer, () -> Constants.indexer.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
         joystick.getButton(2).whenPressed(m_intakeSolToggle);
-        //joystick.getButton(3).whenHeld(new VisAlign(m_drive, m_limeLight, () -> true, () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
         joystick.getButton(3).whenHeld(new VisShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter, () -> true,  () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
-
         joystick.getButton(4).toggleWhenPressed(new Shift(m_drive, true));
-
         joystick.getButton(8).whenHeld(m_trollShot);
-        joystick.getButton(9).whenHeld(new RunWinch(m_climber, () -> -0.9, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
-        joystick.getButton(10).whenHeld(new RunWinch(m_climber, () -> 0.9, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
-
+        joystick.getButton(9).whenHeld(new RunWinch(m_climber, () -> -Constants.climb.winchSpeed, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
+        joystick.getButton(10).whenHeld(new RunWinch(m_climber, () -> Constants.climb.winchSpeed, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
 
     }
 
@@ -161,6 +150,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
 
+        /*
         switch (Constants.controller.autoNumber) {
             case 1:
                 return new TwoBallMid(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
@@ -174,7 +164,9 @@ public class RobotContainer {
                 throw new IllegalStateException("Unexpected Auto: " + Constants.controller.autoNumber);
         }
 
+         */
 
+        return m_chooser.getSelected();
 
     }
 }

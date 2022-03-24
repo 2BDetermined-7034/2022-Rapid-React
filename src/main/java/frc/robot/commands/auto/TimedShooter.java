@@ -42,7 +42,6 @@ public class TimedShooter extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        SmartDashboard.putBoolean("Lined", false);
         timer.reset();
         timer.start();
     }
@@ -67,7 +66,6 @@ public class TimedShooter extends CommandBase {
         SmartDashboard.putNumber("ErrorX", errorX);
 
         if(Math.abs(errorX) <= 2.4) {
-            SmartDashboard.putBoolean("Lined", true);
             if (Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
                 new SensorOverride(analogSensor);
                 m_index.setSpeed(Constants.indexer.speed);

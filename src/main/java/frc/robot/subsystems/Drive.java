@@ -214,8 +214,6 @@ public class Drive extends SubsystemBase {
      * @param rightVolts the commanded right output
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
-        SmartDashboard.putNumber("Left", -leftVolts);
-        SmartDashboard.putNumber("Right", -rightVolts);
         m_left.setVoltage(leftVolts);
         m_right.setVoltage(rightVolts);
         m_differentialDrive.feed();
@@ -251,6 +249,6 @@ public class Drive extends SubsystemBase {
     public void periodic() {
         m_odometry.update(getCurrentAngle(), getLeftEncoderPosition(), getRightEncoderPosition());
         //m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
-        debug();
+        //debug();
     }
 }

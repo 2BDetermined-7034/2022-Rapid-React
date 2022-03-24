@@ -7,12 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
-import edu.wpi.first.cscore.CvSink;
-import edu.wpi.first.cscore.CvSource;
-import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.*;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,8 +22,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  private UsbCamera camera1;
-  private UsbCamera camera2;
+
   NetworkTableEntry cameraSelection;
 
   /**
@@ -35,13 +31,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
-    //camera1 = CameraServer;
-    //camera2 = CameraServer;
-
     cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
-
+    CameraServer.startAutomaticCapture();
     m_robotContainer = new RobotContainer();
   }
 

@@ -11,39 +11,6 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "0,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/limelight_Stream",
-              "_title": "limelight_Stream"
-            }
-          },
-          "2,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/limelight_PipelineName",
-              "_title": "limelight_PipelineName"
-            }
-          },
-          "1,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/limelight_Interface",
-              "_title": "limelight_Interface"
-            }
-          },
           "5,0": {
             "size": [
               1,
@@ -55,7 +22,7 @@
               "_title": "LimeLight X Angle"
             }
           },
-          "2,1": {
+          "2,0": {
             "size": [
               1,
               1
@@ -66,7 +33,7 @@
               "_title": "Intake Solenoid"
             }
           },
-          "1,1": {
+          "1,0": {
             "size": [
               1,
               1
@@ -110,7 +77,7 @@
               "_title": "LimeLight Y Angle"
             }
           },
-          "0,1": {
+          "0,0": {
             "size": [
               1,
               1
@@ -145,8 +112,8 @@
           },
           "3,1": {
             "size": [
-              7,
-              3
+              3,
+              2
             ],
             "content": {
               "_type": "Camera Stream",
@@ -173,7 +140,7 @@
               "_title": "Gear"
             }
           },
-          "2,2": {
+          "5,3": {
             "size": [
               1,
               1
@@ -184,7 +151,7 @@
               "_title": "Shooter Speed"
             }
           },
-          "1,3": {
+          "2,2": {
             "size": [
               1,
               1
@@ -228,7 +195,7 @@
               "_title": "Climb Winch Position"
             }
           },
-          "4,4": {
+          "3,3": {
             "size": [
               1,
               1
@@ -241,7 +208,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "5,4": {
+          "4,3": {
             "size": [
               1,
               1
@@ -289,6 +256,25 @@
               "_title": "Is Indexer Full?",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "6,1": {
+            "size": [
+              4,
+              3
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://USB Camera 0",
+              "_title": "USB Camera 0",
+              "Crosshair/Show crosshair": false,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": false,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": 0,
+              "imageHeight": 0
             }
           }
         }
@@ -449,12 +435,82 @@
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///LiveWindow/Ungrouped/Talon SRX [0]/Value",
-                  "_title": "/LiveWindow/Ungrouped/Talon SRX [0]/Value"
+                  "_title": "Talon SRX [0]/Value"
                 },
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///LiveWindow/Ungrouped/Talon SRX [3]/Value",
-                  "_title": "/LiveWindow/Ungrouped/Talon SRX [3]/Value"
+                  "_title": "Talon SRX [3]/Value"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[16]",
+                  "_title": "PIDController[16]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[11]",
+                  "_title": "PIDController[11]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[17]",
+                  "_title": "PIDController[17]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[6]",
+                  "_title": "PIDController[6]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[8]",
+                  "_title": "PIDController[8]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[12]",
+                  "_title": "PIDController[12]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[7]",
+                  "_title": "PIDController[7]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[9]",
+                  "_title": "PIDController[9]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[13]",
+                  "_title": "PIDController[13]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[15]",
+                  "_title": "PIDController[15]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[18]",
+                  "_title": "PIDController[18]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[5]",
+                  "_title": "PIDController[5]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[10]",
+                  "_title": "PIDController[10]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[14]",
+                  "_title": "PIDController[14]"
                 }
               ]
             }
@@ -539,12 +595,12 @@
           "0,0": {
             "size": [
               23,
-              11
+              10
             ],
             "content": {
               "_type": "Camera Stream",
-              "_source0": "camera_server://limelight",
-              "_title": "limelight",
+              "_source0": "camera_server://USB Camera 0",
+              "_title": "USB Camera 0",
               "Crosshair/Show crosshair": false,
               "Crosshair/Crosshair color": "#FFFFFFFF",
               "Controls/Show controls": false,
@@ -560,9 +616,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -6.400000095367432,
-    "y": 1.600000023841858,
-    "width": 1547.199951171875,
-    "height": 828.7999877929688
+    "x": -7.199999809265137,
+    "y": -7.199999809265137,
+    "width": 1550.4000244140625,
+    "height": 838.4000244140625
   }
 }
