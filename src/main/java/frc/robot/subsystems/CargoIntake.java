@@ -42,6 +42,10 @@ public class CargoIntake extends SubsystemBase {
         }
     }
 
+    public DoubleSolenoid.Value getSolenoid(){
+        return m_solenoid.get();
+    }
+
     public void toggleSolenoid(){
         if(m_solenoid.get().equals(DoubleSolenoid.Value.kForward)){
             m_solenoid.set(DoubleSolenoid.Value.kReverse);

@@ -1,0 +1,90 @@
+{
+  "MainWindow": {
+    "GLOBAL": {
+      "height": "900",
+      "maximized": "1",
+<<<<<<< Updated upstream
+      "style": "0",
+=======
+      "style": "1",
+>>>>>>> Stashed changes
+      "userScale": "2",
+      "width": "1600",
+      "xpos": "0",
+      "ypos": "29"
+    }
+  },
+  "Window": {
+    "###Analyzer": {
+      "Collapsed": "0",
+<<<<<<< Updated upstream
+      "Pos": "546,42",
+      "Size": "450,687"
+=======
+      "Pos": "714,19",
+      "Size": "662,662"
+>>>>>>> Stashed changes
+    },
+    "###Generator": {
+      "Collapsed": "0",
+      "Pos": "6,31",
+<<<<<<< Updated upstream
+      "Size": "492,433"
+    },
+    "###Logger": {
+      "Collapsed": "0",
+      "Pos": "2,474",
+      "Size": "453,479"
+    },
+    "###Program Log": {
+      "Collapsed": "0",
+      "Pos": "531,739",
+      "Size": "450,168"
+=======
+      "Size": "671,437"
+    },
+    "###Logger": {
+      "Collapsed": "0",
+      "Pos": "8,472",
+      "Size": "666,487"
+    },
+    "###Program Log": {
+      "Collapsed": "0",
+      "Pos": "724,707",
+      "Size": "662,156"
+>>>>>>> Stashed changes
+    },
+    "Debug##Default": {
+      "Collapsed": "0",
+      "Pos": "60,60",
+      "Size": "400,400"
+    },
+<<<<<<< Updated upstream
+    "Deploy Status": {
+      "Collapsed": "0",
+      "Pos": "495,100",
+      "Size": "960,800"
+    },
+    "Diagnostic Plots": {
+      "Collapsed": "0",
+      "Pos": "1039,23",
+      "Size": "873,971"
+    },
+    "Exception Caught!": {
+      "Collapsed": "0",
+      "Pos": "804,460",
+      "Size": "480,176"
+    },
+    "Warning": {
+      "Collapsed": "0",
+      "Pos": "977,3",
+      "Size": "812,995"
+=======
+    "Diagnostic Plots": {
+      "Collapsed": "0",
+      "Pos": "1377,-7",
+      "Size": "558,1014"
+>>>>>>> Stashed changes
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "SysId": {
+    "Analysis Type": "Drivetrain",
+    "NetworkTables Settings": {
+      "serverTeam": "7034"
+<<<<<<< Updated upstream
+    },
+    "mode": "Client",
+    "serverTeam": "7034"
+=======
+    }
+>>>>>>> Stashed changes
+  }
+}

@@ -8,15 +8,15 @@ import frc.robot.subsystems.CargoIntake;
 public class Solenoid extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final CargoIntake m_intake;
-    private final boolean m_hasBoner;
+    private final boolean m_hasAir;
 
     /**
      *
      * @param intake The robot's intake
      */
-    public Solenoid(CargoIntake intake, Boolean boner) {
+    public Solenoid(CargoIntake intake, Boolean air) {
         this.m_intake = intake;
-        this.m_hasBoner = boner;
+        this.m_hasAir = air;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_intake);
     }
@@ -29,7 +29,7 @@ public class Solenoid extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_intake.setSolenoid(!m_hasBoner);
+        m_intake.setSolenoid(!m_hasAir);
     }
 
     // Called once the command ends or is interrupted.

@@ -17,7 +17,7 @@ public class Invert extends CommandBase {
 
     @Override
     public void execute() {
-        m_drive.setInverted(true);
+
     }
 
     @Override

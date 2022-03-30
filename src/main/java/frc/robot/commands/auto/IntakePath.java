@@ -1,23 +1,22 @@
 package frc.robot.commands.auto;
 
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.robot.commands.drive.MotionProfileCommand;
 import frc.robot.commands.indexer.RunIndexer;
 import frc.robot.commands.intake.RunIntakeMotors;
-import frc.robot.commands.intake.Solenoid;
-import frc.robot.subsystems.AnalogSensor;
+import frc.robot.subsystems.DigitalSensor;
 import frc.robot.subsystems.CargoIntake;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Indexer;
 
-public class IntakePath extends ParallelRaceGroup {
-    AnalogSensor sensor;
+public class IntakePath extends ParallelDeadlineGroup {
+    DigitalSensor sensor;
 
-
-    public IntakePath(Drive m_drive, Indexer m_indexer, AnalogSensor m_sensor, CargoIntake m_cargoIntake, String path, boolean inverted, double intakeSpeed, double indexerSpeed) {
-        super(new MotionProfileCommand(m_drive, path, inverted), new RunIndexer(m_indexer,() -> indexerSpeed, m_sensor), new RunIntakeMotors(m_cargoIntake, () -> intakeSpeed, m_sensor));
+    public IntakePath(Drive m_drive, Indexer m_indexer, DigitalSensor m_sensor, CargoIntake m_cargoIntake, String path, boolean inverted, double intakeSpeed, double indexerSpeed) {
+        super(new FollowPath(m_drive, path, inverted).getRamseteCommand(), new RunIndexer(m_indexer,() -> indexerSpeed, m_sensor, () ->false), new RunIntakeMotors(m_cargoIntake, () -> intakeSpeed, m_sensor, () -> false));
         sensor = m_sensor;
     }
 

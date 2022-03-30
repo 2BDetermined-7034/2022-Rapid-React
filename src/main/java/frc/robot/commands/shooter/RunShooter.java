@@ -3,21 +3,18 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.shooter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import java.util.function.DoubleSupplier;
-import edu.wpi.first.wpilibj.Timer;
 
-import frc.robot.Constants;
 import frc.robot.commands.sensor.SensorOverride;
-import frc.robot.subsystems.AnalogSensor;
+import frc.robot.subsystems.DigitalSensor;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
 
 public class RunShooter extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final AnalogSensor analogSensor;
+    private final DigitalSensor analogSensor;
 
     private final Shooter m_shooter;
     private final Indexer m_index;
@@ -30,7 +27,7 @@ public class RunShooter extends CommandBase {
      * @param subsystem The subsystem used by this command.
      * @param speed DoubleSupplier for the motor.
      */
-    public RunShooter(Shooter subsystem, Indexer indexer, DoubleSupplier speed, AnalogSensor sensor) {
+    public RunShooter(Shooter subsystem, Indexer indexer, DoubleSupplier speed, DigitalSensor sensor) {
         this.m_index = indexer;
         this.analogSensor = sensor;
         m_shooter = subsystem;

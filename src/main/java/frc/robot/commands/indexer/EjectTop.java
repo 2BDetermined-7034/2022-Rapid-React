@@ -6,16 +6,14 @@ package frc.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.sensor.SensorOverride;
-import frc.robot.subsystems.AnalogSensor;
+import frc.robot.subsystems.DigitalSensor;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
-
-import java.util.function.DoubleSupplier;
 
 
 public class EjectTop extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final AnalogSensor analogSensor;
+    private final DigitalSensor analogSensor;
 
     private final Shooter m_shooter;
     private final Indexer m_index;
@@ -25,7 +23,7 @@ public class EjectTop extends CommandBase {
      *
      * @param subsystem The subsystem used by this command.
      */
-    public EjectTop(Shooter subsystem, Indexer indexer, AnalogSensor sensor) {
+    public EjectTop(Shooter subsystem, Indexer indexer, DigitalSensor sensor) {
         this.m_index = indexer;
         this.analogSensor = sensor;
         m_shooter = subsystem;

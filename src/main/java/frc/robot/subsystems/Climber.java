@@ -34,10 +34,6 @@ public class Climber extends SubsystemBase {
         resetEncoder();
 
         m_winchTalon.setNeutralMode(NeutralMode.Brake);
-
-        //TEMP SMARTDASHBOARD PUTNUMBER
-        SmartDashboard.putNumber("ExtendedValue", Constants.climb.extendedValue);
-
         m_winchTalon.config_kP(0, 1);
         //m_winchTalon.config_kI()
     }
