@@ -43,9 +43,8 @@ public class TrollShot extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_shooter.setSpeed(-3.3);
+        m_shooter.setSpeed(-2);
         m_indexer.setSpeed(Constants.indexer.speed);
-
     }
 
     // Called once the command ends or is interrupted.
