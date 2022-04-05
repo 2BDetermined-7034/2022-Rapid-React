@@ -19,7 +19,7 @@ public class ThreeBall extends SequentialCommandGroup {
         addCommands(
                 new TwoBallBot(m_drive, ll, m_shooter, m_indexer, m_analogSensor, m_intake),
                 new Solenoid(m_intake, true),
-                new IntakePath(m_drive, m_indexer,m_analogSensor, m_intake, "3ball2", true, Constants.intake.speed, Constants.indexer.speed),
+                new IntakePath(m_drive, m_indexer, m_shooter, m_analogSensor, m_intake, "3ball2", true, Constants.intake.speed, Constants.indexer.speed),
                 new TimedShooter(m_drive, ll, m_analogSensor, m_indexer, m_shooter, Constants.shooter.shootTime)
 
         );

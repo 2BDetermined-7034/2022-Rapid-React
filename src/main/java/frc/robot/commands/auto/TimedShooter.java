@@ -33,7 +33,7 @@ public class TimedShooter extends CommandBase {
         this.m_shooter = shooter;
         this.totalTime = time;
 
-        shooterLock = new PIDController(0.0666, 0.01, 0);
+        shooterLock = new PIDController(0.0666, 0.001, 0);
 
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_shooter);
@@ -60,12 +60,15 @@ public class TimedShooter extends CommandBase {
         double visX = m_ll.getXAngle() + Constants.vision.VisX_Offset;
 
         double errorX = visX > 0 ? visX + 1.2 : visX - 1.2;
+
+        double rotateSpeed = shooterLock.calculate(visX, 0);
+
         m_drive.arcadeDrive(0, -errorX / 13);
-        //double errorX = shooterLock.calculate(visX, 0);
+        //m_drive.arcadeDrive(0, -rotateSpeed);
 
         SmartDashboard.putNumber("ErrorX", errorX);
 
-        if(Math.abs(errorX) <= 2.4) {
+        if(Math.abs(errorX) <= 3) {
             if (Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
                 new SensorOverride(analogSensor);
                 m_index.setSpeed(Constants.indexer.speed);

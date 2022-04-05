@@ -197,7 +197,7 @@ public class Drive extends SubsystemBase {
     }
 
     public void chezyDrive(double xSpeed, double zRotation) {
-        m_differentialDrive.curvatureDrive(-xSpeed, -zRotation, Math.abs(xSpeed) <= 0.075);
+        m_differentialDrive.curvatureDrive(-xSpeed, -zRotation, Math.abs(xSpeed) <= 0.15);
     }
 
     /**

@@ -117,7 +117,7 @@ public class VisShoot extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
-        m_shooter.setSpeed(Constants.shooter.passiveSpeed);
+        m_shooter.setSpeed(Constants.shooter.passivePostSpeed);
         m_indexer.setSpeed(0);
         m_ll.setLights(false);
     }

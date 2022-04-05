@@ -81,15 +81,19 @@ public final class Constants {
         public static final double zeta = 0.7;
         //Max values
 
-        public static final double maxVelocity = 3;
-        public static final double maxAcceleration = 2.0;
+        public static final double maxVelocity = 4;
+        public static final double maxAcceleration = 3.0;
     }
 
     public final static class shooter {
         public static final int leftShooterNEO = 8;
         public static final int rightShooterNEO = 11;
         public static final double speed = .25;
-        public static final double passiveSpeed = 0; //Passive speed, should be negative
+        //All passive speeds should be negative
+        public static final double passiveOneSpeed = -3;
+        public static final double passiveFullSpeed = -3;
+        public static final double passivePostSpeed = -3; //Passive speed, should be negative
+
         public static final double shooterRange = 0.005;
         public static final double shootTime = 2.1;
 
