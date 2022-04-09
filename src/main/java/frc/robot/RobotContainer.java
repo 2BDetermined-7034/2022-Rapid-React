@@ -4,19 +4,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.PathPlanner;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.TrajectoryParameterizer;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -61,6 +48,7 @@ public class RobotContainer {
     private final Drive m_drive = new Drive(); // Drivebase
     private final Shooter m_shooter = new Shooter(); // Shooter
     private final TrollShot m_trollShot = new TrollShot(m_shooter, m_indexer, m_analogSenseor);
+    private final LaunchShot m_launch = new LaunchShot(m_shooter, m_indexer, m_analogSenseor);
     // Commands
 
     /* Shooter */
@@ -82,6 +70,10 @@ public class RobotContainer {
     public final Climber m_climber = new Climber();
     public final RunSolenoid m_toggleClimbSolenoid = new RunSolenoid(m_climber);
 
+    public final AddCorrect addCorrect = new AddCorrect();
+    public final SubCorrect subCorrect = new SubCorrect();
+    public final ResetCorrect resetCorrect = new ResetCorrect();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
       // SmartDashboard Data
@@ -90,6 +82,11 @@ public class RobotContainer {
       SmartDashboard.putData("Climb Solenoid", m_toggleClimbSolenoid);
       SmartDashboard.putData("Eject Top", m_ejectTop);
       SmartDashboard.putData("Eject Bot", m_ejectBot);
+
+      SmartDashboard.putData("Add", addCorrect);
+      SmartDashboard.putData("Subtract", subCorrect);
+      SmartDashboard.putData("Reset", resetCorrect);
+
       // Register
       m_drive.register();
       m_cargoIntake.register();
@@ -139,6 +136,7 @@ public class RobotContainer {
         joystick.getButton(2).whenPressed(m_intakeSolToggle);
         joystick.getButton(3).whenHeld(new VisShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter, () -> true,  () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
         joystick.getButton(4).toggleWhenPressed(new Shift(m_drive, true));
+        joystick.getButton(5).whenHeld(m_launch);
         joystick.getButton(8).whenHeld(m_trollShot);
         joystick.getButton(9).whenHeld(new RunWinch(m_climber, () -> -Constants.climb.winchSpeed, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
         joystick.getButton(10).whenHeld(new RunWinch(m_climber, () -> Constants.climb.winchSpeed, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));

@@ -33,7 +33,7 @@
               "_title": "Indexer Sensor Override"
             }
           },
-          "7,0": {
+          "4,4": {
             "size": [
               1,
               1
@@ -53,17 +53,6 @@
               "_type": "Command",
               "_source0": "network_table:///SmartDashboard/Climb Solenoid",
               "_title": "Climb Solenoid"
-            }
-          },
-          "8,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Shooter Vis Speed",
-              "_title": "Shooter Vis Speed"
             }
           },
           "6,0": {
@@ -310,6 +299,50 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/lly",
               "_title": "lly"
+            }
+          },
+          "1,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ad",
+              "_title": "ad"
+            }
+          },
+          "5,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Shooter Vis Speed",
+              "_title": "Shooter Vis Speed"
+            }
+          },
+          "7,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Add",
+              "_title": "Add"
+            }
+          },
+          "8,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Subtract",
+              "_title": "Subtract"
             }
           }
         }
