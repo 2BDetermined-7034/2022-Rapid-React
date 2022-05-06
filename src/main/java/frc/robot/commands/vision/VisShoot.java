@@ -93,7 +93,12 @@ public class VisShoot extends CommandBase {
         }
 
          */
-        visSpeed = -1 * (5.205 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)) + SmartDashboard.getNumber("ad", 0));
+        //OG
+        //visSpeed = -1 * (5.205 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)) + SmartDashboard.getNumber("ad", 0));
+
+        //Auto
+        visSpeed = -1 * (5.1 + (.00695 * llY) + (.00146 * Math.pow(llY, 2)) + (.00034 * Math.pow(llY, 3)) + SmartDashboard.getNumber("ad", 0));
+
 
         //double visSpeed = -1 * (5.16 + (.00605 * llY) + (.00146 * Math.pow(llY, 2)) + (.000348 * Math.pow(llY, 3)));
         //double visSpeed = SmartDashboard.getNumber("Bruh", 0);
