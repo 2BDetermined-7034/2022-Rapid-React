@@ -4,19 +4,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.PathPlanner;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.TrajectoryParameterizer;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -61,6 +48,7 @@ public class RobotContainer {
     private final Drive m_drive = new Drive(); // Drivebase
     private final Shooter m_shooter = new Shooter(); // Shooter
     private final TrollShot m_trollShot = new TrollShot(m_shooter, m_indexer, m_analogSenseor);
+    private final LaunchShot m_launch = new LaunchShot(m_shooter, m_indexer, m_analogSenseor);
     // Commands
 
     /* Shooter */
@@ -82,6 +70,10 @@ public class RobotContainer {
     public final Climber m_climber = new Climber();
     public final RunSolenoid m_toggleClimbSolenoid = new RunSolenoid(m_climber);
 
+    public final AddCorrect addCorrect = new AddCorrect();
+    public final SubCorrect subCorrect = new SubCorrect();
+    public final ResetCorrect resetCorrect = new ResetCorrect();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
       // SmartDashboard Data
@@ -90,6 +82,11 @@ public class RobotContainer {
       SmartDashboard.putData("Climb Solenoid", m_toggleClimbSolenoid);
       SmartDashboard.putData("Eject Top", m_ejectTop);
       SmartDashboard.putData("Eject Bot", m_ejectBot);
+
+      SmartDashboard.putData("Add", addCorrect);
+      SmartDashboard.putData("Subtract", subCorrect);
+      SmartDashboard.putData("Reset", resetCorrect);
+
       // Register
       m_drive.register();
       m_cargoIntake.register();
@@ -101,9 +98,11 @@ public class RobotContainer {
       m_chooser = new SendableChooser<>();
 
       m_chooser.setDefaultOption("Four Ball", new FourBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
-      m_chooser.addOption("Two Ball Mid", new TwoBallMid(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
+      m_chooser.addOption("Five Ball", new FiveBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
       m_chooser.addOption("Two Ball Bot", new TwoBallBot(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
       m_chooser.addOption("Three Ball", new ThreeBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
+      m_chooser.addOption("TwoBallD1", new DefensiveTwoBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
+      m_chooser.addOption("TwoBallD1Hanger", new DefensiveTwoBallHanger(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
 
       SmartDashboard.putData("Auto",m_chooser);
 
@@ -124,7 +123,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
 
         climbPad.getButton("RB").whenHeld(new RunWinch(m_climber, () -> Constants.climb.winchSpeed, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
-        climbPad.getButton("LB").whenHeld(new RunWinch(m_climber, () -> -Constants.climb.winchSpeed * 0.75, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
+        climbPad.getButton("LB").whenHeld(new RunWinch(m_climber, () -> -Constants.climb.winchSpeed * 0.85, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
         climbPad.getButton("B").toggleWhenPressed(m_toggleClimbSolenoid);
         climbPad.getButton("Y").whenPressed(m_intakeup);
         //climbPad.getButton("X").whenPressed(new AutoClimbGroup(m_climber, () -> true, m_cargoIntake));
@@ -133,10 +132,11 @@ public class RobotContainer {
         climbPad.getButton("START").whenHeld(m_ejectTop);
 
         joystick.getButton(1).whenHeld(new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
-        joystick.getButton(1).whenHeld(new RunIndexer(m_indexer, () -> Constants.indexer.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
+        joystick.getButton(1).whenHeld(new RunIndexer(m_indexer, m_shooter, () -> Constants.indexer.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
         joystick.getButton(2).whenPressed(m_intakeSolToggle);
         joystick.getButton(3).whenHeld(new VisShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter, () -> true,  () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
         joystick.getButton(4).toggleWhenPressed(new Shift(m_drive, true));
+        joystick.getButton(5).whenHeld(m_launch);
         joystick.getButton(8).whenHeld(m_trollShot);
         joystick.getButton(9).whenHeld(new RunWinch(m_climber, () -> -Constants.climb.winchSpeed, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
         joystick.getButton(10).whenHeld(new RunWinch(m_climber, () -> Constants.climb.winchSpeed, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
@@ -149,23 +149,6 @@ public class RobotContainer {
      * @return The command to run in autonomous.
      */
     public Command getAutonomousCommand() {
-
-        /*
-        switch (Constants.controller.autoNumber) {
-            case 1:
-                return new TwoBallMid(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
-            case 2:
-                return new TwoBallBot(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
-            case 3:
-                return new ThreeBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
-            case 4:
-                return new FourBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake);
-            default:
-                throw new IllegalStateException("Unexpected Auto: " + Constants.controller.autoNumber);
-        }
-
-         */
-
         return m_chooser.getSelected();
 
     }

@@ -31,6 +31,7 @@ public class Shooter extends SubsystemBase {
 
         m_speeds = 0;
         SmartDashboard.putNumber("Shooter Speed", 0);
+        SmartDashboard.putNumber("ad", 0);
     }
 
   @Override

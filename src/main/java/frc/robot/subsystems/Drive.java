@@ -196,6 +196,10 @@ public class Drive extends SubsystemBase {
         m_differentialDrive.arcadeDrive(-xSpeed, -zRotation);
     }
 
+    public void chezyDrive(double xSpeed, double zRotation) {
+        m_differentialDrive.curvatureDrive(-xSpeed, -zRotation, Math.abs(xSpeed) <= 0.15);
+    }
+
     /**
      * Kinematic utility motion drive method
      * @param chassisSpeeds the chassis speed of drive

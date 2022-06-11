@@ -18,8 +18,9 @@ public class TwoBallBot extends SequentialCommandGroup {
     public TwoBallBot(Drive m_drive, LimeLight ll, Shooter m_shooter, Indexer m_indexer, DigitalSensor m_analogSensor, CargoIntake m_intake) {
 
         addCommands(
+                new SetOdometry(m_drive, "2ball1"),
                 new Solenoid(m_intake, true),
-                new IntakePath(m_drive, m_indexer,m_analogSensor, m_intake, "2ball1", false, Constants.intake.speed, Constants.indexer.speed),
+                new IntakePath(m_drive, m_indexer,m_shooter, m_analogSensor, m_intake, "2ball1", false, Constants.intake.speed, Constants.indexer.speed),
                 new TimedShooter(m_drive, ll, m_analogSensor, m_indexer, m_shooter, Constants.shooter.shootTime)
         );
     }

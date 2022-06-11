@@ -2,66 +2,75 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.shooter;
+package frc.robot.commands.auto;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.commands.sensor.SensorOverride;
+import frc.robot.subsystems.CargoIntake;
 import frc.robot.subsystems.DigitalSensor;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
 
-public class TrollShot extends CommandBase {
+public class TimedIntake extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final DigitalSensor analogSensor;
 
-    private final Shooter m_shooter;
     private final Indexer m_indexer;
+    private final CargoIntake m_intake;
+    private final DigitalSensor m_sensor;
 
+    private final Timer timer = new Timer();
+    private final double totalTime;
 
     /**
-     * Creates a new TrollShot.
-     *
-     * @param subsystem The subsystem used by this command.
+     * Creates a new RunShooter.
      */
-    public TrollShot(Shooter subsystem, Indexer indexer, DigitalSensor sensor) {
+    public TimedIntake(Indexer indexer, DigitalSensor sensor, CargoIntake intake, double time) {
         this.m_indexer = indexer;
-        this.analogSensor = sensor;
-        m_shooter = subsystem;
+        this.m_intake = intake;
+        this.m_sensor = sensor;
+        this.totalTime = time;
 
-
-        // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(m_shooter);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-
+        timer.reset();
+        timer.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double visSpeed = -3;
-        m_shooter.setSpeed(visSpeed);
-        if (Math.abs(m_shooter.getVoltage() - visSpeed) <= Constants.shooter.shooterRange) {
-            new SensorOverride(analogSensor);
+        if(m_sensor.getTopSensor()) {
+            m_indexer.setIndexer1(0);
+        } else {
             m_indexer.setSpeed(Constants.indexer.speed);
+
         }
+        m_intake.setSpeed(Constants.intake.speed);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         m_indexer.setSpeed(0);
-        m_shooter.setSpeed(0);
+        m_intake.setSpeed(0);
+        m_intake.setSolenoid(true);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+
+        if(m_sensor.sensorBoolean1_2()) {
+            m_indexer.setSpeed(0);
+            return true;
+        }
+
+        return timer.get() > totalTime;
     }
 }

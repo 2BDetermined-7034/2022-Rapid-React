@@ -47,9 +47,7 @@ public class FollowPath {
     }
 
     public RamseteCommand getRamseteCommand() {
-
         m_drive.shift(Constants.driveBase.HIGH_GEAR);
-        m_drive.setRobotPos(m_path.getInitialPose());
         return ramseteCommand;
     }
 }
