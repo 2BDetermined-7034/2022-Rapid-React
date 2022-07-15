@@ -39,6 +39,7 @@ public class RobotContainer {
 
 
     SendableChooser<Command> m_chooser;
+    SendableChooser<Command> m_controllerChooser;
 
     // Subsystems
     private final CargoIntake m_cargoIntake = new CargoIntake(); // Intake
@@ -106,11 +107,17 @@ public class RobotContainer {
 
       SmartDashboard.putData("Auto",m_chooser);
 
+      m_controllerChooser = new SendableChooser<>();
+      m_controllerChooser.setDefaultOption("Joystick", new DriveCommand(m_drive, joystick::getY, joystick::getX));
+      m_controllerChooser.addOption("Gamepad", new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
+
       // Drive default command
+      /*
       if(Constants.controller.useJoystick)
           m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX)); // Looks wrong do not change
       else
           m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("RX")));
+       */
       configureButtonBindings();
   }
 
