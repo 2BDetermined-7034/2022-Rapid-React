@@ -12,7 +12,7 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
 
-public class TrollShot extends CommandBase {
+public class ThrowShot extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final DigitalSensor analogSensor;
 
@@ -25,7 +25,7 @@ public class TrollShot extends CommandBase {
      *
      * @param subsystem The subsystem used by this command.
      */
-    public TrollShot(Shooter subsystem, Indexer indexer, DigitalSensor sensor) {
+    public ThrowShot(Shooter subsystem, Indexer indexer, DigitalSensor sensor) {
         this.m_indexer = indexer;
         this.analogSensor = sensor;
         m_shooter = subsystem;
@@ -44,9 +44,9 @@ public class TrollShot extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double visSpeed = -12;
-        m_shooter.setSpeed(-12);
-        if (Math.abs(m_shooter.getVoltage() - visSpeed) <= 1) {
+        double visSpeed = -6;
+        m_shooter.setSpeed(-6);
+        if (Math.abs(m_shooter.getVoltage() - visSpeed) <= .05) {
             new SensorOverride(analogSensor);
             m_indexer.setSpeed(Constants.indexer.speed);
         }
