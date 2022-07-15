@@ -111,6 +111,8 @@ public class RobotContainer {
       m_controllerChooser.setDefaultOption("Joystick", new DriveCommand(m_drive, joystick::getY, joystick::getX));
       m_controllerChooser.addOption("Gamepad", new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
 
+      SmartDashboard.putData("Controller", m_controllerChooser);
+
       // Drive default command
       /*
       if(Constants.controller.useJoystick)
