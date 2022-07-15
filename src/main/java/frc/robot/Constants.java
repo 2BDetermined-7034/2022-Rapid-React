@@ -24,10 +24,10 @@ public final class Constants {
     public final static class controller {
         public static final int driveJoystick = 2;
         public static final int climbGamePadPort = 3;
-        public static final int gamePadPort = 0;
+        public static final int drivePad = 0;
         public static final int climberGamepad = 6;
         public static final int buttonPadPort = 2;
-        public static final boolean useJoystick = true; // Switch between using gamepad and joystick (for driver)
+        public static final boolean useJoystick = false; // Switch between using gamepad and joystick (for driver)
 
         public static final double yGate = 0.15;
         public static final double xGate = 0.15;

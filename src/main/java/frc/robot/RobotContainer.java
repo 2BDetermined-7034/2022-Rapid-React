@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.auto.*;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.indexer.*;
@@ -22,8 +20,6 @@ import frc.robot.commands.vision.*;
 import frc.robot.commands.climb.*;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import java.util.List;
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -34,7 +30,7 @@ public class RobotContainer {
     // Controllers
     private final X3D joystick = new X3D(Constants.controller.driveJoystick);
 
-    public final GPad m_GPad = new GPad(Constants.controller.gamePadPort);
+    public final GPad m_GPad = new GPad(Constants.controller.drivePad);
     public final GPad climbPad = new GPad(Constants.controller.climbGamePadPort);
 
 
@@ -49,6 +45,7 @@ public class RobotContainer {
     private final Drive m_drive = new Drive(); // Drivebase
     private final Shooter m_shooter = new Shooter(); // Shooter
     private final TrollShot m_trollShot = new TrollShot(m_shooter, m_indexer, m_analogSenseor);
+    private final ThrowShot m_throwShot = new ThrowShot(m_shooter, m_indexer, m_analogSenseor);
     private final LaunchShot m_launch = new LaunchShot(m_shooter, m_indexer, m_analogSenseor);
     // Commands
 
@@ -107,19 +104,15 @@ public class RobotContainer {
 
       SmartDashboard.putData("Auto",m_chooser);
 
-      m_controllerChooser = new SendableChooser<>();
-      m_controllerChooser.setDefaultOption("Joystick", new DriveCommand(m_drive, joystick::getY, joystick::getX));
-      m_controllerChooser.addOption("Gamepad", new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("LX")));
 
-      SmartDashboard.putData("Controller", m_controllerChooser);
 
       // Drive default command
-      /*
+
       if(Constants.controller.useJoystick)
           m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX)); // Looks wrong do not change
       else
-          m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY"), () -> m_GPad.getAxis("RX")));
-       */
+          m_drive.setDefaultCommand(new DriveCommand(m_drive, () -> m_GPad.getAxis("LY") / 2, () -> m_GPad.getAxis("RX") / 2));
+
       configureButtonBindings();
   }
 
@@ -140,12 +133,21 @@ public class RobotContainer {
         climbPad.getButton("BACK").whenHeld(m_ejectBot);
         climbPad.getButton("START").whenHeld(m_ejectTop);
 
+        m_GPad.getButton("A").whenHeld(m_trollShot);
+        m_GPad.getButton("B").whenHeld(m_throwShot);
+        m_GPad.getButton("Y").whenHeld(new Shift(m_drive, true));
+        m_GPad.getButton("X").whenPressed(m_intakeSolToggle);
+        m_GPad.getButton("LB").whenHeld(new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
+        m_GPad.getButton("LB").whenHeld(new RunIndexer(m_indexer, m_shooter, () -> Constants.indexer.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
+        m_GPad.getButton("RB").whenHeld(new RunIndexer(m_indexer, m_shooter, () -> -Constants.indexer.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
+
         joystick.getButton(1).whenHeld(new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
         joystick.getButton(1).whenHeld(new RunIndexer(m_indexer, m_shooter, () -> Constants.indexer.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
         joystick.getButton(2).whenPressed(m_intakeSolToggle);
         joystick.getButton(3).whenHeld(new VisShoot(m_drive, m_limeLight, m_analogSenseor, m_indexer, m_shooter, () -> true,  () -> (Math.abs(m_GPad.getAxis("LX")) > .4), () -> m_GPad.getAxis("LY")));
         joystick.getButton(4).toggleWhenPressed(new Shift(m_drive, true));
         joystick.getButton(5).whenHeld(m_launch);
+        joystick.getButton(7).whenHeld(m_throwShot);
         joystick.getButton(8).whenHeld(m_trollShot);
         joystick.getButton(9).whenHeld(new RunWinch(m_climber, () -> -Constants.climb.winchSpeed, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
         joystick.getButton(10).whenHeld(new RunWinch(m_climber, () -> Constants.climb.winchSpeed, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
