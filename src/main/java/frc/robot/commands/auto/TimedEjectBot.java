@@ -55,6 +55,7 @@ public class TimedEjectBot extends CommandBase {
 
         m_index.setSpeed(-0.9);
         m_intake.setSpeed(-0.25);
+        //original is 3
         m_shooter.setSpeed(3);
     }
 

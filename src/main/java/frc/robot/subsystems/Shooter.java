@@ -39,6 +39,8 @@ public class Shooter extends SubsystemBase {
 
         SmartDashboard.putNumber("Shooter Vis Speed", m_speeds);
         SmartDashboard.putNumber("Shooter Voltage", getVoltage());
+        //m_motor.setVoltage(m_speeds);
+        //m_motor2.setVoltage(m_speeds);
         m_motor.setVoltage(m_speeds);
         m_motor2.setVoltage(m_speeds);
       //m_motor.set(-SmartDashboard.getNumber("Shooter Speed", 0));
@@ -49,6 +51,9 @@ public class Shooter extends SubsystemBase {
    * Method for command
    * @param speed to be taken from Vision
    */
+  //public void setSpeed(double speed) {
+  //      m_speeds = speed;
+  //  }
   public void setSpeed(double speed) {
       m_speeds = speed;
   }

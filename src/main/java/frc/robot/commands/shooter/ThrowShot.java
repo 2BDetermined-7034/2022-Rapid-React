@@ -44,8 +44,8 @@ public class ThrowShot extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double visSpeed = -6;
-        m_shooter.setSpeed(-6);
+        double visSpeed = -3.6;
+        m_shooter.setSpeed(-3.6);
         if (Math.abs(m_shooter.getVoltage() - visSpeed) <= .05) {
             new SensorOverride(analogSensor);
             m_indexer.setSpeed(Constants.indexer.speed);

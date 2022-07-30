@@ -46,7 +46,7 @@ public class DriveCommand extends CommandBase {
         if (Math.abs(zRotation) < Constants.controller.xGate) zRotation = 0;
 
         //m_drive.arcadeDrive(m_driveY.getAsDouble(), m_driveX.getAsDouble());
-        m_drive.chezyDrive(m_driveY.getAsDouble(), m_driveX.getAsDouble());
+        m_drive.chezyDrive(m_driveY.getAsDouble() / 2, m_driveX.getAsDouble() / 2);
     }
 
     /**

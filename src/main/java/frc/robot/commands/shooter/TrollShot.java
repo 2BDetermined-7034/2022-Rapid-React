@@ -44,8 +44,9 @@ public class TrollShot extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        //double visSpeed = -12;
         double visSpeed = -12;
-        m_shooter.setSpeed(-12);
+        m_shooter.setSpeed(visSpeed);
         if (Math.abs(m_shooter.getVoltage() - visSpeed) <= 1) {
             new SensorOverride(analogSensor);
             m_indexer.setSpeed(Constants.indexer.speed);

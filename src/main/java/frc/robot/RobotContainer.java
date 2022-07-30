@@ -108,6 +108,7 @@ public class RobotContainer {
 
       // Drive default command
 
+
       if(Constants.controller.useJoystick)
           m_drive.setDefaultCommand(new DriveCommand(m_drive, joystick::getY, joystick::getX)); // Looks wrong do not change
       else
@@ -135,11 +136,19 @@ public class RobotContainer {
 
         m_GPad.getButton("A").whenHeld(m_trollShot);
         m_GPad.getButton("B").whenHeld(m_throwShot);
-        m_GPad.getButton("Y").whenHeld(new Shift(m_drive, true));
+        m_GPad.getButton("Y").whenPressed(m_toggleClimbSolenoid);
         m_GPad.getButton("X").whenPressed(m_intakeSolToggle);
         m_GPad.getButton("LB").whenHeld(new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
         m_GPad.getButton("LB").whenHeld(new RunIndexer(m_indexer, m_shooter, () -> Constants.indexer.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
         m_GPad.getButton("RB").whenHeld(new RunIndexer(m_indexer, m_shooter, () -> -Constants.indexer.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
+        m_GPad.getButton("START").whenHeld(m_ejectTop);
+        m_GPad.getButton("BACK").whenHeld(m_ejectBot);
+        m_GPad.getButton("LSB").whenHeld(new RunWinch(m_climber, () -> Constants.climb.winchSpeed, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
+        m_GPad.getButton("RSB").whenHeld(new RunWinch(m_climber, () -> -Constants.climb.winchSpeed, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));;
+        // whenPressed(m_toggleClimbSolenoid);
+        //up whenHeld(new RunWinch(m_climber, () -> Constants.climb.winchSpeed, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")))
+        // down whenHeld(new RunWinch(m_climber, () -> -Constants.climb.winchSpeed, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
+
 
         joystick.getButton(1).whenHeld(new RunIntakeMotors(m_cargoIntake,  () -> Constants.intake.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
         joystick.getButton(1).whenHeld(new RunIndexer(m_indexer, m_shooter, () -> Constants.indexer.speed, m_analogSenseor, () -> climbPad.getButton("A").get()));
@@ -151,6 +160,8 @@ public class RobotContainer {
         joystick.getButton(8).whenHeld(m_trollShot);
         joystick.getButton(9).whenHeld(new RunWinch(m_climber, () -> -Constants.climb.winchSpeed, () -> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
         joystick.getButton(10).whenHeld(new RunWinch(m_climber, () -> Constants.climb.winchSpeed, ()-> climbPad.getAxis("LTrigger"), () -> climbPad.getAxis("RTrigger")));
+        joystick.getButton(11).whenPressed(m_toggleClimbSolenoid);
+        joystick.getButton( 12).whenPressed(m_intakeSolToggle);
 
     }
 
