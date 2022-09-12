@@ -99,9 +99,13 @@ public class RobotContainer {
 
       m_chooser.setDefaultOption("Four Ball", new FourBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
       m_chooser.addOption("Five Ball", new FiveBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
+      m_chooser.addOption("Six Ball", new SixBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
       m_chooser.addOption("Two Ball Bot", new TwoBallBot(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
+      m_chooser.addOption("Two Ball Back", new TwoBallBack(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
+
       m_chooser.addOption("Three Ball", new ThreeBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
       m_chooser.addOption("TwoBallD1", new DefensiveTwoBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
+      m_chooser.addOption("ThreeBallD1", new DefensiveThreeBall(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
       m_chooser.addOption("TwoBallD1Hanger", new DefensiveTwoBallHanger(m_drive, m_limeLight, m_shooter, m_indexer, m_analogSenseor, m_cargoIntake));
 
       SmartDashboard.putData("Auto",m_chooser);

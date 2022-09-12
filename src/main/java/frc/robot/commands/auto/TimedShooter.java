@@ -63,7 +63,7 @@ public class TimedShooter extends CommandBase {
 
         double rotateSpeed = shooterLock.calculate(visX, 0);
 
-        m_drive.arcadeDrive(0, -errorX / 13);
+        m_drive.arcadeDrive(0, -errorX / 12.5);
         //m_drive.arcadeDrive(0, -rotateSpeed);
 
         SmartDashboard.putNumber("ErrorX", errorX);
