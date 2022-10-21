@@ -97,7 +97,6 @@ public class Drive extends SubsystemBase {
      * @return the position of the robot in a pose2d
      */
     public Pose2d getRobotPos(){
-        //return m_locationManager.getEstimatedPosition();
         return m_odometry.getPoseMeters();
     }
 
@@ -140,7 +139,7 @@ public class Drive extends SubsystemBase {
     public void setRobotPos(Pose2d startingPose){
         resetEncoders();
         m_odometry.resetPosition(startingPose, getCurrentAngle());
-        //m_locationManager.resetPosition(startingPose, Rotation2d.fromDegrees(-m_gyro.getYaw()));
+ 
     }
 
     public DifferentialDriveKinematics get_kinematics() {
@@ -252,7 +251,6 @@ public class Drive extends SubsystemBase {
     @Override
     public void periodic() {
         m_odometry.update(getCurrentAngle(), getLeftEncoderPosition(), getRightEncoderPosition());
-        //m_locationManager.update(Rotation2d.fromDegrees(-m_gyro.getYaw()), getWheelVelocity(), m_leftEnc.getPosition(), m_rightEnc.getPosition());
         //debug();
     }
 }
