@@ -37,7 +37,7 @@ public class RobotContainer {
   private final Indexer m_indexer = new Indexer();
   private final RunIndexer m_runIndexer = new RunIndexer(m_indexer, () -> m_GPad.getAxis("RTrigger"));
 
-  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> 0.5, m_GPad);
+  private final RunIntakeMotors m_runIntake = new RunIntakeMotors(m_cargoIntake, () -> 0.5);
 
   private final IntakeSolenoid m_solUp = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeUp);
   private final IntakeSolenoid m_solDown = new IntakeSolenoid(m_cargoIntake, () -> Constants.intake.intakeDown);
@@ -69,7 +69,8 @@ public class RobotContainer {
         m_GPad.getButton("START").toggleWhenPressed(m_runIntake);
         m_GPad.getButton("X").whenPressed(m_solDown);
         m_GPad.getButton("Y").whenPressed(m_solUp);
-        // Indexer
+
+        // Shooter
         m_GPad.getButton("A").whenPressed(m_runShooter);
     }
 
