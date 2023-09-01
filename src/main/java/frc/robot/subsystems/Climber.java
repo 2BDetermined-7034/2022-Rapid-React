@@ -20,33 +20,33 @@ import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
     private final DoubleSolenoid m_solenoid;
-    private final WPI_TalonFX m_winchTalon;
+    //private final WPI_TalonFX m_winchTalon;
     //private final Encoder m_encoder;
 
     /**
      * Creates a new TeleClimb
      */
     public Climber() {
-        m_winchTalon = new WPI_TalonFX(Constants.climb.winchMotorID);
+        //m_winchTalon = new WPI_TalonFX(Constants.climb.winchMotorID);
 
         m_solenoid = new DoubleSolenoid(Constants.pneumatics.climber,Constants.climb.solenoidForwardID, Constants.climb.solenoidBackID);
         m_solenoid.set(Value.kForward);
         resetEncoder();
 
-        m_winchTalon.setNeutralMode(NeutralMode.Brake);
-        m_winchTalon.config_kP(0, 1);
+        //m_winchTalon.setNeutralMode(NeutralMode.Brake);
+        //m_winchTalon.config_kP(0, 1);
         //m_winchTalon.config_kI()
     }
 
     public void runWinch(double speed){
-        m_winchTalon.set(speed);
+        //m_winchTalon.set(speed);
     }
 
 
     public void runWinchSafely(double speed){
         if ((getEncoderPosition() <= 0 && speed < 0) || (getEncoderPosition() >= Constants.climb.maxPos && speed > 0)) speed = 0;
 
-        m_winchTalon.set(speed);
+        //m_winchTalon.set(speed);
 
     }
 
@@ -65,7 +65,7 @@ public class Climber extends SubsystemBase {
     }
 
     public void setWinchPosition(double angle){
-        m_winchTalon.set(TalonFXControlMode.Position, angle);
+        //m_winchTalon.set(TalonFXControlMode.Position, angle);
     }
 
     public void resetEncoder(){
@@ -73,11 +73,12 @@ public class Climber extends SubsystemBase {
     }
 
     public void setEncoder(double pos) {
-        m_winchTalon.setSelectedSensorPosition(pos);
+        //m_winchTalon.setSelectedSensorPosition(pos);
     }
 
     public double getEncoderPosition(){
-        return m_winchTalon.getSelectedSensorPosition();
+        //return m_winchTalon.getSelectedSensorPosition();
+        return 0.0;
     }
 
     @Override
@@ -90,7 +91,7 @@ public class Climber extends SubsystemBase {
         }
         SmartDashboard.putString("Arm state: ", test);
 
-        SmartDashboard.putNumber("Climb Winch Position", m_winchTalon.getSelectedSensorPosition());
+        //SmartDashboard.putNumber("Climb Winch Position", m_winchTalon.getSelectedSensorPosition());
     }
 
     @Override

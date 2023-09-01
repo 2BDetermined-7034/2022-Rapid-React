@@ -49,13 +49,13 @@ public class Drive extends SubsystemBase {
         m_right2 = new CANSparkMax(Constants.driveBase.driveR2ID, CANSparkMaxLowLevel.MotorType.kBrushless);
         m_right3 = new CANSparkMax(Constants.driveBase.driveR3ID, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-        m_left.setInverted(false);
-        m_left2.setInverted(false);
-        m_left3.setInverted(false);
+        m_left.setInverted(true);
+        m_left2.setInverted(true);
+        m_left3.setInverted(true);
 
-        m_right.setInverted(true);
-        m_right2.setInverted(true);
-        m_right3.setInverted(true);
+        m_right.setInverted(false);
+        m_right2.setInverted(false);
+        m_right3.setInverted(false);
 
         m_left2.follow(m_left);
         m_left3.follow(m_left);
